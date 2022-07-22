@@ -26,6 +26,15 @@ function SignIn() {
     login(logemail, logpassword)
       .then((res) => {
         //redirect to home page
+        toast("Login in successful !", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         window.location.href = "/home";
       })
       .catch((error) => {
