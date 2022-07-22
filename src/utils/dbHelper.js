@@ -1,10 +1,10 @@
 import { ref as dbref, update, child, get } from "firebase/database";
 import { database } from "../firebase/init-firebase";
 
-function saveNewUniversity(initalName, fullName, code, email, phone, website) {
+function saveNewUniversity(initialName, fullName, code, email, phone, website) {
   const db = database;
   update(dbref(db, "/universities/" + code), {
-    initalName: initalName,
+    initialName: initialName,
     fullName: fullName,
     code: code,
     email: email,
@@ -12,7 +12,7 @@ function saveNewUniversity(initalName, fullName, code, email, phone, website) {
     website: website,
   })
     .then((snapshot) => {
-      return true;
+      window.location.href = "/";
     })
     .catch((error) => {
       console.log(error);
@@ -20,8 +20,8 @@ function saveNewUniversity(initalName, fullName, code, email, phone, website) {
     });
 }
 
-function getAllUniversities(code) {
-  const db = database;
+function getAllUniversities() {
+  const db = dbref(database);
   get(child(db, `/universities/`))
     .then((snapshot) => {
       let allData = new Array();
