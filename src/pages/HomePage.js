@@ -4,11 +4,6 @@ import { useAuth } from "../contexts/AuthContext";
 
 function HomePage() {
   const { currentUser } = useAuth();
-  useEffect(() => {
-    return () => {
-      console.log(currentUser);
-    };
-  }, []);
 
   return <Dashboard />;
 }
