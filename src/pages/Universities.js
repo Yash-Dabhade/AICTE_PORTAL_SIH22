@@ -3,7 +3,7 @@ import SimpleCard from '../components/SimpleCard'
 import MSBTE_logo from '../res/MSBTE_logo.png'
 import {getAllUniversities} from '../utils/dbHelper'
 
-export default function () {
+export default function  () {
     const arr = getAllUniversities()
     setTimeout(() => console.log(arr), 1000);
 
