@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import UniversityForm from "../pages/forms/UniversityForm";
 
 function TestPage() {
   return (
     <>
-      <div>TestPage</div>
+      <div>
+        <UniversityForm />
+      </div>
     </>
   );
 }
