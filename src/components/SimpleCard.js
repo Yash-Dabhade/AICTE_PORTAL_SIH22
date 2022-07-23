@@ -9,8 +9,8 @@ export default function SimpleCard(props) {
   return (
     // py-24 -mx-52
     <>
-      <div className="container  bg-slate-100 py-24 -mx-52">
-        <div className="right bg-white mx-80 mt-10 p-5 w-72 h-96 rounded-lg drop-shadow-2xl scale-95 hover:scale-100 ease-in duration-500 py">
+      <div className="bg-slate-100">
+        <div className="right bg-white mt-10 p-5 w-72 h-96 rounded-lg drop-shadow-2xl scale-95 hover:scale-100 ease-in duration-500 py">
           <button className="mx-56 rounded-full hover:bg-slate-200">
             <HiOutlineDotsVertical size="24px" />{" "}
           </button>

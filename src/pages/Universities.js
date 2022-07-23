@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import SimpleCard from '../components/SimpleCard'
-import MSBTE_logo from '../res/MSBTE_logo.png'
+import React, { useEffect, useState } from "react";
+import SimpleCard from "../components/SimpleCard";
+import MSBTE_logo from "../res/MSBTE_logo.png";
 import { ref as dbref, update, child, get } from "firebase/database";
 import { database } from "../firebase/init-firebase";
-import { data } from 'jquery';
 
-
-export default function universities  () {
-
+export default function Universities() {
   const [data, setData] = useState([]);
   function getAllUniversities() {
-  
     const db = dbref(database);
     get(child(db, `/universities/`))
       .then((snapshot) => {
@@ -27,33 +23,33 @@ export default function universities  () {
         console.error(error);
       });
   }
-  useEffect(() =>{
-    return() =>{
+  useEffect(() => {
+    return () => {
       getAllUniversities();
     };
   }, []);
-  console.log(data);
-  
+
   return (
-    <> 
-    <div >
+    <>
       <div>
-        {data.map((ele)=>{
-            return (
-            // <div className='h-56 grid grid-row-3 grid-cols-3  gap-4 content-start mx-10 '>
-            // <div className=' h-96 grid grid-rows-3 grid-flow-col -mb-96 ml-96 gap-4'>
-            <div className=' h-96 grid grid-rows-3 grid-flow-col -ml-10  gap-4'>
-
-
-              <div className='displya-flex' key={ele.code}>
-              {<SimpleCard  logo = {MSBTE_logo}  title = {ele.initialName} desc = {ele.fullName}/>}
-              </div>
-            </div>
-            )
-            })
-            }
+        <div>
+          <div className="flex gap-x-3 flex-wrap items-center content-center">
+            {data.map((ele) => {
+              return (
+                <SimpleCard
+                  logo={MSBTE_logo}
+                  title={ele.initialName}
+                  desc={ele.fullName}
+                />
+              );
+            })}
+            <SimpleCard logo={MSBTE_logo} title={"Test"} desc={"Test"} />
+            <SimpleCard logo={MSBTE_logo} title={"Test"} desc={"Test"} />
+            <SimpleCard logo={MSBTE_logo} title={"Test"} desc={"Test"} />
+            <SimpleCard logo={MSBTE_logo} title={"Test"} desc={"Test"} />
+          </div>
+        </div>
       </div>
-    </div>
     </>
-  )
+  );
 }
