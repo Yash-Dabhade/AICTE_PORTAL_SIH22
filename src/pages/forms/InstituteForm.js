@@ -1,6 +1,25 @@
 import React from "react";
+import { saveNewInstitute } from "../../utils/dbHelper";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function InstituteForm() {
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let code = document.getElementById("code").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let location = document.getElementById("location").value;
+    let website = document.getElementById("website").value;
+
+    // check if the values are empty
+
+    // submitting to database
+    saveNewInstitute(name, code, email, phone, location, website);
+  }
+
   return (
     <div className="container  flex justify-center h-screen items-center">
       <div className="content flex-col mt-20">
@@ -12,10 +31,10 @@ function InstituteForm() {
             <label className="label1 flex ml-3">Name : </label>
             <input
               type="text"
-              id="Name"
+              id="name"
               className="initialname  border-2 border-[#9a9a9a] rounded-md w-96 pl-3 h-8
                 "
-              placeholder="University Name"
+              placeholder="Institute Name"
             />
           </div>
 
@@ -63,19 +82,23 @@ function InstituteForm() {
             <label className="label6 flex ml-3">Autonomous : </label>
             <input
               type="text"
-              id="Autonomous"
+              id="website"
               className="Autonomous border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
-              placeholder="Yes / No"
+              placeholder="www.abc.org.in"
             />
           </div>
           <div className="cont5 justify-center flex m-3 ">
-            <button className="submit text-white border-2 border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] ">
+            <button
+              onClick={handleSubmit}
+              className="submit text-white border-2 border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
+            >
               Submit
             </button>
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -25,6 +25,7 @@ export default function Universities() {
   }
   useEffect(() => {
     return () => {
+      window.sessionStorage.setItem("UniversityCode", 1001);
       getAllUniversities();
     };
   }, []);

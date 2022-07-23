@@ -20,6 +20,32 @@ function saveNewUniversity(initialName, fullName, code, email, phone, website) {
     });
 }
 
+function saveNewInstitute(
+  instituteName,
+  code,
+  email,
+  phone,
+  location,
+  website
+) {
+  const db = database;
+  let universityCode = window.sessionStorage.getItem("UniversityCode");
+  update(dbref(db, "/universities/" + universityCode + "/institutes/" + code), {
+    name: instituteName,
+    code: code,
+    email: email,
+    phone: phone,
+    website: website,
+  })
+    .then((snapshot) => {
+      window.location.href = "/";
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+}
+
 function getAllUniversities() {
   const db = dbref(database);
   get(child(db, `/universities/`))
@@ -39,4 +65,30 @@ function getAllUniversities() {
     });
 }
 
-export { saveNewUniversity, getAllUniversities };
+function getAllInstitutes() {
+  const db = dbref(database);
+  let universityCode = window.sessionStorage.getItem("UniversityCode");
+  get(child(db, "/universities/" + universityCode + "/institutes/"))
+    .then((snapshot) => {
+      let allData = new Array();
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+        //setState
+        console.log(allData);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      return new Array();
+    });
+}
+
+export {
+  saveNewUniversity,
+  getAllUniversities,
+  saveNewInstitute,
+  getAllInstitutes,
+};

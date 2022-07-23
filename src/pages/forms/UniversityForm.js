@@ -22,7 +22,7 @@ export class UniversityForm extends Component {
     }
 
     return (
-      <div className="container  flex justify-center h-screen items-center">
+      <div className="container flex content-center justify-center h-screen items-center">
         <div className="content flex-col mt-20">
           <div className="title flex justify-center mb-10 ">
             <label className="title text-4xl">New University Details</label>
