@@ -22,12 +22,12 @@ export class UniversityForm extends Component {
     }
 
     return (
-      <div className="container mt-6 flex justify-center h-screen items-center">
-        <div className="content flex-col">
+      <div className="container  flex justify-center h-screen items-center">
+        <div className="content flex-col mt-20">
           <div className="title flex justify-center mb-10 ">
             <label className="title text-4xl">New University Details</label>
           </div>
-          <form className="form w-fit mb-20   border-2 border-[#eeeeee] shadow-lg">
+          <form className="form w-fit mb-20 px-20 pb-5 pt-3  border-2 border-[#eeeeee] shadow-lg">
             <div className="cont flex-col m-3  ">
               <label className="label1 flex ml-3">Initial Name : </label>
               <input
@@ -91,7 +91,7 @@ export class UniversityForm extends Component {
             <div className="cont5 justify-center flex m-3 ">
               <button
                 onClick={handleSubmit}
-                className="submit text-white border-2 border-[#021a36] py-1 px-10 w-96 text-center rounded-md bg-[#2d8cff] "
+                className="submit text-white border-2 border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
               >
                 Submit
               </button>
