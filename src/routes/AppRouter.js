@@ -6,7 +6,7 @@ import TestPage from "../testing/TestPage";
 import SignIn from "../pages/SignIn";
 import InstituteForm from "../pages/forms/InstituteForm";
 import UniversityForm from "../pages/forms/UniversityForm";
-import Institutes from "../pages/Institutes";
+// import Institutes from "../pages/Institutes";
 
 function AppRouter() {
   return (
@@ -18,7 +18,7 @@ function AppRouter() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/newUniversity" element={<UniversityForm />} />
         <Route path="/newInstitute" element={<InstituteForm />} />
-        <Route path="/Institute" element={<Institutes />} />
+        {/* <Route path="/Institute" element={<Institutes />} /> */}
       </Routes>
     </Router>
   );
