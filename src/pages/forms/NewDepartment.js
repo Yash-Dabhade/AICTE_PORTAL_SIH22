@@ -39,7 +39,7 @@ export default function NewDepartment(props) {
                 <span className="sr-only" onClick={''}>Close modal</span>
             </button>
             <div className="py-6 px-6 lg:px-8">
-                <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-black">Add Cources</h3>
+                <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-black">Department From</h3>
 
                 <form className="space-y-6" action="#">
 
