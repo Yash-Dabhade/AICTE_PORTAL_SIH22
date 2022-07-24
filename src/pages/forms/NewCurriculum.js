@@ -5,6 +5,7 @@ export default function NewCurriculum(props) {
     function getValues(){
     let Title = document.getElementById("newTitle").value;
     let code =  document.getElementById("courceCode").value;
+    // let file = document.getElementById("imgFile").file[0];
     console.log("Buttom Wass click")
     if(Title.length === 0){
         alert("cannot Set Empty")
@@ -66,7 +67,7 @@ export default function NewCurriculum(props) {
                     </select>
                     </div>
 
-                    <input type="file" name="" id="" />
+                    <input type="file" name="" id="imgFile" />
 
                     <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={getValues}>Add </button>
                 </form>
