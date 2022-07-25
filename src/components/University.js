@@ -4,11 +4,13 @@ import MSBTE_logo from "../res/MSBTE_logo.png";
 import { ref as dbref, child, get } from "firebase/database";
 import { database } from "../firebase/init-firebase";
 import SubHead from "./SubHead";
+import Header from "./Header";
+import Modal from "react-modal";
+import UniversityForm from "../pages/forms/UniversityForm";
 
 export default function University() {
   const [data, setData] = useState([]);
-  const [header, setHeader] = useState("University");
-  const [subheader, setSubheader] = useState("University");
+
   function getAllUniversities() {
     const db = dbref(database);
     get(child(db, `/universities/`))
@@ -32,57 +34,30 @@ export default function University() {
     };
   }, []);
 
-  const sectionHeader = (e) => {
-    setHeader(e);
-  };
-  const sectionSubHeader = (e) => {
-    setSubheader(e);
-  };
+  function createUniversity() {
+    openModal();
+    console.log("University ");
+    Modal.setAppElement("#formRoot");
+  }
 
-  const month = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
   return (
-    <div className="universities-section">
-      <div className="universities-section-header">
-        <svg
-          style={{ width: "42px", height: "42px" }}
-          onClick={() => {
-            window.location.href = "/";
-          }}
-        >
-          <path
-            d="M8 42V18L24.1 6 40 18v24H28.3V27.75h-8.65V42Zm3-3h5.65V24.75H31.3V39H37V19.5L24.1 9.75 11 19.5Zm13-14.65Z"
-            strokeWidth="1"
-            stroke="currentColor"
-          />
-        </svg>
-        <p className="uHeader">{header}</p>
-        <p className="time">
-          {month[new Date().getMonth()]} , {new Date().getDate()}
-        </p>
-      </div>
-      <div className="flex justify-center mw-full">
-        <SubHead heading={subheader} />
-      </div>
+    <div className="universities-section" id="formRoot">
+      <Header title={"University"} />
+      <SubHead title={"University"} btnFunc={createUniversity} />
       <div className="university-boxes jsGridView">
         {data.map((ele, index) => {
           return (
             <Card
-              sectionHeader={sectionHeader}
-              sectionSubHeader={sectionSubHeader}
               logo={MSBTE_logo}
               title={ele.initialName}
               fullName={ele.fullName}
@@ -96,6 +71,14 @@ export default function University() {
           );
         })}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        // contentLabel={props.label}
+      >
+        <UniversityForm btnFunc={closeModal} />
+      </Modal>
     </div>
   );
 }

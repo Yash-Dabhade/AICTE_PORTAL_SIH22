@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InstituteDetails from "./InsituteDetails";
+import InsituteLevelCourses from "./InsituteLevelCourses";
 
 function InstituteList(props) {
   const [institutes, setInstitutes] = useState([]);
@@ -19,17 +19,7 @@ function InstituteList(props) {
   }, []);
 
   function renderCardDetails(code) {
-    // Add Institute name after fetching from database
-    // props.sectionHeader()
-    props.sectionSubHeader("Courses");
-    // sectionSubHeader("Courses");
-    props.root.render(
-      <InstituteDetails
-        code={code}
-        sectionSubHeader={props.sectionSubHeader}
-        root={props.root}
-      />
-    );
+    props.root.render(<InsituteLevelCourses code={code} root={props.root} />);
   }
 
   return (
@@ -110,8 +100,8 @@ function InstituteList(props) {
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                             <button
                               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                              onClick={(e) => {
-                                renderCardDetails(e, ele.code);
+                              onClick={() => {
+                                renderCardDetails(ele.code);
                               }}
                             >
                               {"View Details"}

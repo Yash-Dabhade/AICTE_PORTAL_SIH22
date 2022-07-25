@@ -1,5 +1,6 @@
 import { ref as dbref, update, child, get } from "firebase/database";
-import { database } from "../firebase/init-firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage, database } from "../firebase/init-firebase";
 
 function saveNewUniversity(initialName, fullName, code, email, phone, website) {
   const db = database;
@@ -21,6 +22,7 @@ function saveNewUniversity(initialName, fullName, code, email, phone, website) {
 }
 
 function saveNewInstitute(
+  universityCode,
   instituteName,
   code,
   email,
@@ -29,7 +31,7 @@ function saveNewInstitute(
   website
 ) {
   const db = database;
-  let universityCode = window.sessionStorage.getItem("UniversityCode");
+
   update(dbref(db, `/universities/${universityCode}/institutes/${code}`), {
     name: instituteName,
     code: code,
@@ -136,6 +138,7 @@ const handleUpload = async (e) => {
   let code = 3000; //get curriculum code
   let typeRef = "curriculum_files";
   const pathRef = "curriculums";
+  const file = "test";
   let storageRef = ref(storage, `${pathRef}/${typeRef}/${code}`);
   let uploadTask = uploadBytesResumable(storageRef, file);
   console.log("Uploaded");

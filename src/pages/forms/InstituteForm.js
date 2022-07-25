@@ -3,7 +3,7 @@ import { saveNewInstitute } from "../../utils/dbHelper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function InstituteForm() {
+function InstituteForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -17,11 +17,24 @@ function InstituteForm() {
     // check if the values are empty
 
     // submitting to database
-    saveNewInstitute(name, code, email, phone, location, website);
+    saveNewInstitute(
+      props.universityCode,
+      name,
+      code,
+      email,
+      phone,
+      location,
+      website
+    );
   }
 
   return (
     <div className="container  flex justify-center h-screen items-center">
+      <div>
+        <button className="btn btn-blue" onClick={props.btnFunc}>
+          Close
+        </button>
+      </div>
       <div className="content flex-col mt-20">
         <div className="title flex justify-center mb-10 ">
           <label className="title text-4xl">New Institue Details</label>

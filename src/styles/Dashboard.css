@@ -268,7 +268,7 @@ button, a {
   flex: 2;
   background-color: var(--universities-section);
   border-radius: 32px;
-  padding: 32px 32px 0 32px;
+  padding: 32px 32px 32px 32px;
   min-height:fit-content;
   display: flex;
   flex-direction: column;

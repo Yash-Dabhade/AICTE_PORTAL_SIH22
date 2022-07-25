@@ -9,15 +9,13 @@ import Institute from "./Institute";
 
 function Card(props) {
   const renderCardDetails = () => {
-    let allEle = document.querySelectorAll(".university-box-wrapper");
-    allEle.forEach((ele) => {
-      ele.remove();
-    });
-    let root = ReactDOM.createRoot(document.querySelector(".university-boxes"));
+    document.querySelector(".universities-section-header").remove();
+    document.querySelector(".universities-subSection-header").remove();
+    let root = ReactDOM.createRoot(
+      document.querySelector(".universities-section")
+    );
     root.render(
       <Institute
-        sectionHeader={props.sectionHeader}
-        sectionSubHeader={props.sectionSubHeader}
         root={root}
         title={props.title}
         code={props.code}
@@ -25,8 +23,6 @@ function Card(props) {
         institutes={props.institutes}
       />
     );
-    props.sectionHeader("Institute");
-    props.sectionSubHeader("Institute");
   };
 
   return (
