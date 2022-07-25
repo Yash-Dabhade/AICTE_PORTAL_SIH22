@@ -4,6 +4,20 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function InstituteForm() {
+  function validatePhoneNumber(input_str) {
+    var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+    if (re.test(input_str)) return true;
+    toast.error("Please enter valid phone number");
+    return false;
+  }
+
+  function ValidateEmail(email) {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    toast.error("You have entered an invalid email address!");
+    return false;
+  }
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -13,11 +27,34 @@ function InstituteForm() {
     let phone = document.getElementById("phone").value;
     let location = document.getElementById("location").value;
     let website = document.getElementById("website").value;
-
+    let res1 = false;
+    let res2 = false;
+    let res3 = false;
     // check if the values are empty
+    //check all details r there or not
+    if (
+      name == "" ||
+      location == "" ||
+      code == "" ||
+      email == "" ||
+      phone == "" ||
+      website == ""
+    ) {
+      toast.error("All details must be filled");
+    } else {
+      res1 = true;
+      if (ValidateEmail(email)) {
+        res2 = true;
+      }
+      if (validatePhoneNumber(phone)) {
+        res3 = true;
+      }
+    }
 
     // submitting to database
-    saveNewInstitute(name, code, email, phone, location, website);
+    if (res1 && res2 && res3) {
+      saveNewUniversity(initialName, name, code, email, phone, website);
+    }
   }
 
   return (
@@ -49,7 +86,7 @@ function InstituteForm() {
             />
           </div>
           <div className="cont2 flex-col m-3  ">
-            <label className="label3 flex ml-3">Code : </label>
+            <label className="label3 flex ml-3">Institue Code : </label>
             <input
               type="text"
               id="code"
@@ -73,7 +110,7 @@ function InstituteForm() {
             <input
               type="text"
               id="location"
-              className="website border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
+              className="location border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
               placeholder="Region ,City ,State  "
             />
@@ -85,7 +122,7 @@ function InstituteForm() {
               id="website"
               className="Autonomous border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
-              placeholder="www.abc.org.in"
+              placeholder="YES/NO"
             />
           </div>
           <div className="cont5 justify-center flex m-3 ">

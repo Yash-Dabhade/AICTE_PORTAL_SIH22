@@ -5,20 +5,55 @@ import "react-toastify/dist/ReactToastify.css";
 
 export class UniversityForm extends Component {
   render() {
+    function validatePhoneNumber(input_str) {
+      var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+      if (re.test(input_str)) return true;
+      toast.error("Please enter valid phone number");
+      return false;
+    }
+
+    function ValidateEmail(email) {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return true;
+      }
+      toast.error("You have entered an invalid email address!");
+      return false;
+    }
     function handleSubmit(e) {
       e.preventDefault();
-
+      console.log("asass  ");
       let initialName = document.getElementById("initialName").value;
       let name = document.getElementById("name").value;
       let code = document.getElementById("code").value;
       let email = document.getElementById("email").value;
       let phone = document.getElementById("phone").value;
       let website = document.getElementById("website").value;
-
-      // check if the values are empty
-
+      let res1 = false;
+      let res2 = false;
+      let res3 = false;
+      //check all details r there or not
+      if (
+        initialName == "" ||
+        name == "" ||
+        code == "" ||
+        email == "" ||
+        phone == "" ||
+        website == ""
+      ) {
+        toast.error("All details must be filled");
+      } else {
+        res1 = true;
+        if (ValidateEmail(email)) {
+          res2 = true;
+        }
+        if (validatePhoneNumber(phone)) {
+          res3 = true;
+        }
+      }
       // submitting to database
-      saveNewUniversity(initialName, name, code, email, phone, website);
+      if (res1 && res2 && res3) {
+        saveNewUniversity(initialName, name, code, email, phone, website);
+      }
     }
 
     return (
@@ -69,7 +104,7 @@ export class UniversityForm extends Component {
               />
             </div>
             <div className="cont4 flex-col align-middle m-3  ">
-              <label className="label5 flex ml-3">Phone : </label>
+              <label className="label5 flex ml-3 ">Phone : </label>
               <input
                 type="text"
                 id="phone"
@@ -91,7 +126,7 @@ export class UniversityForm extends Component {
             <div className="cont5 justify-center flex m-3 ">
               <button
                 onClick={handleSubmit}
-                className="submit text-white border-2 border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
+                className="submit text-white border-2  border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
               >
                 Submit
               </button>
