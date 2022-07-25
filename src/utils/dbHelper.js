@@ -48,7 +48,7 @@ function saveNewInstitute(
 
 function saveNewInstituteLevelCourse(instituteCode, title, code, level) {
   const db = database;
-  update(dbref(db, `/${instituteCode}/courses/${code}`), {
+  update(dbref(db, `/institutesDetail/${instituteCode}/courses/${code}`), {
     title: title,
     code: code,
     level: level,
@@ -72,7 +72,10 @@ function saveNewDepartment(
 ) {
   const db = database;
   update(
-    dbref(db, `/${instituteCode}/courses/${courseCode}/departments/${code}`),
+    dbref(
+      db,
+      `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${code}`
+    ),
     {
       initialName: initialName,
       title: title,
@@ -103,7 +106,7 @@ function saveNewCurriculum(
   update(
     dbref(
       db,
-      `/${instituteCode}
+      `/institutesDetail/${instituteCode}
         /courses/${courseCode}
         /departments/${departmentCode}
         /semesters/${semester}
@@ -215,9 +218,8 @@ function getAllInstitutes() {
 function getFullInstituteDetails(instituteCode) {
   const db = dbref(database);
   let universityCode = window.sessionStorage.getItem("UniversityCode");
-  get(child(db, `/universities/${universityCode}/institutes/${instituteCode}`))
+  get(child(db, `/institutesDetail/${instituteCode}`))
     .then((snapshot) => {
-      let allData = new Array();
       if (snapshot.exists()) {
         let data = snapshot.val();
         // Object.keys(data).forEach((key) => {
@@ -240,4 +242,5 @@ export {
   saveNewDepartment,
   saveNewCurriculum,
   getAllInstitutes,
+  getFullInstituteDetails,
 };
