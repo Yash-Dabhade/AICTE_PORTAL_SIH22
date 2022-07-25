@@ -14,8 +14,6 @@ function InstituteForm(props) {
     let location = document.getElementById("location").value;
     let website = document.getElementById("website").value;
 
-    // check if the values are empty
-
     // submitting to database
     saveNewInstitute(
       props.universityCode,
@@ -62,7 +60,7 @@ function InstituteForm(props) {
             />
           </div>
           <div className="cont2 flex-col m-3  ">
-            <label className="label3 flex ml-3">Code : </label>
+            <label className="label3 flex ml-3">Institue Code : </label>
             <input
               type="text"
               id="code"
@@ -86,19 +84,19 @@ function InstituteForm(props) {
             <input
               type="text"
               id="location"
-              className="website border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
+              className="location border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
               placeholder="Region ,City ,State  "
             />
           </div>
           <div className="cont flex-col m-3  ">
-            <label className="label6 flex ml-3">Autonomous : </label>
+            <label className="label6 flex ml-3">Website : </label>
             <input
               type="text"
               id="website"
               className="Autonomous border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
-              placeholder="www.abc.org.in"
+              placeholder="www.website.com"
             />
           </div>
           <div className="cont5 justify-center flex m-3 ">

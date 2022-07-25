@@ -7,7 +7,6 @@ export class UniversityForm extends Component {
   render() {
     function handleSubmit(e) {
       e.preventDefault();
-
       let initialName = document.getElementById("initialName").value;
       let name = document.getElementById("name").value;
       let code = document.getElementById("code").value;
@@ -15,9 +14,6 @@ export class UniversityForm extends Component {
       let phone = document.getElementById("phone").value;
       let website = document.getElementById("website").value;
 
-      // check if the values are empty
-
-      // submitting to database
       saveNewUniversity(initialName, name, code, email, phone, website);
     }
 
@@ -74,7 +70,7 @@ export class UniversityForm extends Component {
               />
             </div>
             <div className="cont4 flex-col align-middle m-3  ">
-              <label className="label5 flex ml-3">Phone : </label>
+              <label className="label5 flex ml-3 ">Phone : </label>
               <input
                 type="text"
                 id="phone"
@@ -83,12 +79,12 @@ export class UniversityForm extends Component {
                 placeholder="+91 1234567890"
               />
             </div>
-            <div className="cont flex-col m-3  ">
+            <div className="cont flex-col m-3 ">
               <label className="label6 flex ml-3">Website : </label>
               <input
                 type="text"
                 id="website"
-                className="website border-2  border-[#9a9a9a] rounded-md w-96 h-8  pl-3
+                className="website border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
               "
                 placeholder="wwww.website.com"
               />
@@ -96,7 +92,7 @@ export class UniversityForm extends Component {
             <div className="cont5 justify-center flex m-3 ">
               <button
                 onClick={handleSubmit}
-                className="submit text-white border-2 border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
+                className="submit text-white border-2  border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
               >
                 Submit
               </button>
