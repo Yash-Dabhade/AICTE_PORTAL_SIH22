@@ -3,9 +3,12 @@ import Card from "./Card";
 import MSBTE_logo from "../res/MSBTE_logo.png";
 import { ref as dbref, child, get } from "firebase/database";
 import { database } from "../firebase/init-firebase";
+import SubHead from "./SubHead";
 
-function University() {
+export default function University() {
   const [data, setData] = useState([]);
+  const [header, setHeader] = useState("University");
+  const [subheader, setSubheader] = useState("University");
   function getAllUniversities() {
     const db = dbref(database);
     get(child(db, `/universities/`))
@@ -28,6 +31,13 @@ function University() {
       getAllUniversities();
     };
   }, []);
+
+  const sectionHeader = (e) => {
+    setHeader(e);
+  };
+  const sectionSubHeader = (e) => {
+    setSubheader(e);
+  };
 
   const month = [
     "January",
@@ -59,20 +69,23 @@ function University() {
             stroke="currentColor"
           />
         </svg>
-        <p>University</p>
+        <p className="uHeader">{header}</p>
         <p className="time">
-          {month[new Date().getMonth()]} , {new Date().getDay()}
+          {month[new Date().getMonth()]} , {new Date().getDate()}
         </p>
       </div>
+      <div className="flex justify-center mw-full">
+        <SubHead heading={subheader} />
+      </div>
       <div className="university-boxes jsGridView">
-        {/* Add cards here */}
-
         {data.map((ele, index) => {
           return (
             <Card
+              sectionHeader={sectionHeader}
+              sectionSubHeader={sectionSubHeader}
               logo={MSBTE_logo}
               title={ele.initialName}
-              desc={ele.fullName}
+              fullName={ele.fullName}
               phone={ele.phone}
               email={ele.email}
               code={ele.code}
@@ -86,5 +99,3 @@ function University() {
     </div>
   );
 }
-
-export default University;

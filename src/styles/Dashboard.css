@@ -33,7 +33,7 @@
 
 body {
   font-family: "DM Sans", sans-serif;
-  /* overflow: hidden; */
+  overflow: hidden;
   display: flex;
   justify-content: center;
   background-color: var(--app-container);
@@ -299,9 +299,19 @@ button, a {
 .university-boxes.jsGridView {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: scroll;
+  overflow-x:hidden;
+  height: 70vh;
 }
+.university-boxes::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
 .university-boxes.jsGridView .university-box-wrapper {
   padding: 10px;
+
 }
 
 .university-box {
