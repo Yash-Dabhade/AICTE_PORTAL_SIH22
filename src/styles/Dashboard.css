@@ -232,7 +232,7 @@ button, a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 10%;
+  width: 14%;
 }
 
 /* .app-sidebar:hover{
@@ -251,7 +251,7 @@ button, a {
   width: 100%;
   height: 50px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
 

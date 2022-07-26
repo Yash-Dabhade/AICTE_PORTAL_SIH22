@@ -2,6 +2,14 @@ import React, { useState } from "react";
 import "../styles/Dashboard.css";
 import University from "./University";
 import Institutes from "./Institute";
+import {
+  BsFillBarChartLineFill,
+  BsFillHouseFill,
+  BsBookFill,
+  BsFillDiagram3Fill,
+  BsGearFill,
+  BsFillFileEarmarkArrowDownFill,
+} from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext";
 
 function Dashboard() {
@@ -168,23 +176,26 @@ function Dashboard() {
               setSettingOpen(false);
             }}
           >
-            Dashboard
+            <BsBookFill size={22} className="mx-2" /> Curriculum
           </a>
           <a
             href="#curriculum"
+            className="app-sidebar-link"
             onClick={(e) => {
               makeActive(e);
               setUniversityOpen(false);
-              setInstituteOpen(true);
+              // setInstituteOpen(true);
               setSettingOpen(false);
             }}
-            className="app-sidebar-link"
           >
-            Curriculum
+            <div className="flex justify-start items-center">
+              <BsFillBarChartLineFill size={22} className="mx-2" />
+              Dashboard
+            </div>
           </a>
           <a
             href="#curriculumDev"
-            className="app-sidebar-link"
+            className="app-sidebar-link flex "
             onClick={(e) => {
               makeActive(e);
               setUniversityOpen(false);
@@ -192,7 +203,10 @@ function Dashboard() {
               setSettingOpen(true);
             }}
           >
-            Curriculum <br /> Development
+            <div className="flex justify-start items-center">
+              <BsFillDiagram3Fill size={22} className="mx-2" />
+              Trending
+            </div>
           </a>
           <a
             href="#pastReports"
@@ -201,7 +215,10 @@ function Dashboard() {
               makeActive(e);
             }}
           >
-            Past Reports
+            <div className="flex justify-start items-center">
+              <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />
+              Past Reports
+            </div>
           </a>
           <a
             href="#settings"
@@ -210,7 +227,10 @@ function Dashboard() {
               makeActive(e);
             }}
           >
-            Settings
+            <div className="flex justify-start items-center">
+              <BsGearFill size={22} className="mx-2" />
+              Settings
+            </div>
           </a>
         </div>
         {universityOpen ? <University /> : null}

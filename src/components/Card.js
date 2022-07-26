@@ -5,6 +5,7 @@ import {
   HiOutlineMail,
   HiOutlinePhone,
 } from "react-icons/hi";
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import Institute from "./Institute";
 
 function Card(props) {
@@ -39,7 +40,7 @@ function Card(props) {
             id="email"
             className="btn px-16 pt-3 mt-2 h-12 w-60 rounded-md bg-slate-300  hover:bg-slate-200 font-light flex "
           >
-            <HiOutlineMail className="mx-2" size="26px" />
+            <HiOutlineMail className="mx-2" size="27px" />
             Email
           </a>
           <a
@@ -47,6 +48,7 @@ function Card(props) {
             id="details"
             className="btn px-16 pt-3  mt-4 h-12 w-60 rounded-md  bg-slate-300  hover:bg-slate-200 font-light flex"
           >
+            <BsFillJournalBookmarkFill className="mx-2" size="24px" />
             Details
           </a>
         </div>
