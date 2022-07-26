@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Dashboard.css";
 import University from "./University";
-import Institutes from "./Institute";
 import {
   BsFillBarChartLineFill,
   BsFillHouseFill,
@@ -186,7 +185,7 @@ function Dashboard() {
             onClick={(e) => {
               makeActive(e);
               setUniversityOpen(false);
-              setInstituteOpen(true);
+              setInstituteOpen(false);
               setSettingOpen(false);
             }}
           >
@@ -236,7 +235,6 @@ function Dashboard() {
           </a>
         </div>
         {universityOpen ? <University /> : null}
-        {instituteOpen ? <Institutes /> : null}
       </div>
     </div>
   );
