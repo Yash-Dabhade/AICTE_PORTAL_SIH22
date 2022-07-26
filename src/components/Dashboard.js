@@ -176,7 +176,9 @@ function Dashboard() {
               setSettingOpen(false);
             }}
           >
-            <BsBookFill size={22} className="mx-2" /> Curriculum
+            <div className="flex justify-start items-center">
+              <BsBookFill size={22} className="mx-2" /> Curriculum
+            </div>
           </a>
           <a
             href="#curriculum"
@@ -184,7 +186,7 @@ function Dashboard() {
             onClick={(e) => {
               makeActive(e);
               setUniversityOpen(false);
-              // setInstituteOpen(true);
+              setInstituteOpen(true);
               setSettingOpen(false);
             }}
           >
