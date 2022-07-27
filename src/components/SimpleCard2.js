@@ -4,16 +4,22 @@ import { BsPersonPlus } from "react-icons/bs";
 function SimpleCard2(props) {
   return (
     <div className="university-box-wrapper darkMode">
-      <div className="content border-2 border-compatible rounded-lg  py-3 w-full">
-        <div className="title p-3 m-4 border-b-2 border-compatible">
+      <div className="border-2 border-compatible rounded-lg py-3 w-card">
+        <div className="font-bold text-xl p-3 m-4 border-b-2 border-compatible">
           {props.data.title}
         </div>
-        <div className="subtitle p-3 m-4">{props.data.level}</div>
-        <div className="content2 flex m-4 justify-between">
-          <div className="subjectcode flex-none">{props.data.code}</div>
-          <div className="view flex rounded-3xl px-12 py-1 btn-compatible ">
+        <div className="flex justify-between itmes-center ">
+          <div className="p-3 text-lg m-4">
+            {props.data.level || props.data.desc}
+          </div>
+          <div className="p-3 text-lg min-w-fit m-4">
+            Code : {props.data.code}
+          </div>
+        </div>
+        <div className="m-4">
+          <div className="rounded-3xl px-6 py-2 btn-compatible text-center  font-bold">
             <button
-              className="btn"
+              className="btn cursor-pointer"
               onClick={() => {
                 props.renderDetails(props.data.code);
               }}
