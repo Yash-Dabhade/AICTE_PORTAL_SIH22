@@ -7,7 +7,7 @@ import { IoCall, IoEarthSharp } from "react-icons/io5";
 export default function ContactCard(props) {
   return (
     <>
-      <div className="container w-96 m-3 p-4 border-2 border-black rounded-2xl">
+      <div className="container w-96 m-3 p-4 border-2 border-compatible rounded-2xl darkMode">
         <p className="font-bold mt-2 w-80 cursor-pointer flex">
           {" "}
           <MdEmail className="mx-2" size="26px" />
@@ -23,7 +23,7 @@ export default function ContactCard(props) {
         </p>
         <p className="font-bold mt-2 w-80 cursor-pointer flex">
           <IoEarthSharp className="mx-2" size="26px " />
-          {props.wesite}
+          {props.website}
         </p>
       </div>
     </>

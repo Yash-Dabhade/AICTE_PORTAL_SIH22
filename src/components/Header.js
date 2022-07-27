@@ -1,6 +1,5 @@
 import React from "react";
 import { BsFillHouseFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
 
 function Header(props) {
   const month = [
@@ -19,10 +18,10 @@ function Header(props) {
   ];
   return (
     <div className="universities-section-header">
-      <Link to="/">
+      <a href="/">
         <BsFillHouseFill size={30} className="m-4" />
-      </Link>
-      <p className="uHeader">{props.title}</p>
+      </a>
+      <p className="uHeader">Curriculum</p>
       <p className="time">
         {month[new Date().getMonth()]} , {new Date().getDate()}
       </p>

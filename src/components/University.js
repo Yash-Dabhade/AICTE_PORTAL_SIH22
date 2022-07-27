@@ -7,9 +7,12 @@ import SubHead from "./SubHead";
 import Header from "./Header";
 import Modal from "react-modal";
 import UniversityForm from "../pages/forms/UniversityForm";
+import SimpleCard2 from "./SimpleCard2";
+import ContactCard from "./ContactCard";
 
 export default function University() {
   const [data, setData] = useState([]);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function getAllUniversities() {
     const db = dbref(database);
@@ -36,12 +39,8 @@ export default function University() {
 
   function createUniversity() {
     openModal();
-    console.log("University ");
     Modal.setAppElement("#formRoot");
   }
-
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -52,7 +51,7 @@ export default function University() {
   }
   return (
     <div className="universities-section" id="formRoot">
-      <Header title={"University"} />
+      <Header />
       <SubHead title={"University"} btnFunc={createUniversity} />
       <div className="university-boxes jsGridView">
         {data.map((ele, index) => {
@@ -64,6 +63,7 @@ export default function University() {
               phone={ele.phone}
               email={ele.email}
               code={ele.code}
+              location={ele.location}
               institutes={ele.institutes}
               website={ele.website}
               key={index}
@@ -71,12 +71,7 @@ export default function University() {
           );
         })}
       </div>
-      <Modal
-        isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        // contentLabel={props.label}
-      >
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <UniversityForm btnFunc={closeModal} />
       </Modal>
     </div>

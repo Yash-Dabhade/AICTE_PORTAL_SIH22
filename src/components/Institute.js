@@ -8,14 +8,12 @@ import SubHead from "./SubHead";
 import InstituteForm from "../pages/forms/InstituteForm";
 
 function Institute(props) {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
   function createInstitute() {
     openModal();
-    console.log("University ");
     Modal.setAppElement("#formRoot");
   }
-
-  let subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -27,7 +25,7 @@ function Institute(props) {
 
   return (
     <>
-      <Header title={"Institute"} />
+      <Header />
       <SubHead title={"Institute"} btnFunc={createInstitute} />
       <div className="flex justify-between ">
         <Description
@@ -35,19 +33,18 @@ function Institute(props) {
           code={props.code}
           fullName={props.fullName}
         />
-        {/* <SimpleCard2 /> */}
-        <ContactCard />
+        <ContactCard
+          email={props.email}
+          phone={props.phone}
+          location={props.location}
+          website={props.website}
+        />
       </div>
       <div className="universities-section-header">
         <p>Institutes</p>
       </div>
       <InstituteList institutes={props.institutes} root={props.root} />
-      <Modal
-        isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        // contentLabel={props.label}
-      >
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <InstituteForm btnFunc={closeModal} universityCode={props.code} />
       </Modal>
     </>

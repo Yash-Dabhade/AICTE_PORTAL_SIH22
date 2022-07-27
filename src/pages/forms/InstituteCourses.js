@@ -2,14 +2,19 @@ import React from "react";
 import { saveNewInstituteLevelCourse } from "../../utils/dbHelper";
 
 export default function InstituteCourses(props) {
+  const [level, setLevel] = React.useState("Select Level");
+  const handleSelectChange = (e) => {
+    setLevel(e.value);
+  };
+
   function handleSubmit() {
-    let title = document.getElementById("newTitle").value;
+    let title = document.getElementById("courseTitle").value;
     let code = document.getElementById("courseCode").value;
-    let level = document.getElementById("level").value;
-    let semester = document.getElementById("semester").value;
+    let level = document.getElementById("courseLevel").value;
     if (title.length === 0 || code.length === 0 || level.length === 0) {
       alert("cannot Set Empty");
     } else {
+      console.log(props.instituteCode, title, code, level);
       saveNewInstituteLevelCourse(props.instituteCode, title, code, level);
     }
   }
@@ -24,7 +29,7 @@ export default function InstituteCourses(props) {
         role="dialog"
       >
         <div className="relative p-4 w-full max-w-md h-full md:h-auto">
-          <div className="relative bg-white rounded-lg shadow dark:bg-white-200">
+          <div className="relative bg-white rounded-lg shadow ">
             <button
               type="button"
               className=" shadow-2xl absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
@@ -62,7 +67,7 @@ export default function InstituteCourses(props) {
                   <input
                     type="addCourse"
                     name="addCourse"
-                    id="title"
+                    id="courseTitle"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                     placeholder="Electronics, MIC"
                     required=""
@@ -78,25 +83,28 @@ export default function InstituteCourses(props) {
                   </label>
                   <input
                     name="courceCode"
-                    id="code"
+                    id="courseCode"
                     placeholder="22617, 22619"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                   />
                 </div>
 
-                <div className="mt-6">
+                <div className="mt-6 ">
                   <label className="">Select Level</label>
                   <select
                     className="ml-36"
                     name="level"
-                    id="level"
-                    value="Select Level"
+                    id="courseLevel"
+                    value={level}
+                    onChange={(e) => {
+                      handleSelectChange(e);
+                    }}
                   >
-                    <option value="volvo">Diploma</option>
-                    <option value="saab">Degree</option>
-                    <option value="mercedes">Master</option>
-                    <option value="audi">Phd</option>
-                    <option value="audi">Other</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Degree">Degree</option>
+                    <option value="Master">Master</option>
+                    <option value="Phd">Phd</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
 

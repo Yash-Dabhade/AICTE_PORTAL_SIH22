@@ -1,4 +1,4 @@
-import { ref as dbref, update, child, get } from "firebase/database";
+import { ref as dbref, set, update, child, get } from "firebase/database";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, database } from "../firebase/init-firebase";
 
@@ -73,7 +73,7 @@ function saveNewDepartment(
   initialName
 ) {
   const db = database;
-  update(
+  set(
     dbref(
       db,
       `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${code}`

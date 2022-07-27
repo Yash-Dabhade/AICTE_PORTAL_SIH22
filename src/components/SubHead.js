@@ -24,10 +24,10 @@ export default function SubHead(props) {
   return (
     <div className="universities-subSection-header flex justify-center mw-full">
       <div className="white w-full">
-        <div className="right bg-white px-2 w-full h-11  border-b border-neutral-500 flex justify-between">
-          <p className="font-bold mt-2 w-80 ">{props.title}</p>
+        <div className="right px-2 w-full h-11 border-b border-neutral-500 flex justify-between">
+          <p className="font-bold mt-2 w-80 darkMode">{props.title}</p>
           <button
-            className="btn px-2 mt-1 mb-1 ml-28 rounded-md h-8 w-max bg-gray-400 font-bold text-white hover:bg-gray-300  "
+            className="btn btn-compatible px-2 mt-1 mb-1 rounded-md h-8 w-max font-bold"
             onClick={props.btnFunc}
           >
             {`Create ${props.title}`}

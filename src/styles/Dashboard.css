@@ -62,7 +62,7 @@ button, a {
 .app-content {
   display: flex;
   height: 100%;
-  padding: 16px 24px 24px 0;
+  padding: 8px 8px 8px 8px;
 }
 .app-header {
   display: flex;
@@ -82,29 +82,7 @@ button, a {
 .app-header-right button {
   margin-left: 10px;
 }
-.app-icon {
-  width: 26px;
-  height: 2px;
-  border-radius: 4px;
-  background-color: var(--main-color);
-  position: relative;
-}
-.app-icon:before, .app-icon:after {
-  content: "";
-  position: absolute;
-  width: 12px;
-  height: 2px;
-  border-radius: 4px;
-  background-color: var(--main-color);
-  left: 50%;
-  transform: translatex(-50%);
-}
-.app-icon:before {
-  top: -6px;
-}
-.app-icon:after {
-  bottom: -6px;
-}
+
 .app-name {
   color: var(--main-color);
   margin: 0;
@@ -151,35 +129,17 @@ button, a {
   background-color: var(--search-area-bg);
   color: var(--main-color);
 }
-.search-input:placeholder {
+.search-input::placeholder {
   color: var(--main-color);
-  opacity: 0.6;
 }
 
-.add-btn {
-  color: #fff;
-  background-color: var(--button-bg);
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.notification-btn {
+.darkMode{
   color: var(--main-color);
-  padding: 0;
-  border: 0;
-  background-color: transparent;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  fill:var(--main-color) !important;
 }
-
+.border-compatible{
+  border-color: var(--main-color);
+}
 .profile{
   position: relative;
 }
@@ -187,9 +147,11 @@ button, a {
 .profile-btn {
   padding: 0;
   border: 0;
-  background-color: transparent;
+  color: var(--main-color);
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
   padding-left: 12px;
   border-left: 2px solid #ddd;
 }
@@ -204,15 +166,6 @@ button, a {
 .profile-btn:hover ~.logout,
 .profile-btn:focus-within ~.logout{
   display: block;
-}
-
-.profile-btn img {
-  width: 32px;
-  height: 32px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 50%;
-  margin-right: 4px;
 }
 
 .profile-btn span {
@@ -232,12 +185,15 @@ button, a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 14%;
+  width: 12%;
 }
 
-/* .app-sidebar:hover{
-  width: 10%;
-} */
+.hideMenuNav {
+  display: none;
+}
+.show{
+  display: block !important;
+}
 
 .app-sidebar-link {
   color: var(--main-color);
@@ -268,7 +224,7 @@ button, a {
   flex: 2;
   background-color: var(--universities-section);
   border-radius: 32px;
-  padding: 32px 32px 32px 32px;
+  padding: 16px 32px 32px 32px;
   min-height:fit-content;
   display: flex;
   flex-direction: column;
@@ -278,7 +234,7 @@ button, a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   color: var(--main-color);
 }
 .universities-section-header p {
@@ -309,9 +265,8 @@ button, a {
   background: transparent;
 }
 
-.university-boxes.jsGridView .university-box-wrapper {
+.university-box-wrapper {
   padding: 10px;
-
 }
 
 .university-box {
@@ -320,15 +275,49 @@ button, a {
   padding: 16px;
 }
 
-@media screen and (max-width: 980px) {
-  .university-boxes.jsGridView .university-box-wrapper {
-    width: 50%;
-  }
+.btn-compatible{
+  color: var(--app-container);
+  background-color: var(--main-color);
+  outline: 1px solid var(--universities-section);
+}
 
+.btn-compatible:hover{
+  color:var(--main-color);
+  background-color: var(--app-container);
+}
+
+.card{
+  color:var(--main-color);
+  background-color: var(--app-container);
+}
+
+.card a{
+  background-color: var(--universities-section);
+}
+
+.ReactModal__Content{
+  border:none !important;
+  padding:0 !important;
+  background-color: var(--universities-section) !important;
+  color: var(--main-color) !important;
+  inset-block: 40px !important;
+  inset-inline: 400px !important;
+}
+
+.ReactModal__Content::-webkit-scrollbar{
+  width: 0;
+  background: transparent;
+}
+
+@media (max-width:865px) {
+  .app-sidebar span{
+    display: none;
+  }
+  
 }
 
 @media screen and (max-width: 720px) {
-  .app-name, .profile-btn span {
+  .app-name, .profile-btn span{
     display: none;
   }
 
@@ -355,16 +344,16 @@ button, a {
     overflow: auto;
   }
 
+  .btn-compatible{
+    min-width: max-content;
+  }
+
   .university-boxes {
     overflow-y: visible;
   }
 
-  .app-sidebar, .app-icon {
-    display: none;
-  }
-
   .app-content {
-    padding: 16px 12px 24px 12px;
+    padding: 8px 12px 24px 12px;
   }
 
   .app-header {
@@ -373,10 +362,6 @@ button, a {
 
   .search-input {
     max-width: 120px;
-  }
-
-  .university-boxes.jsGridView .university-box-wrapper {
-    width: 100%;
   }
 
   .universities-section {
