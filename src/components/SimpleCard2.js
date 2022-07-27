@@ -19,7 +19,7 @@ function SimpleCard2(props) {
         <div className="m-4">
           <div className="rounded-3xl px-6 py-2 btn-compatible text-center  font-bold">
             <button
-              className="btn cursor-pointer"
+              className="btn cursor-pointer w-full"
               onClick={() => {
                 props.renderDetails(props.data.code);
               }}

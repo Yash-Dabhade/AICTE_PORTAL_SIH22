@@ -1,4 +1,4 @@
-import { ref as dbref, set, update, child, get } from "firebase/database";
+import { ref as dbref, set, update, child, get, push } from "firebase/database";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, database } from "../firebase/init-firebase";
 
@@ -101,33 +101,41 @@ function saveNewCurriculum(
   title,
   code,
   semester,
-  tags,
+  tag,
   fileUrl
 ) {
   const db = database;
-  update(
-    dbref(
-      db,
-      `/institutesDetail/${instituteCode}
-        /courses/${courseCode}
-        /departments/${departmentCode}
-        /semesters/${semester}
-        /${code}`
-    ),
-    {
-      title: title,
-      code: code,
-      semester: semester,
-      tags: tags,
-      fileUrl: fileUrl,
-    }
-  )
+  //getting new reference
+  const newRef = push(dbref(db, "/curriculumDetails/"));
+
+  set(newRef, {
+    title: title,
+    code: code,
+    semester: semester,
+    tag: tag,
+    fileUrl: fileUrl,
+    instituteCode: instituteCode,
+  })
     .then((snapshot) => {
-      window.location.href = "/";
+      set(
+        dbref(
+          db,
+          `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${departmentCode}/curriculum/`
+        ),
+        {
+          curriculumId: newRef,
+        }
+      )
+        .then((snapshot) => {
+          window.location.href = "/";
+        })
+        .catch((error) => {
+          console.log(error);
+          return false;
+        });
     })
     .catch((error) => {
       console.log(error);
-      return false;
     });
 }
 
@@ -237,6 +245,63 @@ function getFullInstituteDetails(instituteCode) {
     });
 }
 
+function getAllCurriculums(reference) {
+  const db = dbref(database);
+
+  get(child(db, "/curriculumDetails/" + reference + "/"))
+    .then((snapshot) => {
+      let allData = new Array();
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+        //setState
+        console.log(allData);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+// Tags
+function saveNewTag(name) {
+  const db = database;
+
+  update(dbref(db, `/tags/${name}/`), {
+    name: name,
+    value: name,
+  })
+    .then((snapshot) => {
+      alert("Tag added");
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+}
+
+function getAllTags() {
+  const db = dbref(database);
+  get(child(db, `/tags/`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        let allData = new Array();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+        // setState
+        console.log(allData);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 export {
   saveNewUniversity,
   getAllUniversities,
@@ -246,4 +311,6 @@ export {
   saveNewCurriculum,
   getAllInstitutes,
   getFullInstituteDetails,
+  saveNewTag,
+  getAllTags,
 };

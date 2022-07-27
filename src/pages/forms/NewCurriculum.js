@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { saveNewCurriculum } from "../../utils/dbHelper";
 import { storage, database } from "../../firebase/init-firebase";
+
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function NewCurriculum(props) {
   const [file, setFile] = useState(null);
+
+  const [tagValue, setTagValue] = useState("");
+  const handleTagChange = (e) => {
+    setTagValue(e);
+  };
+  const [semValue, setSemValue] = useState("");
+  const handleSemChange = (e) => {
+    setSemValue(e);
+  };
+  const [levelValue, setLevelValue] = useState("");
+  const handleLevelChange = (e) => {
+    setLevelValue(e);
+  };
 
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
@@ -159,31 +173,59 @@ export default function NewCurriculum(props) {
                     className="ml-36"
                     name="level"
                     id="level"
-                    value="Select Level"
+                    value={semValue}
+                    onChange={(e) => {
+                      handleSemChange(e.target.value);
+                    }}
                   >
-                    <option value="diploma">Diploma</option>
-                    <option value="degree">Degree</option>
-                    <option value="master">Master</option>
-                    <option value="phd">Phd</option>
-                    <option value="other">Other</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
                   </select>
                 </div>
 
-                {/* <div className="mt-6">
-                  <label className="">Tags</label>
+                <div className="mt-6">
+                  <label className="">Tag</label>
+                  <select
+                    className="ml-44"
+                    name="tag"
+                    id="tag"
+                    value={tagValue}
+                    onChange={(e) => {
+                      handleTagChange(e.target.value);
+                    }}
+                  >
+                    {props.tags.map((ele, index) => {
+                      return (
+                        <option value={ele.value} key={index}>
+                          {ele.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
+                <div className="mt-6">
+                  <label className="">Level</label>
                   <select
                     className="ml-44"
                     name="level"
                     id="level"
-                    value="Select Level"
+                    value={levelValue}
+                    onChange={(e) => {
+                      handleLevelChange(e.target.value);
+                    }}
                   >
-                    <option value="diploma">Web</option>
-                    <option value="degree"></option>
-                    <option value="master">Master</option>
-                    <option value="phd">Phd</option>
-                    <option value="other">Other</option>
+                    <option value="basic">Basic</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Difficult">Difficult</option>
                   </select>
-                </div> */}
+                </div>
 
                 <input
                   type="file"
