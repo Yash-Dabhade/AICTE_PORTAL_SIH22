@@ -18,10 +18,10 @@ function Header(props) {
   ];
   return (
     <div className="universities-section-header">
-      <a href="/">
+      <a href="/" className="cursor">
         <BsFillHouseFill size={30} className="m-4" />
       </a>
-      <p className="uHeader">Curriculum</p>
+      <p className="uHeader">{props.title}</p>
       <p className="time">
         {month[new Date().getMonth()]} , {new Date().getDate()}
       </p>

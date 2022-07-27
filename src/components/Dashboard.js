@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Dashboard.css";
 import University from "./University";
-import Institutes from "./Institute";
 import {
   BsFillBarChartLineFill,
   BsFillHouseFill,
