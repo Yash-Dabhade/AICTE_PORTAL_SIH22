@@ -107,11 +107,11 @@ function saveNewCurriculum(
 ) {
   console.log(instituteCode, courseCode, departmentCode);
   const db = database;
-  const curriculumRef = dbref(db, "curriculumDetails");
-  //getting new reference
-  const newRef = push(curriculumRef);
 
-  update(newRef, {
+  //getting new reference
+  const newRef = push(dbref(db, "/curriculumDetails/"));
+
+  update(dbref(db, `/curriculumDetials/${newRef.key}/${code}`), {
     title: title,
     code: code,
     level: level,
@@ -121,19 +121,19 @@ function saveNewCurriculum(
     fileUrl: fileUrl,
   })
     .then((snapshot) => {
-      console.log("here");
-      set(
+      console.log("Uploaded");
+      update(
         dbref(
           db,
           `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${departmentCode}/curriculum/`
         ),
         {
-          curriculumId: newRef,
+          curriculumId: newRef.key,
         }
       )
         .then((snapshot) => {
-          console.log("Success");
-          // window.location.href = "/";
+          alert("Data Submitted successfully");
+          window.location.href = "/";
         })
         .catch((error) => {
           console.log(error);
@@ -144,52 +144,6 @@ function saveNewCurriculum(
       console.log(error);
     });
 }
-
-const handleUpload = async (e) => {
-  e.preventDefault();
-  // document.getElementById("UploadButton").innerHTML = "Uploading...";
-  // document.getElementById("UploadButton").disabled = true;
-  let code = 3000; //get curriculum code
-  let typeRef = "curriculum_files";
-  const pathRef = "curriculums";
-  const file = "test";
-  let storageRef = ref(storage, `${pathRef}/${typeRef}/${code}`);
-  let uploadTask = uploadBytesResumable(storageRef, file);
-  console.log("Uploaded");
-
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log("Upload is " + progress + "% done");
-      progress.toPrecision(2);
-      // document.getElementById(
-      //   "UploadButton"
-      // ).innerHTML = `Uploading... ${parseInt(progress)}%`;
-      switch (snapshot.state) {
-        case "paused":
-          console.log("Upload is paused");
-          break;
-        case "running":
-          console.log("Upload is running");
-          break;
-        default:
-          break;
-      }
-    },
-    (error) => {
-      // Handle unsuccessful uploads
-      alert("Some error occured ! Please try again");
-    },
-    () => {
-      document.getElementById("UploadButton").innerHTML = `Submitting...`;
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        //set download url here
-        console.log(downloadURL);
-      });
-    }
-  );
-};
 
 // ---------------------------------------------------------------------------------------------------
 
