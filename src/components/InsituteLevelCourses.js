@@ -23,6 +23,9 @@ export default function InstituteLevelCourses(props) {
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
+          // Object.keys(data).forEach((key) => {
+          //   allData.push(Object.values(data[key]));
+          // });
           let finalData = new Array();
           allData.map((ele) => {
             Object.keys(ele).forEach((key) => {

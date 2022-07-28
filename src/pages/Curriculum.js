@@ -6,7 +6,7 @@ import NewCurriculum from "./forms/NewCurriculum";
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import { database } from "../firebase/init-firebase";
-import { ref as dbref, child, get } from "firebase/database";
+import { ref as dbref, child, get, push } from "firebase/database";
 
 function Curriculum(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -23,9 +23,7 @@ function Curriculum(props) {
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
-          // setState
           setTags(allData);
-          console.log(allData);
         }
       })
       .catch((error) => {
@@ -35,7 +33,7 @@ function Curriculum(props) {
 
   function getAllCurriculums(reference) {
     const db = dbref(database);
-
+    // const ref = push(db,"")
     get(child(db, "/curriculumDetails/" + reference + "/"))
       .then((snapshot) => {
         let allData = new Array();
@@ -155,7 +153,6 @@ function Curriculum(props) {
           </div>
         </div>
       </div>
-
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <NewCurriculum
           btnFunc={closeModal}

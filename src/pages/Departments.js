@@ -9,6 +9,7 @@ import Curriculum from "./Curriculum";
 function Departments(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [allData, setAllData] = React.useState([]);
+  const [deptCodes, setDeptCode] = React.useState([]);
 
   function getDeparments(data) {
     let allDept = {};
@@ -18,6 +19,7 @@ function Departments(props) {
         allDept = ele.departments;
       }
     });
+    setDeptCode(Object.keys(allDept));
     Object.keys(allDept).forEach((ele) => {
       deptData.push(allDept[ele]);
     });
@@ -29,12 +31,12 @@ function Departments(props) {
     return () => {};
   }, []);
 
-  function renderCurriculumDetails() {
+  function renderCurriculumDetails(code) {
     props.root.render(
       <Curriculum
         instituteCode={props.instituteCode}
         courseCode={props.courseCode}
-        departmentCode={props.departmentCode}
+        departmentCode={code}
         data={allData}
       />
     );
@@ -60,6 +62,7 @@ function Departments(props) {
               renderDetails={renderCurriculumDetails}
               data={ele}
               key={index}
+              deptCode={deptCodes[index]}
             />
           );
         })}

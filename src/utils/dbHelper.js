@@ -100,23 +100,28 @@ function saveNewCurriculum(
   departmentCode,
   title,
   code,
+  level,
   semester,
   tag,
   fileUrl
 ) {
+  console.log(instituteCode, courseCode, departmentCode);
   const db = database;
+  const curriculumRef = dbref(db, "curriculumDetails");
   //getting new reference
-  const newRef = push(dbref(db, "/curriculumDetails/"));
+  const newRef = push(curriculumRef);
 
-  set(newRef, {
+  update(newRef, {
     title: title,
     code: code,
+    level: level,
     semester: semester,
     tag: tag,
-    fileUrl: fileUrl,
     instituteCode: instituteCode,
+    fileUrl: fileUrl,
   })
     .then((snapshot) => {
+      console.log("here");
       set(
         dbref(
           db,
@@ -127,7 +132,8 @@ function saveNewCurriculum(
         }
       )
         .then((snapshot) => {
-          window.location.href = "/";
+          console.log("Success");
+          // window.location.href = "/";
         })
         .catch((error) => {
           console.log(error);

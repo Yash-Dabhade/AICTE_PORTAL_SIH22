@@ -21,7 +21,11 @@ function SimpleCard2(props) {
             <button
               className="btn cursor-pointer w-full"
               onClick={() => {
-                props.renderDetails(props.data.code);
+                if (!props.deptCode) {
+                  props.renderDetails(props.data.code);
+                } else {
+                  props.renderDetails(props.deptCode);
+                }
               }}
             >
               View

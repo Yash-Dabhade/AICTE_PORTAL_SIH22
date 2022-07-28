@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { saveNewCurriculum } from "../../utils/dbHelper";
+// import { saveNewCurriculum } from "../../utils/dbHelper";
+import { ref as dbref, set, update, child, get, push } from "firebase/database";
 import { storage, database } from "../../firebase/init-firebase";
 
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -7,15 +8,15 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 export default function NewCurriculum(props) {
   const [file, setFile] = useState(null);
 
-  const [tagValue, setTagValue] = useState("");
+  const [tagValue, setTagValue] = useState("basic");
   const handleTagChange = (e) => {
     setTagValue(e);
   };
-  const [semValue, setSemValue] = useState("");
+  const [semValue, setSemValue] = useState("1");
   const handleSemChange = (e) => {
     setSemValue(e);
   };
-  const [levelValue, setLevelValue] = useState("");
+  const [levelValue, setLevelValue] = useState("basic");
   const handleLevelChange = (e) => {
     setLevelValue(e);
   };
@@ -26,13 +27,28 @@ export default function NewCurriculum(props) {
     }
   };
 
-  const handleUpload = async (title, code, level, semester) => {
+  function handleSubmit() {
+    console.log("HandleSubmit");
+    let title = document.getElementById("currTitle").value;
+    let code = document.getElementById("currCode").value;
+    let level = levelValue;
+    let semester = semValue;
+    let tag = tagValue;
+    if (title.length === 0 || code.length === 0 || !file) {
+      alert("cannot Set Empty");
+    } else {
+      document.getElementById("submitBtn").innerHTML = "Submitting...";
+      console.log("handleUpload called");
+      handleUpload(title, code, level, semester, tag);
+    }
+  }
+
+  const handleUpload = async (title, code, level, semester, tag) => {
     let typeRef = "curriculum_files";
     const pathRef = "curriculums";
 
     let storageRef = ref(storage, `${pathRef}/${typeRef}/${code}`);
     let uploadTask = uploadBytesResumable(storageRef, file);
-    console.log("Uploaded");
 
     uploadTask.on(
       "state_changed",
@@ -40,37 +56,21 @@ export default function NewCurriculum(props) {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log("Upload is " + progress + "% done");
-        progress.toPrecision(2);
-        // document.getElementById(
-        //   "UploadButton"
-        // ).innerHTML = `Uploading... ${parseInt(progress)}%`;
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (error) => {
-        // Handle unsuccessful uploads
-        alert("Some error occured ! Please try again");
+        alert("Uploding");
       },
       () => {
-        document.getElementById("UploadButton").innerHTML = `Submitting...`;
+        alert("Downloading");
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          //set download url here
+          alert("Calling saveNewCurriculum");
           saveNewCurriculum(
             props.instituteCode,
             props.courseCode,
             props.departmentCode,
             title,
             code,
+            level,
             semester,
-            "",
+            tag,
             downloadURL
           );
         });
@@ -78,24 +78,78 @@ export default function NewCurriculum(props) {
     );
   };
 
-  function handleSubmit() {
-    let title = document.getElementById("newTitle").value;
-    let code = document.getElementById("courseCode").value;
-    let level = document.getElementById("level").value;
-    let semester = document.getElementById("semester").value;
-    console.log("Button Wasa click");
-    if (
-      title.length === 0 ||
-      code.length === 0 ||
-      level.length === 0 ||
-      semester.length === 0 ||
-      !file
-    ) {
-      alert("cannot Set Empty");
-    } else {
-      document.getElementById("submitBtn").innerHTML = "Submitting...";
-      handleUpload(title, code, level, semester);
-    }
+  const saveNewCurriculum = (
+    instituteCode,
+    courseCode,
+    departmentCode,
+    title,
+    code,
+    level,
+    semester,
+    tag,
+    fileUrl
+  ) => {
+    document.getElementById("submitBtn").innerHTML = "Finishing Up!";
+    console.log(instituteCode, courseCode, departmentCode);
+
+    const curriculum = {
+      title: title,
+      code: code,
+      level: level,
+      semester: semester,
+      tag: tag,
+      instituteCode: instituteCode,
+      fileUrl: fileUrl,
+      instituteCode: instituteCode,
+      courseCode: courseCode,
+      departmentCode: departmentCode,
+    };
+
+    writeCurriculum(curriculum);
+  };
+
+  function writeCurriculum(curriculum) {
+    const db = database;
+    const curriculumRef = dbref(db, "/curriculumDetails/");
+    //getting new reference
+    const newRef = push(curriculumRef);
+
+    set(newRef, {
+      title: curriculum.title,
+      code: curriculum.code,
+      level: curriculum.level,
+      semester: curriculum.semester,
+      tag: curriculum.tag,
+      fileUrl: curriculum.fileUrl,
+    });
+    setLocation(
+      newRef,
+      curriculum.instituteCode,
+      curriculum.courseCode,
+      curriculum.departmentCode
+    );
+  }
+
+  function setLocation(newRef, instituteCode, courseCode, departmentCode) {
+    console.log("Setting Location");
+    const db = database;
+    set(
+      dbref(
+        db,
+        `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${departmentCode}/curriculum/`
+      ),
+      {
+        curriculumId: String(newRef),
+      }
+    )
+      .then((snapshot) => {
+        console.log("Success");
+        // window.location.href = "/";
+      })
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
   }
 
   return (
@@ -137,15 +191,15 @@ export default function NewCurriculum(props) {
               <form className="space-y-6" action="#">
                 <div>
                   <label
-                    htmlFor="newTitle"
+                    htmlFor="currTitle"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black-900"
                   >
                     Name / Title
                   </label>
                   <input
-                    type="newTitle"
-                    name="newTitle"
-                    id="newTitle"
+                    type="currTitle"
+                    name="currTitle"
+                    id="currTitle"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                     placeholder="Electronics, MIC"
                     required=""
@@ -154,25 +208,25 @@ export default function NewCurriculum(props) {
 
                 <div>
                   <label
-                    htmlFor="courseCode"
+                    htmlFor="currCode"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black-900"
                   >
                     Code
                   </label>
                   <input
-                    name="courseCode"
-                    id="courseCode"
+                    name="currCode"
+                    id="currCode"
                     placeholder="22617, 22619"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                   />
                 </div>
 
                 <div className="mt-6">
-                  <label className="">Semester</label>
+                  <label className="currSemester">Semester</label>
                   <select
                     className="ml-36"
-                    name="level"
-                    id="level"
+                    name="currSem"
+                    id="currSem"
                     value={semValue}
                     onChange={(e) => {
                       handleSemChange(e.target.value);
@@ -190,11 +244,11 @@ export default function NewCurriculum(props) {
                 </div>
 
                 <div className="mt-6">
-                  <label className="">Tag</label>
+                  <label className="currTag">Tag</label>
                   <select
                     className="ml-44"
-                    name="tag"
-                    id="tag"
+                    name="currTag"
+                    id="currTag"
                     value={tagValue}
                     onChange={(e) => {
                       handleTagChange(e.target.value);
@@ -211,11 +265,11 @@ export default function NewCurriculum(props) {
                 </div>
 
                 <div className="mt-6">
-                  <label className="">Level</label>
+                  <label className="currLevel">Level</label>
                   <select
                     className="ml-44"
-                    name="level"
-                    id="level"
+                    name="currLevel"
+                    id="currLevel"
                     value={levelValue}
                     onChange={(e) => {
                       handleLevelChange(e.target.value);
