@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import Header from "../components/Header";
 import SubHead from "../components/SubHead";
@@ -9,9 +9,10 @@ import { database } from "../firebase/init-firebase";
 import { ref as dbref, child, get, push } from "firebase/database";
 
 function Curriculum(props) {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [allData, setAllData] = React.useState([]);
-  const [tags, setTags] = React.useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [allData, setAllData] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [curriculumId, setCurriculumId] = useState("");
 
   function getAllTags() {
     const db = dbref(database);
@@ -53,7 +54,18 @@ function Curriculum(props) {
       });
   }
 
+  function getCurriculumId() {
+    props.data.map((ele) => {
+      if (ele.curriculum) {
+        Object.values(ele.curriculum).forEach((ele) => {
+          setCurriculumId(ele);
+        });
+      }
+    });
+  }
+
   React.useEffect(() => {
+    getCurriculumId();
     // getAllCurriculums();
     getAllTags();
     return () => {};
