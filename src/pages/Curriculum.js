@@ -34,19 +34,21 @@ function Curriculum(props) {
 
   function getAllCurriculums(reference) {
     const db = dbref(database);
-    // const ref = push(db,"")
-    get(child(db, "/curriculumDetails/" + reference + "/"))
+
+    get(child(db, "/curriculumDetials/" + reference + "/"))
       .then((snapshot) => {
         let allData = new Array();
+
         if (snapshot.exists()) {
           let data = snapshot.val();
+          console.log(data);
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
-
           //setState
           setAllData(allData);
-          console.log(allData);
+        } else {
+          console.log(snapshot);
         }
       })
       .catch((error) => {
@@ -55,18 +57,16 @@ function Curriculum(props) {
   }
 
   function getCurriculumId() {
-    props.data.map((ele) => {
+    props.data.forEach((ele) => {
       if (ele.curriculum) {
-        Object.values(ele.curriculum).forEach((ele) => {
-          setCurriculumId(ele);
-        });
+        setCurriculumId(ele.curriculum.curriculumId);
+        getAllCurriculums(ele.curriculum.curriculumId);
       }
     });
   }
 
   React.useEffect(() => {
     getCurriculumId();
-    // getAllCurriculums();
     getAllTags();
     return () => {};
   }, []);
@@ -85,7 +85,7 @@ function Curriculum(props) {
       <Header title={"Curriculum"} />
       <SubHead title={"Curriculum"} btnFunc={openModal} />
 
-      <div className="university-boxes jsGridView">
+      <div className="university-boxes">
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
@@ -103,32 +103,30 @@ function Curriculum(props) {
                         scope="col"
                         className="text-sm font-medium  px-6 py-4 text-left"
                       >
-                        Code
+                        Subject Code
                       </th>
                       <th
                         scope="col"
                         className="text-sm font-medium  px-6 py-4 text-left"
                       >
-                        Name
+                        Subject Name
                       </th>
                       <th
                         scope="col"
                         className="text-sm font-medium  px-6 py-4 text-left"
                       >
-                        Phone
+                        Subject Level
                       </th>
                       <th
                         scope="col"
                         className="text-sm font-medium  px-6 py-4 text-left"
                       >
-                        email
+                        Subject Tag
                       </th>
                       <th
                         scope="col"
                         className="text-sm font-medium  px-6 py-4 text-left"
-                      >
-                        website
-                      </th>
+                      ></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -143,16 +141,20 @@ function Curriculum(props) {
                                 {ele.code}
                               </td>
                               <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                                {ele.name}
+                                {ele.title}
                               </td>
                               <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                                {ele.phone}
+                                {ele.level}
                               </td>
                               <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                                {ele.email}
+                                {ele.tag}
                               </td>
                               <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                                {ele.website}
+                                <a target="_blank" href={ele.fileUrl}>
+                                  <button className="btn-compatible font-bold py-2 px-4 rounded-full">
+                                    Open
+                                  </button>
+                                </a>
                               </td>
                             </tr>
                           );
@@ -168,6 +170,7 @@ function Curriculum(props) {
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <NewCurriculum
           btnFunc={closeModal}
+          reference={curriculumId}
           instituteCode={props.instituteCode}
           courseCode={props.courseCode}
           departmentCode={props.departmentCode}

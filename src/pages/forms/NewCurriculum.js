@@ -75,7 +75,8 @@ export default function NewCurriculum(props) {
               level,
               semester,
               tag,
-              downloadURL
+              downloadURL,
+              props.reference
             );
             document.getElementById("submitBtn").innerHTML = "Saving";
           })

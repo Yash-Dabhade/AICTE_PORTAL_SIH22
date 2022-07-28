@@ -103,15 +103,19 @@ function saveNewCurriculum(
   level,
   semester,
   tag,
-  fileUrl
+  fileUrl,
+  reference
 ) {
   console.log(instituteCode, courseCode, departmentCode);
   const db = database;
 
-  //getting new reference
-  const newRef = push(dbref(db, "/curriculumDetails/"));
+  let newRef = reference;
+  if (!reference) {
+    //getting new reference
+    newRef = push(dbref(db, "/curriculumDetails/")).key;
+  }
 
-  update(dbref(db, `/curriculumDetials/${newRef.key}/${code}`), {
+  update(dbref(db, `/curriculumDetials/${newRef}/${code}`), {
     title: title,
     code: code,
     level: level,
@@ -122,23 +126,27 @@ function saveNewCurriculum(
   })
     .then((snapshot) => {
       console.log("Uploaded");
-      update(
-        dbref(
-          db,
-          `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${departmentCode}/curriculum/`
-        ),
-        {
-          curriculumId: newRef.key,
-        }
-      )
-        .then((snapshot) => {
-          alert("Data Submitted successfully");
-          window.location.href = "/";
-        })
-        .catch((error) => {
-          console.log(error);
-          return false;
-        });
+      if (!reference) {
+        update(
+          dbref(
+            db,
+            `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${departmentCode}/curriculum/`
+          ),
+          {
+            curriculumId: newRef,
+          }
+        )
+          .then((snapshot) => {
+            alert("Data Submitted successfully");
+            window.location.href = "/";
+          })
+          .catch((error) => {
+            console.log(error);
+            return false;
+          });
+      } else {
+        alert("Data Submitted successfully");
+      }
     })
     .catch((error) => {
       console.log(error);
