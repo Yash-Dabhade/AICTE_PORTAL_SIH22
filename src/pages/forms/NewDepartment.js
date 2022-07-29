@@ -61,7 +61,7 @@ export default function NewDepartment(props) {
             </button>
             <div className="py-6 px-6 lg:px-8">
               <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-black">
-                Department From
+                Department Form
               </h3>
 
               <form className="space-y-6" action="#">

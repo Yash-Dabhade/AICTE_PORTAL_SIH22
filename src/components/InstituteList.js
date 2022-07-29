@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InsituteLevelCourses from "./InsituteLevelCourses";
+import Courses from "../pages/CurriculumPortal/Courses";
 
 function InstituteList(props) {
   const [institutes, setInstitutes] = useState([]);
@@ -19,7 +19,7 @@ function InstituteList(props) {
   }, []);
 
   function renderCardDetails(code) {
-    props.root.render(<InsituteLevelCourses code={code} root={props.root} />);
+    props.root.render(<Courses code={code} root={props.root} />);
   }
 
   return (

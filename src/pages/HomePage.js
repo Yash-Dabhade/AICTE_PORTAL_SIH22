@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import Dashboard from "../components/Dashboard";
+import Home from "../components/Home";
 import { useAuth } from "../contexts/AuthContext";
 
 function HomePage() {
   const { currentUser } = useAuth();
 
-  return <Dashboard />;
+  return <Home />;
 }
 
 export default HomePage;

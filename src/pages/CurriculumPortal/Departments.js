@@ -1,9 +1,9 @@
 import React from "react";
 import Modal from "react-modal";
-import SimpleCard2 from "../components/SimpleCard2";
-import Header from "../components/Header";
-import SubHead from "../components/SubHead";
-import NewDepartment from "./forms/NewDepartment";
+import SimpleCard from "../../components/SimpleCard";
+import Header from "../../components/Header";
+import SubHead from "../../components/SubHead";
+import NewDepartment from "../forms/NewDepartment";
 import Curriculum from "./Curriculum";
 
 function Departments(props) {
@@ -11,13 +11,12 @@ function Departments(props) {
   const [allData, setAllData] = React.useState([]);
   const [deptCodes, setDeptCode] = React.useState([]);
 
-  function getDeparments(data) {
+  function getDeparments(data, courseCode) {
     let allDept = {};
     let deptData = [];
     data.forEach((ele) => {
-      if (ele.departments) {
-        allDept = ele.departments;
-      }
+      if (!ele.departments) return;
+      if (ele.code == courseCode) allDept = ele.departments;
     });
     setDeptCode(Object.keys(allDept));
     Object.keys(allDept).forEach((ele) => {
@@ -27,7 +26,7 @@ function Departments(props) {
   }
 
   React.useEffect(() => {
-    getDeparments(props.data);
+    getDeparments(props.data, props.courseCode);
     return () => {};
   }, []);
 
@@ -58,7 +57,7 @@ function Departments(props) {
       <div className="university-boxes jsGridView">
         {allData.map((ele, index) => {
           return (
-            <SimpleCard2
+            <SimpleCard
               renderDetails={renderCurriculumDetails}
               data={ele}
               key={index}

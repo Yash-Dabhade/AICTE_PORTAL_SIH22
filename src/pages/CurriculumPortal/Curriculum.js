@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import Header from "../components/Header";
-import SubHead from "../components/SubHead";
-import NewCurriculum from "./forms/NewCurriculum";
+import Header from "../../components/Header";
+import SubHead from "../../components/SubHead";
+import NewCurriculum from "../forms/NewCurriculum";
 import DataTable from "react-data-table-component";
 import axios from "axios";
-import { database } from "../firebase/init-firebase";
+import { database } from "../../firebase/init-firebase";
 import { ref as dbref, child, get, push } from "firebase/database";
 
 function Curriculum(props) {
@@ -41,7 +41,6 @@ function Curriculum(props) {
 
         if (snapshot.exists()) {
           let data = snapshot.val();
-          console.log(data);
           Object.keys(data).forEach((key) => {
             if (data[key].departmentCode === props.departmentCode)
               allData.push(data[key]);

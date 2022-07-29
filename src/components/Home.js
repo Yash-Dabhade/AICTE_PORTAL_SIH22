@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Dashboard.css";
-import University from "./University";
 import {
   BsFillBarChartLineFill,
-  BsFillHouseFill,
   BsBookFill,
   BsFillDiagram3Fill,
   BsGearFill,
@@ -11,12 +9,14 @@ import {
 } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext";
 import { FaUserAlt } from "react-icons/fa";
+import University from "../pages/CurriculumPortal/University";
+import Trending from "../pages/TrendingPortal/Trending";
 
-function Dashboard() {
+function Home() {
   const { logout, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [universityOpen, setUniversityOpen] = useState(true);
-  const [instituteOpen, setInstituteOpen] = useState(false);
+  const [trendingOpen, setTrendingOpen] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
 
   function modeSwitch() {
@@ -141,9 +141,6 @@ function Dashboard() {
         </div>
       </div>
       <div className="app-content">
-        {/* <section className="MOBILE-MENU flex"> */}
-        {/* <div className={isNavOpen ? "app-sidebar" : "hideMenuNav"}> */}
-        {/* <div className="app-sidebar"> */}
         <div className={isNavOpen ? "hideMenuNav" : "app-sidebar"}>
           <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
             <li className="w-full">
@@ -153,7 +150,7 @@ function Dashboard() {
                 onClick={(e) => {
                   makeActive(e);
                   setUniversityOpen(true);
-                  setInstituteOpen(false);
+                  setTrendingOpen(false);
                   setSettingOpen(false);
                 }}
               >
@@ -170,7 +167,7 @@ function Dashboard() {
                 onClick={(e) => {
                   makeActive(e);
                   setUniversityOpen(false);
-                  setInstituteOpen(true);
+                  setTrendingOpen(false);
                   setSettingOpen(false);
                 }}
               >
@@ -187,8 +184,8 @@ function Dashboard() {
                 onClick={(e) => {
                   makeActive(e);
                   setUniversityOpen(false);
-                  setInstituteOpen(false);
-                  setSettingOpen(true);
+                  setTrendingOpen(true);
+                  setSettingOpen(false);
                 }}
               >
                 <div className="flex justify-start items-center">
@@ -227,12 +224,11 @@ function Dashboard() {
             </li>
           </ul>
         </div>
-        {/* </div> */}
-        {/* </section> */}
         {universityOpen ? <University /> : null}
+        {trendingOpen ? <Trending /> : null}
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default Home;
