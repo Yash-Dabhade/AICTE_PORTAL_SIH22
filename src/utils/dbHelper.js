@@ -106,7 +106,7 @@ function saveNewCurriculum(
   fileUrl,
   reference
 ) {
-  console.log(instituteCode, courseCode, departmentCode);
+  // console.log(instituteCode, courseCode, departmentCode);
   const db = database;
 
   let newRef = reference;
@@ -122,6 +122,7 @@ function saveNewCurriculum(
     semester: semester,
     tag: tag,
     instituteCode: instituteCode,
+    departmentCode: departmentCode,
     fileUrl: fileUrl,
   })
     .then((snapshot) => {
@@ -146,6 +147,7 @@ function saveNewCurriculum(
           });
       } else {
         alert("Data Submitted successfully");
+        window.location.href = "/";
       }
     })
     .catch((error) => {

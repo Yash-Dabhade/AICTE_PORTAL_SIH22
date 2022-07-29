@@ -43,7 +43,8 @@ function Curriculum(props) {
           let data = snapshot.val();
           console.log(data);
           Object.keys(data).forEach((key) => {
-            allData.push(data[key]);
+            if (data[key].departmentCode === props.departmentCode)
+              allData.push(data[key]);
           });
           //setState
           setAllData(allData);
