@@ -45,7 +45,7 @@ function SignIn() {
 
   return (
     <div>
-      <div className="container bg-slate-100 ">
+      <div className="container flex flex-col justify-center items-center bg-slate-100 ">
         <img className="h-28 mt-2  mx-auto w-28" src={logo} alt="Logo" />
         <p className="text-3xl font-bold text-center mt-2">
           Sign in to your account
@@ -71,7 +71,7 @@ function SignIn() {
           <button
             id="signInBtn"
             onClick={signInNow}
-            class="btn px-3 mt-4 h-10 rounded-lg bg-blue-700   hover:bg-blue-600 font-bold text-white text-xl"
+            className="btn px-3 mt-4 h-10 rounded-lg bg-blue-700   hover:bg-blue-600 font-bold text-white text-xl"
           >
             Sign In
           </button>
