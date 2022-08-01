@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Dashboard.css";
-import University from "./University";
 import {
   BsFillBarChartLineFill,
-  BsFillHouseFill,
   BsBookFill,
   BsFillDiagram3Fill,
   BsGearFill,
@@ -11,13 +9,18 @@ import {
 } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext";
 import { FaUserAlt } from "react-icons/fa";
+import University from "../pages/CurriculumPortal/University";
+import Trending from "../pages/TrendingPortal/Trending";
+import ExpertHome from "../pages/ExpertPortal/ExpertHome";
+import Sidebar from "./Sidebar";
 
-function Dashboard() {
+function Home(props) {
   const { logout, currentUser } = useAuth();
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(true);
   const [universityOpen, setUniversityOpen] = useState(true);
-  const [instituteOpen, setInstituteOpen] = useState(false);
+  const [trendingOpen, setTrendingOpen] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   function modeSwitch() {
     document.documentElement.classList.toggle("dark");
@@ -47,6 +50,38 @@ function Dashboard() {
 
     return capitalized;
   }
+
+  function getUniversityOpen(e) {
+    setUniversityOpen(e);
+  }
+  function getTrendingOpen(e) {
+    setTrendingOpen(e);
+  }
+  function getSettingOpen(e) {
+    setSettingOpen(e);
+  }
+  // function getTrendingOpen(e) {
+  //   setTrendingOpen(e);
+  // }
+  // function getTrendingOpen(e) {
+  //   setTrendingOpen(e);
+  // }
+
+  const links = [
+    "University",
+    "Curriculum",
+    "CurriculumDev",
+    "Past Reports",
+    "Settings",
+  ];
+  const icons = [
+    <BsBookFill size={22} className="mx-2" />,
+    <BsFillBarChartLineFill size={22} className="mx-2" />,
+    <BsFillDiagram3Fill size={22} className="mx-2" />,
+    <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />,
+    <BsGearFill size={22} className="mx-2" />,
+  ];
+  const linkFunc = [getUniversityOpen, getTrendingOpen, getSettingOpen];
 
   return (
     <div className="app-container">
@@ -140,99 +175,22 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className="app-content">
-        {/* <section className="MOBILE-MENU flex"> */}
-        {/* <div className={isNavOpen ? "app-sidebar" : "hideMenuNav"}> */}
-        {/* <div className="app-sidebar"> */}
-        <div className={isNavOpen ? "hideMenuNav" : "app-sidebar"}>
-          <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
-            <li className="w-full">
-              <a
-                href="#university"
-                className="app-sidebar-link active"
-                onClick={(e) => {
-                  makeActive(e);
-                  setUniversityOpen(true);
-                  setInstituteOpen(false);
-                  setSettingOpen(false);
-                }}
-              >
-                <div className="flex justify-start items-center">
-                  <BsBookFill size={22} className="mx-2" />
-                  <span>Curriculum</span>
-                </div>
-              </a>
-            </li>
-            <li className="w-full">
-              <a
-                href="#curriculum"
-                className="app-sidebar-link"
-                onClick={(e) => {
-                  makeActive(e);
-                  setUniversityOpen(false);
-                  setInstituteOpen(true);
-                  setSettingOpen(false);
-                }}
-              >
-                <div className="flex justify-start items-center">
-                  <BsFillBarChartLineFill size={22} className="mx-2" />
-                  <span>Dashboard</span>
-                </div>
-              </a>
-            </li>
-            <li className="w-full">
-              <a
-                href="#curriculumDev"
-                className="app-sidebar-link flex "
-                onClick={(e) => {
-                  makeActive(e);
-                  setUniversityOpen(false);
-                  setInstituteOpen(false);
-                  setSettingOpen(true);
-                }}
-              >
-                <div className="flex justify-start items-center">
-                  <BsFillDiagram3Fill size={22} className="mx-2" />
-                  <span>Trending</span>
-                </div>
-              </a>
-            </li>
-            <li className="w-full">
-              <a
-                href="#pastReports"
-                className="app-sidebar-link"
-                onClick={(e) => {
-                  makeActive(e);
-                }}
-              >
-                <div className="flex justify-start items-center">
-                  <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />
-                  <span>Past Reports</span>
-                </div>
-              </a>
-            </li>
-            <li className="w-full">
-              <a
-                href="#settings"
-                className="app-sidebar-link"
-                onClick={(e) => {
-                  makeActive(e);
-                }}
-              >
-                <div className="flex justify-start items-center">
-                  <BsGearFill size={22} className="mx-2" />
-                  <span>Settings</span>
-                </div>
-              </a>
-            </li>
-          </ul>
+      {currentUser && currentUser.email == "admin@gmail.com" ? (
+        <div className="app-content">
+          <Sidebar
+            links={links}
+            icons={icons}
+            linkFunc={linkFunc}
+            isNavOpen={isNavOpen}
+          />
+          {universityOpen ? <University /> : null}
+          {trendingOpen ? <Trending /> : null}
         </div>
-        {/* </div> */}
-        {/* </section> */}
-        {universityOpen ? <University /> : null}
-      </div>
+      ) : (
+        currentUser && <ExpertHome isNavOpen={isNavOpen} />
+      )}
     </div>
   );
 }
 
-export default Dashboard;
+export default Home;

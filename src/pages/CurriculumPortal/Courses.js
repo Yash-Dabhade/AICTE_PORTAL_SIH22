@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { ref as dbref, child, get } from "firebase/database";
-import { database } from "../firebase/init-firebase";
-import SimpleCard2 from "./SimpleCard2";
-import Header from "./Header";
-import SubHead from "./SubHead";
-import Departments from "../pages/Departments";
-import InstituteCourses from "../pages/forms/InstituteCourses";
+import { database } from "../../firebase/init-firebase";
+import SimpleCard from "../../components/SimpleCard";
+import Header from "../../components/Header";
+import SubHead from "../../components/SubHead";
+import Departments from "./Departments";
+import InstituteCourses from "../forms/InstituteCourses";
 
-export default function InstituteLevelCourses(props) {
+export default function Courses(props) {
   const [courses, setCourses] = useState([]);
   const [data, setData] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -77,7 +77,7 @@ export default function InstituteLevelCourses(props) {
       <div className="university-boxes jsGridView">
         {data.map((ele, index) => {
           return (
-            <SimpleCard2
+            <SimpleCard
               renderDetails={renderCourseDetails}
               key={index}
               data={ele}

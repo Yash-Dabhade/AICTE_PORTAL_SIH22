@@ -1,5 +1,4 @@
 import React from "react";
-
 import { MdEmail } from "react-icons/md";
 import { TiLocation } from "react-icons/ti";
 import { IoCall, IoEarthSharp } from "react-icons/io5";

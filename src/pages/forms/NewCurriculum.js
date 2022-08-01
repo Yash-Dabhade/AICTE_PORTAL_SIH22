@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-// import { saveNewCurriculum } from "../../utils/dbHelper";
+import { saveNewCurriculum } from "../../utils/dbHelper";
 import { ref as dbref, set, update, child, get, push } from "firebase/database";
 import { storage, database } from "../../firebase/init-firebase";
-
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function NewCurriculum(props) {
-  const [file, setFile] = useState(null);
+  const [uploadedFile, setFile] = useState(null);
 
   const [tagValue, setTagValue] = useState("basic");
   const handleTagChange = (e) => {
@@ -27,14 +26,15 @@ export default function NewCurriculum(props) {
     }
   };
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
     console.log("HandleSubmit");
     let title = document.getElementById("currTitle").value;
     let code = document.getElementById("currCode").value;
     let level = levelValue;
     let semester = semValue;
     let tag = tagValue;
-    if (title.length === 0 || code.length === 0 || !file) {
+    if (title.length === 0 || code.length === 0 || !uploadedFile) {
       alert("cannot Set Empty");
     } else {
       document.getElementById("submitBtn").innerHTML = "Submitting...";
@@ -48,109 +48,44 @@ export default function NewCurriculum(props) {
     const pathRef = "curriculums";
 
     let storageRef = ref(storage, `${pathRef}/${typeRef}/${code}`);
-    let uploadTask = uploadBytesResumable(storageRef, file);
+    let uploadTask = uploadBytesResumable(storageRef, uploadedFile);
 
     uploadTask.on(
       "state_changed",
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        alert("Uploding");
+        document.getElementById("submitBtn").innerHTML =
+          "Uploading " + progress + "%";
+      },
+      (error) => {
+        console.log(error);
+        // Handle unsuccessful uploads
       },
       () => {
-        alert("Downloading");
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          alert("Calling saveNewCurriculum");
-          saveNewCurriculum(
-            props.instituteCode,
-            props.courseCode,
-            props.departmentCode,
-            title,
-            code,
-            level,
-            semester,
-            tag,
-            downloadURL
-          );
-        });
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            console.log("uploaded: " + downloadURL);
+            saveNewCurriculum(
+              props.instituteCode,
+              props.courseCode,
+              props.departmentCode,
+              title,
+              code,
+              level,
+              semester,
+              tag,
+              downloadURL,
+              props.reference
+            );
+            document.getElementById("submitBtn").innerHTML = "Saving";
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     );
   };
-
-  const saveNewCurriculum = (
-    instituteCode,
-    courseCode,
-    departmentCode,
-    title,
-    code,
-    level,
-    semester,
-    tag,
-    fileUrl
-  ) => {
-    document.getElementById("submitBtn").innerHTML = "Finishing Up!";
-    console.log(instituteCode, courseCode, departmentCode);
-
-    const curriculum = {
-      title: title,
-      code: code,
-      level: level,
-      semester: semester,
-      tag: tag,
-      instituteCode: instituteCode,
-      fileUrl: fileUrl,
-      instituteCode: instituteCode,
-      courseCode: courseCode,
-      departmentCode: departmentCode,
-    };
-
-    writeCurriculum(curriculum);
-  };
-
-  function writeCurriculum(curriculum) {
-    const db = database;
-    const curriculumRef = dbref(db, "/curriculumDetails/");
-    //getting new reference
-    const newRef = push(curriculumRef);
-
-    set(newRef, {
-      title: curriculum.title,
-      code: curriculum.code,
-      level: curriculum.level,
-      semester: curriculum.semester,
-      tag: curriculum.tag,
-      fileUrl: curriculum.fileUrl,
-    });
-    setLocation(
-      newRef,
-      curriculum.instituteCode,
-      curriculum.courseCode,
-      curriculum.departmentCode
-    );
-  }
-
-  function setLocation(newRef, instituteCode, courseCode, departmentCode) {
-    console.log("Setting Location");
-    const db = database;
-    set(
-      dbref(
-        db,
-        `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${departmentCode}/curriculum/`
-      ),
-      {
-        curriculumId: String(newRef),
-      }
-    )
-      .then((snapshot) => {
-        console.log("Success");
-        // window.location.href = "/";
-      })
-      .catch((error) => {
-        console.log(error);
-        return false;
-      });
-  }
 
   return (
     <div>

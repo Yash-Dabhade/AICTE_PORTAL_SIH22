@@ -220,7 +220,7 @@ button, a {
   color: var(--link-color-active);
 }
 
-.universities-section {
+.parent-section {
   flex: 2;
   background-color: var(--universities-section);
   border-radius: 32px;

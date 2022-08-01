@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Card from "./Card";
-import MSBTE_logo from "../res/MSBTE_logo.png";
+import Card from "../../components/Card";
+import MSBTE_logo from "../../res/MSBTE_logo.png";
 import { ref as dbref, child, get } from "firebase/database";
-import { database } from "../firebase/init-firebase";
-import SubHead from "./SubHead";
-import Header from "./Header";
+import { database } from "../../firebase/init-firebase";
+import SubHead from "../../components/SubHead";
+import Header from "../../components/Header";
 import Modal from "react-modal";
-import UniversityForm from "../pages/forms/UniversityForm";
-import SimpleCard2 from "./SimpleCard2";
-import ContactCard from "./ContactCard";
+import UniversityForm from "../forms/UniversityForm";
 
-export default function University() {
+export default function University(props) {
   const [data, setData] = useState([]);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function getAllUniversities() {
     const db = dbref(database);
@@ -50,7 +48,7 @@ export default function University() {
     setIsOpen(false);
   }
   return (
-    <div className="universities-section" id="formRoot">
+    <div className="parent-section" id="formRoot">
       <Header />
       <SubHead title={"University"} btnFunc={createUniversity} />
       <div className="university-boxes jsGridView">
@@ -67,6 +65,7 @@ export default function University() {
               institutes={ele.institutes}
               website={ele.website}
               key={index}
+              HiddenRoute={props.HiddenRoute}
             />
           );
         })}

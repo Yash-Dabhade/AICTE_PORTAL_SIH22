@@ -1,13 +1,13 @@
 import React from "react";
 import Modal from "react-modal";
-import Description from "./Description";
-import InstituteList from "./InstituteList";
-import ContactCard from "./ContactCard";
-import Header from "./Header";
-import SubHead from "./SubHead";
-import InstituteForm from "../pages/forms/InstituteForm";
+import Description from "../../components/Description";
+import InstituteList from "../../components/InstituteList";
+import ContactCard from "../../components/ContactCard";
+import Header from "../../components/Header";
+import SubHead from "../../components/SubHead";
+import InstituteForm from "../forms/InstituteForm";
 
-function Institute(props) {
+function Institutes(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function createInstitute() {
@@ -51,4 +51,4 @@ function Institute(props) {
   );
 }
 
-export default Institute;
+export default Institutes;

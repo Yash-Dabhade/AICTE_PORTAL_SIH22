@@ -1,23 +1,17 @@
-import React, { createElement } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  HiOutlineDotsVertical,
-  HiOutlineMail,
-  HiOutlinePhone,
-} from "react-icons/hi";
+import { HiOutlineMail } from "react-icons/hi";
 import { FaUniversity } from "react-icons/fa";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
-import Institute from "./Institute";
+import Institutes from "../pages/CurriculumPortal/Institutes";
 
 function Card(props) {
   const renderCardDetails = () => {
     document.querySelector(".universities-section-header").remove();
     document.querySelector(".universities-subSection-header").remove();
-    let root = ReactDOM.createRoot(
-      document.querySelector(".universities-section")
-    );
+    let root = ReactDOM.createRoot(document.querySelector(".parent-section"));
     root.render(
-      <Institute
+      <Institutes
         root={root}
         title={props.title}
         code={props.code}
@@ -34,7 +28,6 @@ function Card(props) {
   return (
     <div className="university-box-wrapper">
       <div className="card right bg-white mt-10 p-5 w-72 h-card rounded-lg drop-shadow-2xl scale-95 hover:scale-100 ease-in duration-500 py">
-        {/* <img className="mt-5 mx-20 h-24  w-24" src={props.logo} alt="Logo" /> */}
         <FaUniversity className="darkMode mb-20 mx-20" size={68} />
         <p className="font-bold mt-2">{props.title}</p>
         <p>{props.fullName}</p>
@@ -48,6 +41,7 @@ function Card(props) {
           Email
         </a>
         <a
+          href="#institute"
           onClick={renderCardDetails}
           id="details"
           className="btn px-16 pt-3  mt-4 h-12 w-60 rounded-md border-2 border-compatible font-light flex"
