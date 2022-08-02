@@ -3,18 +3,18 @@ import { saveNewUniversity } from "../../utils/dbHelper";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export class UniversityForm extends Component {
+export class NewExpertForm extends Component {
   render() {
     function handleSubmit(e) {
       e.preventDefault();
-      let initialName = document.getElementById("universityInitialName").value;
-      let name = document.getElementById("universityName").value;
-      let code = document.getElementById("universityCode").value;
-      let email = document.getElementById("universityEmail").value;
-      let phone = document.getElementById("universityPhone").value;
-      let website = document.getElementById("universityWebsite").value;
+      let name = document.getElementById("Name").value;
+      let position = document.getElementById("position").value;
+      let email = document.getElementById("Email").value;
+      let phone = document.getElementById("Phone").value;
+      let Company = document.getElementById("Company").value;
 
-      saveNewUniversity(initialName, name, code, email, phone, website);
+      console.log(Company, name, email, phone, position);
+      //   saveNewUniversity(initialName, name, code, email, phone, website);
     }
 
     return (
@@ -38,67 +38,58 @@ export class UniversityForm extends Component {
         </button>
         <div className="content flex-col">
           <div className="title flex justify-center mb-10 ">
-            <label className="title text-4xl">New University Details</label>
+            <label className="title text-4xl">New Expert Form</label>
           </div>
           <form className="form w-fit px-20 pb-5 pt-3 border-2 border-[#eeeeee] rounded-md">
             <div className="cont flex-col m-3  ">
-              <label className="label1 flex ml-3">Initial Name : </label>
+              <label className="label2 flex ml-3">Name : </label>
               <input
                 type="text"
-                id="universityInitialName"
-                className="initialname  border-2 border-[#9a9a9a] rounded-md w-96 pl-3 h-8
-              "
-                placeholder="Initial Name"
-              />
-            </div>
-            <div className="cont flex-col m-3  ">
-              <label className="label2 flex ml-3">Full Name : </label>
-              <input
-                type="text"
-                id="universityName"
+                id="Name"
                 className="name  border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
               "
-                placeholder="Full Name"
+                placeholder="Name"
               />
             </div>
-            <div className="cont2 flex-col m-3  ">
-              <label className="label3 flex ml-3">Code : </label>
-              <input
-                type="text"
-                id="universityCode"
-                className="code border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
-                "
-                placeholder="university code"
-              />
-            </div>
+
             <div className="cont3 flex-col m-3  ">
               <label className="label4 flex ml-3">Email : </label>
               <input
                 type="email"
-                id="universityEmail"
+                id="Email"
                 className="email border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
                 placeholder="example123@gmail.com"
               />
             </div>
             <div className="cont4 flex-col align-middle m-3  ">
-              <label className="label5 flex ml-3 ">Phone : </label>
+              <label className="label5 flex ml-3 ">Position : </label>
               <input
-                type="number"
-                id="universityPhone"
-                className="phone border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
+                type="position"
+                id="position"
+                className="position border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
                 placeholder="+91 1234567890"
               />
             </div>
             <div className="cont flex-col m-3 ">
-              <label className="label6 flex ml-3">Website : </label>
+              <label className="label6 flex ml-3">Company : </label>
               <input
                 type="text"
-                id="universityWebsite"
-                className="website border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
+                id="Company"
+                className="Company border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
               "
-                placeholder="www.website.com"
+                placeholder="Company Name"
+              />
+            </div>
+            <div className="cont flex-col m-3 ">
+              <label className="label6 flex ml-3">Phone : </label>
+              <input
+                type="text"
+                id="Phone"
+                className="Phone border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
+              "
+                placeholder="+91 0000000000"
               />
             </div>
             <div className="cont5 justify-center flex m-3 ">
@@ -117,4 +108,4 @@ export class UniversityForm extends Component {
   }
 }
 
-export default UniversityForm;
+export default NewExpertForm;
