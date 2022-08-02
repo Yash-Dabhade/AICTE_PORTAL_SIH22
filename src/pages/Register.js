@@ -94,7 +94,7 @@ function Register() {
 
   return (
     <div className="contain">
-      <div className="container flex flex-col justify-center items-center bg-slate-100 ">
+      <div className="flex flex-col justify-center items-center bg-slate-100 ">
         <div>
           <img className="h-28 mt-2  mx-auto w-28" src={logo} alt="Logo" />
           <p className="text-3xl font-bold text-center mt-2">
