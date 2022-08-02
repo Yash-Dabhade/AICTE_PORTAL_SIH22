@@ -1,7 +1,12 @@
 import React from "react";
+import Register from "../pages/Register";
 
 function TestPage() {
-  return <>Test page</>;
+  return (
+    <>
+      <Register />
+    </>
+  );
 }
 
 export default TestPage;
