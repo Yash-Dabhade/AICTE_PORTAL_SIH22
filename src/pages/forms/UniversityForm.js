@@ -5,6 +5,22 @@ import "react-toastify/dist/ReactToastify.css";
 
 export class UniversityForm extends Component {
   render() {
+    function ValidateEmail(email) {
+      let regexp = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+      if (!regexp.test(email)) {
+        toast("Invalid Email");
+      }
+
+      return false;
+    }
+
+    function ValidateNumber(phone) {
+      var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+      if (!phone.match(phoneno)) {
+        toast("Please Valid 10 digit phone number");
+      }
+    }
+
     function handleSubmit(e) {
       e.preventDefault();
       let initialName = document.getElementById("universityInitialName").value;
@@ -13,9 +29,21 @@ export class UniversityForm extends Component {
       let email = document.getElementById("universityEmail").value;
       let phone = document.getElementById("universityPhone").value;
       let website = document.getElementById("universityWebsite").value;
+      if (
+        initialName == "" ||
+        name == "" ||
+        code == "" ||
+        email == "" ||
+        phone == "" ||
+        website == ""
+      ) {
+        toast("Enter all details");
+      } else {
+        ValidateEmail(email);
+        ValidateNumber(phone);
+      }
 
-      console.log(initialName, name, code, email, phone, website);
-      saveNewUniversity(initialName, name, code, email, phone, website);
+      // saveNewUniversity(initialName, name, code, email, phone, website);
     }
 
     return (
@@ -69,7 +97,7 @@ export class UniversityForm extends Component {
                 id="universityCode"
                 className="code border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
                 "
-                placeholder="example:213312"
+                placeholder="university code"
               />
             </div>
             <div className="cont3 flex-col m-3  ">

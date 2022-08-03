@@ -13,7 +13,7 @@ function saveNewUniversity(initialName, fullName, code, email, phone, website) {
     website: website,
   })
     .then((snapshot) => {
-      window.location.href = "/";
+      window.location.href = "/home";
     })
     .catch((error) => {
       console.log(error);
@@ -40,7 +40,7 @@ function saveNewInstitute(
     website: website,
   })
     .then((snapshot) => {
-      window.location.href = "/";
+      window.location.href = "/home";
     })
     .catch((error) => {
       console.log(error);
@@ -56,7 +56,7 @@ function saveNewInstituteLevelCourse(instituteCode, title, code, level) {
     level: level,
   })
     .then((snapshot) => {
-      window.location.href = "/";
+      window.location.href = "/home";
     })
     .catch((error) => {
       console.log(error);
@@ -86,7 +86,7 @@ function saveNewDepartment(
     }
   )
     .then((snapshot) => {
-      window.location.href = "/";
+      window.location.href = "/home";
     })
     .catch((error) => {
       console.log(error);
@@ -139,7 +139,7 @@ function saveNewCurriculum(
         )
           .then((snapshot) => {
             alert("Data Submitted successfully");
-            window.location.href = "/";
+            window.location.href = "/home";
           })
           .catch((error) => {
             console.log(error);
@@ -147,7 +147,7 @@ function saveNewCurriculum(
           });
       } else {
         alert("Data Submitted successfully");
-        window.location.href = "/";
+        window.location.href = "/home";
       }
     })
     .catch((error) => {

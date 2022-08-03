@@ -4,6 +4,22 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function InstituteForm(props) {
+  function ValidateEmail(email) {
+    let regexp = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+    if (!regexp.test(email)) {
+      toast("Invalid Email");
+    }
+
+    return false;
+  }
+
+  function ValidateNumber(phone) {
+    var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    if (!phone.match(phoneno)) {
+      toast("Please Valid 10 digit phone number");
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -13,7 +29,19 @@ function InstituteForm(props) {
     let phone = document.getElementById("institutePhone").value;
     let location = document.getElementById("instituteLocation").value;
     let website = document.getElementById("instituteWebsite").value;
-
+    if (
+      location == "" ||
+      name == "" ||
+      code == "" ||
+      email == "" ||
+      phone == "" ||
+      website == ""
+    ) {
+      toast("Enter all details");
+    } else {
+      ValidateEmail(email);
+      ValidateNumber(phone);
+    }
     saveNewInstitute(
       props.universityCode,
       name,
