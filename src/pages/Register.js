@@ -50,46 +50,46 @@ function Register() {
 
     document.getElementById("registerBtn").style.disabeld = true;
     if (password != confirmPass) {
-      alert("Details does not match  !");
+      alert("Password does not match  !");
       document.getElementById("registerBtn").style.disabeld = false;
       return;
     }
 
-    // const db = dbref(database);
-    // get(child(db, `/authenticate/${enroll}`))
-    //   .then((snapshot) => {
-    //     if (snapshot.exists()) {
-    //       const data = snapshot.val();
-    //       // console.log(data);
-    //       // console.log(fname, lname, email, enroll);
+    const db = dbref(database);
+    get(child(db, `/expertEmails/${email}`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          // console.log(data);
+          // console.log(fname, lname, email, enroll);
 
-    // if (data.Email == email) {
-    setIsSubmitting(true);
-    register(email, password)
-      .then((res) => {
-        console.log("Registered");
-        window.location.href = "/home";
+          if (data.Email == email) {
+            setIsSubmitting(true);
+            register(email, password)
+              .then((res) => {
+                console.log("Registered");
+                window.location.href = "/home";
+              })
+              .catch((error) => {
+                console.log(error.message);
+              })
+              .finally(() => {
+                mounted.current && setIsSubmitting(false);
+              });
+          } else {
+            alert("Details does not match the records !");
+            document.getElementById("RegisterButton").style.disabeld = false;
+          }
+        } else {
+          alert("Expert email not found !");
+          document.getElementById("RegisterButton").style.disabeld = false;
+        }
       })
       .catch((error) => {
-        console.log(error.message);
-      })
-      .finally(() => {
-        mounted.current && setIsSubmitting(false);
+        alert("Some error occured");
+        document.getElementById("RegisterButton").style.disabeld = false;
+        return;
       });
-    // } else {
-    //   alert("Details does not match the records !");
-    //   document.getElementById("RegisterButton").style.disabeld = false;
-    // }
-    //     } else {
-    //       alert("No Student found in the record !");
-    //       document.getElementById("RegisterButton").style.disabeld = false;
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     alert("Some error occured");
-    //     document.getElementById("RegisterButton").style.disabeld = false;
-    //     return;
-    //   });
   }
 
   return (
