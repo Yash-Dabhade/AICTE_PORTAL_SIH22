@@ -69,15 +69,15 @@ function Home(props) {
 
   const links = [
     "University",
-    "Curriculum",
-    "CurriculumDev",
+    "Trending",
+    "Dashboard",
     "Past Reports",
     "Settings",
   ];
   const icons = [
     <BsBookFill size={22} className="mx-2" />,
-    <BsFillBarChartLineFill size={22} className="mx-2" />,
     <BsFillDiagram3Fill size={22} className="mx-2" />,
+    <BsFillBarChartLineFill size={22} className="mx-2" />,
     <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />,
     <BsGearFill size={22} className="mx-2" />,
   ];

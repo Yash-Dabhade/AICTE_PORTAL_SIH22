@@ -21,7 +21,7 @@ export default function Sidebar(props) {
 
   return (
     <div className={props.isNavOpen ? "app-sidebar" : "hideMenuNav"}>
-      <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
+      <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px] mt-5">
         {props.links.map((ele, index) => {
           return (
             <li className="w-full" key={index}>
