@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { saveNewCurriculum } from "../../utils/dbHelper";
-import { ref as dbref, set, update, child, get, push } from "firebase/database";
-import { storage, database } from "../../firebase/init-firebase";
+import { storage } from "../../firebase/init-firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function NewCurriculum(props) {

@@ -30,12 +30,12 @@ export class UniversityForm extends Component {
       let phone = document.getElementById("universityPhone").value;
       let website = document.getElementById("universityWebsite").value;
       if (
-        initialName == "" ||
-        name == "" ||
-        code == "" ||
-        email == "" ||
-        phone == "" ||
-        website == ""
+        initialName === "" ||
+        name === "" ||
+        code === "" ||
+        email === "" ||
+        phone === "" ||
+        website === ""
       ) {
         toast("Enter all details");
       } else {

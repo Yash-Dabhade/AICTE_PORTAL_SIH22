@@ -12,6 +12,7 @@ import { FaUserAlt } from "react-icons/fa";
 import University from "../pages/CurriculumPortal/University";
 import Trending from "../pages/TrendingPortal/Trending";
 import ExpertHome from "../pages/ExpertPortal/ExpertHome";
+import Settings from "../pages/Settings/Settings";
 import Sidebar from "./Sidebar";
 
 function Home(props) {
@@ -19,6 +20,8 @@ function Home(props) {
   const [isNavOpen, setIsNavOpen] = useState(true);
   const [universityOpen, setUniversityOpen] = useState(true);
   const [trendingOpen, setTrendingOpen] = useState(false);
+  const [CurriculumOpen, setCurriculumOpen] = useState(false);
+  const [reportsOpen, setReportsOpen] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
   const [admin, setAdmin] = useState(false);
 
@@ -57,15 +60,15 @@ function Home(props) {
   function getTrendingOpen(e) {
     setTrendingOpen(e);
   }
+  function getCurricumOpen(e) {
+    setCurriculumOpen(e);
+  }
+  function getReportsOpen(e) {
+    setReportsOpen(e);
+  }
   function getSettingOpen(e) {
     setSettingOpen(e);
   }
-  // function getTrendingOpen(e) {
-  //   setTrendingOpen(e);
-  // }
-  // function getTrendingOpen(e) {
-  //   setTrendingOpen(e);
-  // }
 
   const links = [
     "University",
@@ -81,7 +84,13 @@ function Home(props) {
     <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />,
     <BsGearFill size={22} className="mx-2" />,
   ];
-  const linkFunc = [getUniversityOpen, getTrendingOpen, getSettingOpen];
+  const linkFunc = [
+    getUniversityOpen,
+    getTrendingOpen,
+    getCurricumOpen,
+    getReportsOpen,
+    getSettingOpen,
+  ];
 
   return (
     <div className="app-container">
@@ -185,6 +194,7 @@ function Home(props) {
           />
           {universityOpen ? <University /> : null}
           {trendingOpen ? <Trending /> : null}
+          {settingOpen ? <Settings /> : null}
         </div>
       ) : (
         currentUser && <ExpertHome isNavOpen={isNavOpen} />

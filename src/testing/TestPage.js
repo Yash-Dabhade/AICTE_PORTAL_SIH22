@@ -1,10 +1,10 @@
 import React from "react";
-import Register from "../pages/Register";
+import ExpertDetails from "../pages/ExpertPortal/ExpertDetails";
 
 function TestPage() {
   return (
     <>
-      <Register />
+      <ExpertDetails />
     </>
   );
 }

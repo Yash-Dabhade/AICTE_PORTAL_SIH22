@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "../res/AICTE_logo.png";
+import logo from "../../res/AICTE_logo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 function SignIn() {
   const { login } = useAuth();
@@ -50,7 +50,7 @@ function SignIn() {
         <p className="text-3xl font-bold text-center mt-2">
           Sign in to your account
         </p>
-        <div className="right flex flex-col bg-white mx-80 mt-10 p-10 w-1/2 h-1/6 rounded-xl drop-shadow-xl">
+        <div className="right flex flex-col bg-white mt-10 p-10 w-card h-1/6 rounded-xl drop-shadow-xl">
           <p>Email address</p>
           <input
             id="email"
@@ -65,9 +65,18 @@ function SignIn() {
             type="password"
             placeholder="Password"
           />
-          <span className="mt-3 mx-2 text-violet-900   cursor-pointer hover:underline">
-            Forgot your password?
-          </span>
+          <div className="flex justify-between items-center mt-3">
+            <a href="/forgetpassword">
+              <span className=" text-violet-900   cursor-pointer hover:underline">
+                Forgot your password?
+              </span>
+            </a>
+            <a href="/register">
+              <span className=" text-violet-900   cursor-pointer hover:underline">
+                New ? Create account
+              </span>
+            </a>
+          </div>
           <button
             id="signInBtn"
             onClick={signInNow}
