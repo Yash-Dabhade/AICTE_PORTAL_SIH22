@@ -73,7 +73,7 @@ function saveNewDepartment(
   initialName
 ) {
   const db = database;
-  set(
+  update(
     dbref(
       db,
       `/institutesDetail/${instituteCode}/courses/${courseCode}/departments/${code}`
@@ -149,6 +149,22 @@ function saveNewCurriculum(
         alert("Data Submitted successfully");
         window.location.href = "/home";
       }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function saveNewReport(reportName) {
+  const db = database;
+  let newRef = push(dbref(db, "/reportsList/")).key;
+  update(dbref(db, `/reportsList/${newRef}/`), {
+    id: newRef,
+    name: reportName,
+    date: new Date(Date.now()),
+  })
+    .then((snapshot) => {
+      window.location.reload();
     })
     .catch((error) => {
       console.log(error);
@@ -272,6 +288,26 @@ function getAllTags() {
     });
 }
 
+function getAllReports() {
+  const db = dbref(database);
+  get(child(db, `/reportsList/`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        let allData = new Array();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+        // setState here
+        //ex : setData(allData)
+        console.log(allData);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 export {
   saveNewUniversity,
   getAllUniversities,
@@ -283,4 +319,6 @@ export {
   getFullInstituteDetails,
   saveNewTag,
   getAllTags,
+  saveNewReport,
+  getAllReports,
 };
