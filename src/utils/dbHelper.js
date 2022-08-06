@@ -171,6 +171,43 @@ function saveNewReport(reportName) {
     });
 }
 
+function saveNewTag(name) {
+  const db = database;
+
+  update(dbref(db, `/tags/${name}/`), {
+    name: name,
+    value: name,
+  })
+    .then((snapshot) => {
+      alert("Tag added");
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+}
+
+function addNewExpertEmail(email) {
+  const db = database;
+
+  const registerStatus = {
+    isRegistered: false,
+  };
+
+  update(dbref(db, `/expertsEmails/${email}`), {
+    email: email,
+    registerStatus: registerStatus,
+  })
+    .then((snapshot) => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+      return false;
+    });
+}
+
 // ---------------------------------------------------------------------------------------------------
 
 function getAllUniversities() {
@@ -252,22 +289,6 @@ function getAllCurriculums(reference) {
 }
 
 // Tags
-function saveNewTag(name) {
-  const db = database;
-
-  update(dbref(db, `/tags/${name}/`), {
-    name: name,
-    value: name,
-  })
-    .then((snapshot) => {
-      alert("Tag added");
-      window.location.reload();
-    })
-    .catch((error) => {
-      console.log(error);
-      return false;
-    });
-}
 
 function getAllTags() {
   const db = dbref(database);
@@ -308,6 +329,26 @@ function getAllReports() {
     });
 }
 
+function getAllExpertEmails() {
+  const db = dbref(database);
+  get(child(db, `/expertsEmails/`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        let allData = new Array();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+        // setState here
+        //ex : setData(allData)
+        console.log(allData);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 export {
   saveNewUniversity,
   getAllUniversities,
@@ -321,4 +362,6 @@ export {
   getAllTags,
   saveNewReport,
   getAllReports,
+  addNewExpertEmail,
+  getAllExpertEmails,
 };
