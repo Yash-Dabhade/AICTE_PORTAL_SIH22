@@ -1,0 +1,46 @@
+import React, { useState, useEffect } from "react";
+
+function algorithm(props) {
+  const [curriulum, setCurriculum] = useState(null);
+
+  function getCurriculumFromRef(reference) {
+    //get curriculum and setState
+  }
+
+  function checkIfAlreadyExisit(title) {
+    //return true or false based on the
+  }
+
+  function searchPrerequisitesSem(prerequisites) {
+    //return -1 if not found, else return the semeter number where it is found
+  }
+
+  function compute() {
+    //check if curriculum already exisits
+    //pass report subject title
+    if (checkIfAlreadyExisit(props.title)) {
+      //show modal
+    } else {
+      //search for prerequisites and return if prerequisites present in which sem
+      let prerequisitesInSem = searchPrerequisitesSem(props.prerequisites);
+      if (prerequisitesInSem === -1) {
+        //show modal that prerequisites not found, search for prerequisite
+      } else {
+        if (prerequisitesInSem === curriulum.totalSem) {
+          // message = Shift preqruisite in prerequisitesInSem-1 and suggest to put props.title in prerequisitiesInSem
+        } else {
+          // message =  suggest to put props.title in prerequisitiesInSem + 1
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    //getCurriculumFromRef(reference)
+    //compute()
+  }, []);
+
+  return <div>algorithm</div>;
+}
+
+export default algorithm;
