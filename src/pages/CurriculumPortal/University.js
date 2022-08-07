@@ -63,12 +63,7 @@ export default function University(props) {
               width: "100%",
             }}
           >
-            <HashLoader
-              color="#0F172A"
-              size={36}
-              margin={2}
-              loading={loading}
-            />
+            <HashLoader size={36} margin={2} loading={loading} />
           </div>
         ) : (
           <>
