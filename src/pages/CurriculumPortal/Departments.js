@@ -5,11 +5,13 @@ import Header from "../../components/Header";
 import SubHead from "../../components/SubHead";
 import NewDepartment from "../forms/NewDepartment";
 import Curriculum from "./Curriculum";
+import { Route, Routes } from "react-router-dom";
 
 function Departments(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [allData, setAllData] = React.useState([]);
   const [deptCodes, setDeptCode] = React.useState([]);
+  const [selectedDepartmentCode, setSelectedDepartmentCode] = React.useState();
 
   function getDeparments(data, courseCode) {
     let allDept = {};
@@ -30,16 +32,9 @@ function Departments(props) {
     return () => {};
   }, []);
 
-  function renderCurriculumDetails(code) {
-    props.root.render(
-      <Curriculum
-        instituteCode={props.instituteCode}
-        courseCode={props.courseCode}
-        departmentCode={code}
-        data={allData}
-      />
-    );
-  }
+  const getSelectedDepartmentCode = (code) => {
+    setSelectedDepartmentCode(code);
+  };
 
   function openModal() {
     Modal.setAppElement("#formRoot");
@@ -51,29 +46,47 @@ function Departments(props) {
   }
 
   return (
-    <>
-      <Header title={"Departments"} />
-      <SubHead title={"Departments"} btnFunc={openModal} />
-      <div className="university-boxes jsGridView">
-        {allData.map((ele, index) => {
-          return (
-            <SimpleCard
-              renderDetails={renderCurriculumDetails}
-              data={ele}
-              key={index}
-              deptCode={deptCodes[index]}
-            />
-          );
-        })}
-      </div>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-        <NewDepartment
-          btnFunc={closeModal}
-          instituteCode={props.instituteCode}
-          courseCode={props.courseCode}
-        />
-      </Modal>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Header title={"Departments"} />
+            <SubHead title={"Departments"} btnFunc={openModal} />
+            <div className="university-boxes jsGridView">
+              {allData.map((ele, index) => {
+                return (
+                  <SimpleCard
+                    getSelectedDepartmentCode={getSelectedDepartmentCode}
+                    data={ele}
+                    key={index}
+                    deptCode={deptCodes[index]}
+                  />
+                );
+              })}
+            </div>
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+              <NewDepartment
+                btnFunc={closeModal}
+                instituteCode={props.instituteCode}
+                courseCode={props.courseCode}
+              />
+            </Modal>
+          </>
+        }
+      />
+      <Route
+        path={`/curriculums`}
+        element={
+          <Curriculum
+            instituteCode={props.instituteCode}
+            courseCode={props.courseCode}
+            departmentCode={selectedDepartmentCode}
+            data={allData}
+          />
+        }
+      />
+    </Routes>
   );
 }
 

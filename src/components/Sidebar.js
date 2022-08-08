@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
 
 export default function Sidebar(props) {
@@ -25,8 +26,8 @@ export default function Sidebar(props) {
         {props.links.map((ele, index) => {
           return (
             <li className="w-full" key={index}>
-              <a
-                href={`#${ele}`}
+              <Link
+                to={`/${ele}`}
                 className={
                   index == 0 ? "app-sidebar-link active" : "app-sidebar-link"
                 }
@@ -39,7 +40,7 @@ export default function Sidebar(props) {
                   {props.icons[index]}
                   <span>{ele}</span>
                 </div>
-              </a>
+              </Link>
             </li>
           );
         })}

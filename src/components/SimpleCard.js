@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function SimpleCard(props) {
   return (
@@ -17,18 +18,23 @@ function SimpleCard(props) {
         </div>
         <div className="m-4">
           <div className="rounded-3xl px-6 py-2 btn-compatible text-center  font-bold">
-            <button
+            <Link
+              to={`${
+                window.location.pathname === "/University/institutes/courses"
+                  ? `${window.location.pathname}/departments`
+                  : `${window.location.pathname}/curriculums`
+              }`}
               className="btn cursor-pointer w-full"
               onClick={() => {
                 if (!props.deptCode) {
-                  props.renderDetails(props.data.code);
+                  props.getSelectedCourseCode(props.data.code);
                 } else {
-                  props.renderDetails(props.deptCode);
+                  props.getSelectedDepartmentCode(props.deptCode);
                 }
               }}
             >
               View
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -14,8 +14,11 @@ import Trending from "../pages/TrendingPortal/Trending";
 import ExpertHome from "../pages/ExpertPortal/ExpertHome";
 import Settings from "../pages/Settings/Settings";
 import Sidebar from "./Sidebar";
+import UniversityRoutes from "../routes/UniversityRoutes";
+import Institutes from "../pages/CurriculumPortal/Institutes";
+import { Route, Routes, useOutletContext, Link } from "react-router-dom";
 
-function Home(props) {
+function Home() {
   const { logout, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(true);
   const [universityOpen, setUniversityOpen] = useState(true);
@@ -24,6 +27,8 @@ function Home(props) {
   const [reportsOpen, setReportsOpen] = useState(false);
   const [settingOpen, setSettingOpen] = useState(false);
   const [admin, setAdmin] = useState(false);
+
+  let outletData = useOutletContext();
 
   function modeSwitch() {
     document.documentElement.classList.toggle("dark");
@@ -110,9 +115,9 @@ function Home(props) {
             </svg>
           </button>
 
-          <a href="/" className="app-name">
+          <Link to="/" className="app-name">
             AICTE
-          </a>
+          </Link>
           <div className="search-wrapper">
             <input className="search-input" type="text" placeholder="Search" />
             <svg
@@ -192,9 +197,14 @@ function Home(props) {
             linkFunc={linkFunc}
             isNavOpen={isNavOpen}
           />
-          {universityOpen ? <University /> : null}
-          {trendingOpen ? <Trending /> : null}
-          {settingOpen ? <Settings /> : null}
+          <Routes>
+            <Route path="/" element={<University />} />
+            <Route path="/University/*" element={<UniversityRoutes />}>
+              {/* <Route path="institute" element={<Institutes />} /> */}
+            </Route>
+            <Route path="/Trending" element={<Trending />} />
+            <Route path="/Settings" element={<Settings />} />
+          </Routes>
         </div>
       ) : (
         currentUser && <ExpertHome isNavOpen={isNavOpen} />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Courses from "../pages/CurriculumPortal/Courses";
 
 function InstituteList(props) {
@@ -17,10 +18,6 @@ function InstituteList(props) {
     getAllInstitutes();
     return () => {};
   }, []);
-
-  function renderCardDetails(code) {
-    props.root.render(<Courses code={code} root={props.root} />);
-  }
 
   return (
     <div className="institute flex flex-col">
@@ -75,43 +72,43 @@ function InstituteList(props) {
                 </tr>
               </thead>
               <tbody>
-                {institutes
-                  ? institutes.map((ele, index) => {
-                      return (
-                        <tr className="border-b" key={index}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
-                            {index + 1}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
-                            {ele.code}
-                          </td>
-                          <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                            {ele.name}
-                          </td>
-                          <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                            {ele.phone}
-                          </td>
-                          <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                            {ele.email}
-                          </td>
-                          <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                            {ele.website}
-                          </td>
-                          <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
-                            <button
-                              className="btn-compatible font-bold py-2 px-4 rounded-full"
-                              onClick={() => {
-                                renderCardDetails(ele.code);
-                              }}
-                            >
-                              {"View Details"}
-                              {/* {ele.details} */}
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  : null}
+                {institutes &&
+                  institutes.map((ele, index) => {
+                    return (
+                      <tr className="border-b" key={index}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                          {index + 1}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                          {ele.code}
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                          {ele.name}
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                          {ele.phone}
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                          {ele.email}
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                          {ele.website}
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                          <Link
+                            to={`${window.location.pathname}/courses`}
+                            className="btn-compatible font-bold py-2 px-4 rounded-full"
+                            onClick={() => {
+                              props.getInstituteCode(ele.code);
+                            }}
+                          >
+                            {"View Details"}
+                            {/* {ele.details} */}
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
