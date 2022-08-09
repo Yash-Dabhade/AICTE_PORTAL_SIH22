@@ -6,10 +6,16 @@ import { Routes, Route } from "react-router-dom";
 function HomePage() {
   const currentUser = useAuth();
   return (
-    <Routes>
-      <Route path="*" element={<Home user={currentUser.email} />} />
-      <Route path="/signin" element={<SignIn />} />
-    </Routes>
+    <>
+      {currentUser && currentUser.currentUser ? (
+        <Routes>
+          <Route path="*" element={<Home user={currentUser.email} />} />
+          <Route path="/signin" element={<SignIn />} />
+        </Routes>
+      ) : (
+        <SignIn />
+      )}
+    </>
   );
 }
 
