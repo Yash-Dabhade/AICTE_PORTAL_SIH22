@@ -9,10 +9,24 @@ function algorithm(props) {
 
   function checkIfAlreadyExisit(title) {
     //return true or false based on the
+    let subject = new String(title).toLowerCase();
+    curriculum.forEach((ele) => {
+      if (new String(ele).toLocaleLowerCase().search(subject) !== -1) {
+        return true;
+      }
+    });
+    return false;
   }
 
-  function searchPrerequisitesSem(prerequisites) {
+  function searchPrerequisitesSem(prerequisite) {
     //return -1 if not found, else return the semeter number where it is found
+    let subject = new String(prerequisite).toLowerCase();
+    curriculum.forEach((ele) => {
+      if (new String(ele).toLocaleLowerCase().search(subject) !== -1) {
+        return ele.semester;
+      }
+    });
+    return -1;
   }
 
   function compute() {
@@ -22,7 +36,7 @@ function algorithm(props) {
       //show modal
     } else {
       //search for prerequisites and return if prerequisites present in which sem
-      let prerequisitesInSem = searchPrerequisitesSem(props.prerequisites);
+      let prerequisitesInSem = searchPrerequisitesSem(props.prerequisite);
       if (prerequisitesInSem === -1) {
         //show modal that prerequisites not found, search for prerequisite
       } else {
