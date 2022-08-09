@@ -195,7 +195,9 @@ function addNewExpertEmail(email) {
     isRegistered: false,
   };
 
-  update(dbref(db, `/expertsEmails/${email}`), {
+  let expertName = String(email).split("@")[0];
+
+  update(dbref(db, `/expertsEmails/${expertName}`), {
     email: email,
     registerStatus: registerStatus,
   })

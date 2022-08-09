@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import { addNewExpertEmail, saveNewUniversity } from "../../utils/dbHelper";
-import { ToastContainer, toast } from "react-toastify";
+import React from "react";
+import { saveNewTag } from "../../utils/dbHelper";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function NewExpertForm(props) {
+export default function NewTag(props) {
   function handleSubmit(e) {
     e.preventDefault();
-    let email = document.getElementById("expertEmail").value;
-    addNewExpertEmail(email);
+    let tag = document.getElementById("tagName").value;
+    saveNewTag(tag);
   }
 
   return (
@@ -43,7 +42,7 @@ export default function NewExpertForm(props) {
           </button>
           <div className="py-6 px-6 lg:px-8">
             <h3 className="mb-4 text-xl font-medium text-gray-900">
-              Expert Form
+              Add Tag Form
             </h3>
 
             <form className="space-y-6" action="#">
@@ -52,14 +51,14 @@ export default function NewExpertForm(props) {
                   htmlFor="newTitle"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
-                  Email
+                  Tag Name
                 </label>
                 <input
                   type="text"
-                  name="newEmail"
-                  id="expertEmail"
+                  name="tagName"
+                  id="tagName"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-                  placeholder="Email of expert"
+                  placeholder="Tag Name"
                   required=""
                 />
               </div>

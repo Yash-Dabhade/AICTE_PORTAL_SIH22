@@ -1,10 +1,16 @@
 import React from "react";
 import Home from "../components/Home";
 import { useAuth } from "../contexts/AuthContext";
-
+import SignIn from "./Authentication/SignIn";
+import { Routes, Route } from "react-router-dom";
 function HomePage() {
   const currentUser = useAuth();
-  return <Home user={currentUser.email} />;
+  return (
+    <Routes>
+      <Route path="*" element={<Home user={currentUser.email} />} />
+      <Route path="/signin" element={<SignIn />} />
+    </Routes>
+  );
 }
 
 export default HomePage;

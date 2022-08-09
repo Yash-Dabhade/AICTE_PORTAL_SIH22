@@ -35,7 +35,7 @@ function SignIn() {
           draggable: true,
           progress: undefined,
         });
-        window.location.href = "/home";
+        window.location.href = "/";
       })
       .catch((error) => {
         // alert("Unable to login !");

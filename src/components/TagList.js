@@ -1,7 +1,8 @@
 import React from "react";
+// import { getAllTags } from "../utils/dbHelper";
 import ListCard from "./ListCard";
 
-export default function ExpertLists(props) {
+export default function TagList(props) {
   return (
     <div className="flex flex-wrap w-full">
       <button
@@ -21,10 +22,11 @@ export default function ExpertLists(props) {
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
-      <ListCard />
-      <ListCard />
-      <ListCard />
-      <ListCard />
+      {console.log(props.tags)}
+      {props.tags &&
+        props.tags.map((ele, index) => {
+          <ListCard details={ele} key={index} />;
+        })}
     </div>
   );
 }
