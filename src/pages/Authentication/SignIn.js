@@ -3,6 +3,7 @@ import logo from "../../res/AICTE_logo.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../contexts/AuthContext";
+import { Link, Outlet } from "react-router-dom";
 
 function SignIn() {
   const { login } = useAuth();
@@ -35,7 +36,6 @@ function SignIn() {
           draggable: true,
           progress: undefined,
         });
-        window.location.href = "/";
       })
       .catch((error) => {
         // alert("Unable to login !");
@@ -66,27 +66,28 @@ function SignIn() {
             placeholder="Password"
           />
           <div className="flex justify-between items-center mt-3">
-            <a href="/forgetpassword">
+            <Link to="/forgetpassword">
               <span className=" text-violet-900   cursor-pointer hover:underline">
                 Forgot your password?
               </span>
-            </a>
-            <a href="/register">
+            </Link>
+            <Link to="/register">
               <span className=" text-violet-900   cursor-pointer hover:underline">
                 New ? Create account
               </span>
-            </a>
+            </Link>
           </div>
           <button
             id="signInBtn"
             onClick={signInNow}
-            className="btn px-3 mt-4 h-10 rounded-lg bg-blue-700   hover:bg-blue-600 font-bold text-white text-xl"
+            className="btn btn-compatible px-3 mt-4 h-10 rounded-lg  hover:border-[#1f1c2e] hover:border-2  font-bold text-white text-xl"
           >
             Sign In
           </button>
         </div>
       </div>
       <ToastContainer />
+      <Outlet />
     </div>
   );
 }

@@ -44,9 +44,9 @@ function Register() {
   }, []);
 
   function registerNow() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let confirmPass = document.getElementById("confirmPass").value;
+    let email = document.getElementById("regEmail").value;
+    let password = document.getElementById("regPassword").value;
+    let confirmPass = document.getElementById("confirmRegPass").value;
 
     document.getElementById("registerBtn").style.disabeld = true;
     if (password != confirmPass) {
@@ -56,19 +56,19 @@ function Register() {
     }
 
     const db = dbref(database);
-    get(child(db, `/expertEmails/${email}`))
+    let emailName = String(email).split("@")[0];
+    // console.log(emailName);
+    get(child(db, `/expertsEmails/${emailName}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          // console.log(data);
           // console.log(fname, lname, email, enroll);
 
-          if (data.Email == email) {
+          if (data.email == email) {
             setIsSubmitting(true);
             register(email, password)
               .then((res) => {
-                console.log("Registered");
-                window.location.href = "/home";
+                data.registerStatus.isRegister = false;
               })
               .catch((error) => {
                 console.log(error.message);
@@ -78,47 +78,47 @@ function Register() {
               });
           } else {
             alert("Details does not match the records !");
-            document.getElementById("RegisterButton").style.disabeld = false;
+            document.getElementById("registerBtn").style.disabeld = false;
           }
         } else {
           alert("Expert email not found !");
-          document.getElementById("RegisterButton").style.disabeld = false;
+          document.getElementById("registerBtn").style.disabeld = false;
         }
       })
       .catch((error) => {
         alert("Some error occured");
-        document.getElementById("RegisterButton").style.disabeld = false;
+        document.getElementById("registerBtn").style.disabeld = false;
         return;
       });
   }
 
   return (
-    <div className="contain">
-      <div className="flex flex-col justify-center items-center bg-slate-100 ">
+    <div>
+      <div className="container flex flex-col justify-center items-center bg-slate-100 ">
         <div>
           <img className="h-28 mt-2  mx-auto w-28" src={logo} alt="Logo" />
           <p className="text-3xl font-bold text-center mt-2">
             Register account
           </p>
         </div>
-        <div className="flex flex-col bg-white mx-80 mt-10 p-10 w-1/2 h-1/6 rounded-xl drop-shadow-xl">
+        <div className="flex flex-col bg-white mt-10 p-10 w-card h-1/6 rounded-xl drop-shadow-xl">
           <p>Email</p>
           <input
-            id="email"
+            id="regEmail"
             className=" mt-2 text-lg px-3 h-10  border border-gray-400 outline-1 outline-blue-500 rounded-md"
             type="text"
             placeholder="Email address"
           />
           <h2 className="mt-2">Password</h2>
           <input
-            id="password"
+            id="regPassword"
             className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
             type="password"
             placeholder="Password"
           />
           <h2 className="mt-2">Confirm Password</h2>
           <input
-            id="confirmPass"
+            id="confirmRegPass"
             className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
             type="password"
             placeholder="Confirm Password"
@@ -127,7 +127,7 @@ function Register() {
           <button
             id="registerBtn"
             onClick={registerNow}
-            className="btn px-3 mt-4 h-10 rounded-lg bg-blue-700   hover:bg-blue-600 font-bold text-white text-xl"
+            className="btn btn-compatible px-3 mt-4 h-10 rounded-lg hover:border-[#1f1c2e] hover:border-2 font-bold text-white text-xl"
           >
             Register
           </button>

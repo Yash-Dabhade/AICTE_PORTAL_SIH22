@@ -175,12 +175,10 @@ function Home() {
             </button>
             {currentUser && (
               <button
-                className="logout py-2 px-4 w-full btn-compatible rounded-lg hide"
+                className="logout py-2 px-4 w-full btn-compatible rounded-lg hide hover:border-[#1f1c2e] hover:border-2"
                 onClick={async (e) => {
                   e.preventDefault();
-                  await logout().then(() => {
-                    window.location.href = "/signin";
-                  });
+                  logout();
                 }}
               >
                 Log out
