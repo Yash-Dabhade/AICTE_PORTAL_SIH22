@@ -11,12 +11,13 @@ import { useAuth } from "../contexts/AuthContext";
 import { FaUserAlt } from "react-icons/fa";
 import University from "../pages/CurriculumPortal/University";
 import Trending from "../pages/TrendingPortal/Trending";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import ExpertHome from "../pages/ExpertPortal/ExpertHome";
 import Settings from "../pages/Settings/Settings";
 import Sidebar from "./Sidebar";
 import UniversityRoutes from "../routes/UniversityRoutes";
-import Institutes from "../pages/CurriculumPortal/Institutes";
 import { Route, Routes, useOutletContext, Link } from "react-router-dom";
+import PastReports from "../pages/PastReports/PastReports";
 
 function Home() {
   const { logout, currentUser } = useAuth();
@@ -201,6 +202,8 @@ function Home() {
               {/* <Route path="institute" element={<Institutes />} /> */}
             </Route>
             <Route path="/Trending" element={<Trending />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/Past%20Reports" element={<PastReports />} />
             <Route path="/Settings" element={<Settings />} />
           </Routes>
         </div>
