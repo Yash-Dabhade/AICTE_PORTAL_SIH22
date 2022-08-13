@@ -1,12 +1,12 @@
 import React from "react";
 import ListCard from "./ListCard";
 
-export default function ExpertLists(props) {
+export default function ExpertLists({ experts, btnFunc }) {
   return (
     <div className="flex flex-wrap w-full">
       <button
         className="CROSS-ICON absolute top-0 right-0 darkMode"
-        onClick={props.btnFunc}
+        onClick={btnFunc}
       >
         <svg
           className="h-8 w-8"
@@ -21,10 +21,10 @@ export default function ExpertLists(props) {
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
-      <ListCard />
-      <ListCard />
-      <ListCard />
-      <ListCard />
+      {experts &&
+        Object.keys(experts).map((key, index) => {
+          return <ListCard name={key} field={experts[key].field} key={index} />;
+        })}
     </div>
   );
 }

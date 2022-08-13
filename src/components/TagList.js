@@ -2,12 +2,12 @@ import React from "react";
 // import { getAllTags } from "../utils/dbHelper";
 import ListCard from "./ListCard";
 
-export default function TagList(props) {
+export default function TagList({ tags, btnFunc }) {
   return (
     <div className="flex flex-wrap w-full">
       <button
         className="CROSS-ICON absolute top-0 right-0 darkMode"
-        onClick={props.btnFunc}
+        onClick={btnFunc}
       >
         <svg
           className="h-8 w-8"
@@ -22,10 +22,9 @@ export default function TagList(props) {
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
-      {console.log(props.tags)}
-      {props.tags &&
-        props.tags.map((ele, index) => {
-          <ListCard details={ele} key={index} />;
+      {tags &&
+        Object.keys(tags).map((key, index) => {
+          return <ListCard name={key} key={index} />;
         })}
     </div>
   );

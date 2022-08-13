@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { addNewExpertEmail, saveNewUniversity } from "../../utils/dbHelper";
-import { ToastContainer, toast } from "react-toastify";
+import React from "react";
+import { addNewExpert } from "../../utils/dbHelper";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function NewExpertForm(props) {
+export default function NewExpertForm({ btnFunc }) {
   function handleSubmit(e) {
     e.preventDefault();
     let email = document.getElementById("expertEmail").value;
-    addNewExpertEmail(email);
+    let area = document.getElementById("faculty").value;
+    addNewExpert(email, area, btnFunc);
   }
 
   return (
@@ -21,7 +21,7 @@ export default function NewExpertForm(props) {
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
         <div className="relative bg-white rounded-lg shadow dark:bg-white-200">
           <button
-            onClick={props.btnFunc}
+            onClick={btnFunc}
             type="button"
             className=" shadow-2xl absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
             data-modal-toggle="authentication-modal"
@@ -60,7 +60,23 @@ export default function NewExpertForm(props) {
                   id="expertEmail"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                   placeholder="Email of expert"
-                  required=""
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="faculty"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Field of Experty
+                </label>
+                <input
+                  type="text"
+                  name="faculty"
+                  id="faculty"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
+                  placeholder="Area of Experty"
+                  required
                 />
               </div>
 

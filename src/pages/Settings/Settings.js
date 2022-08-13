@@ -20,6 +20,7 @@ export default function Settings() {
 
   useEffect(() => {
     getAllTags();
+    getAllExperts();
     Modal.setAppElement("#formRoot");
     return () => {};
   }, []);
@@ -28,7 +29,7 @@ export default function Settings() {
     setIsExpertFormModalIsOpen(false);
     setIsExpertDetailsModalIsOpen(false);
     setIsAddTagModalIsOpen(false);
-    setIsExpertDetailsModalIsOpen(false);
+    setIsTagDetailsModalIsOpen(false);
   }
 
   function openExpertFormModal() {
@@ -44,10 +45,11 @@ export default function Settings() {
   }
 
   function openTagDetailsModal() {
-    setIsExpertDetailsModalIsOpen(true);
+    setIsTagDetailsModalIsOpen(true);
   }
 
   const [tags, setTags] = React.useState();
+  const [experts, setExperts] = React.useState();
 
   function getAllTags() {
     const db = dbref(database);
@@ -56,6 +58,16 @@ export default function Settings() {
       if (snapshot.exists()) {
         alltags = snapshot.val();
         setTags(alltags);
+      }
+    });
+  }
+  function getAllExperts() {
+    const db = dbref(database);
+    get(child(db, `/expertsEmails/`)).then((snapshot) => {
+      let allExperts = [];
+      if (snapshot.exists()) {
+        allExperts = snapshot.val();
+        setExperts(allExperts);
       }
     });
   }
@@ -106,7 +118,7 @@ export default function Settings() {
         <NewExpertForm btnFunc={closeModal} />
       </Modal>
       <Modal isOpen={ExpertDetailsModalIsOpen} onRequestClose={closeModal}>
-        <ExpertLists btnFunc={closeModal} />
+        <ExpertLists btnFunc={closeModal} experts={experts} />
       </Modal>
       <Modal isOpen={addTagModalIsOpen} onRequestClose={closeModal}>
         <NewTag btnFunc={closeModal} />

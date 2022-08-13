@@ -2,11 +2,11 @@ import React from "react";
 import { saveNewTag } from "../../utils/dbHelper";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function NewTag(props) {
+export default function NewTag({ btnFunc }) {
   function handleSubmit(e) {
     e.preventDefault();
     let tag = document.getElementById("tagName").value;
-    saveNewTag(tag);
+    saveNewTag(tag, btnFunc);
   }
 
   return (
@@ -20,7 +20,7 @@ export default function NewTag(props) {
       <div className="relative p-4 w-full max-w-md h-full md:h-auto">
         <div className="relative bg-white rounded-lg shadow dark:bg-white-200">
           <button
-            onClick={props.btnFunc}
+            onClick={btnFunc}
             type="button"
             className=" shadow-2xl absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
             data-modal-toggle="authentication-modal"

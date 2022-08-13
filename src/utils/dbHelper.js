@@ -171,7 +171,7 @@ function saveNewReport(reportName) {
     });
 }
 
-function saveNewTag(name) {
+function saveNewTag(name, btnFunc) {
   const db = database;
 
   update(dbref(db, `/tags/${name}/`), {
@@ -180,7 +180,7 @@ function saveNewTag(name) {
   })
     .then((snapshot) => {
       alert("Tag added");
-      window.location.reload();
+      btnFunc();
     })
     .catch((error) => {
       console.log(error);
@@ -188,7 +188,7 @@ function saveNewTag(name) {
     });
 }
 
-function addNewExpertEmail(email) {
+function addNewExpert(email, field, btnFunc) {
   const db = database;
 
   const registerStatus = {
@@ -199,10 +199,12 @@ function addNewExpertEmail(email) {
 
   update(dbref(db, `/expertsEmails/${expertName}`), {
     email: email,
+    field: field,
     registerStatus: registerStatus,
   })
     .then((snapshot) => {
-      window.location.reload();
+      alert("New Expert is Successfully Added");
+      btnFunc();
     })
     .catch((error) => {
       console.log(error);
@@ -361,9 +363,9 @@ export {
   getAllInstitutes,
   getFullInstituteDetails,
   saveNewTag,
+  addNewExpert,
   getAllTags,
   saveNewReport,
   getAllReports,
-  addNewExpertEmail,
   getAllExpertEmails,
 };
