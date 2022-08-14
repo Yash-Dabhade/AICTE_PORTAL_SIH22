@@ -33,7 +33,6 @@ export default function Sidebar(props) {
                 }
                 onClick={(e) => {
                   makeActive(e);
-                  props.linkFunc[index](true);
                 }}
               >
                 <div className="flex justify-start items-center">
