@@ -27,19 +27,6 @@ function Home() {
     document.documentElement.classList.toggle("dark");
   }
 
-  function removeActive() {
-    let actives = document.querySelectorAll(".active");
-    actives.forEach((a) => {
-      a.classList.remove("active");
-    });
-  }
-
-  function makeActive(e) {
-    removeActive();
-    let ele = e.target.closest("a");
-    ele.classList.add("active");
-  }
-
   function toggleLogout() {
     if (!currentUser) return;
     document.querySelector(".logout").classList.toggle("hide");

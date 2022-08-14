@@ -95,38 +95,46 @@ function Curriculum(props) {
                     <tr>
                       <th
                         scope="col"
-                        className="text-sm font-medium  px-6 py-4 text-left"
+                        className="text-sm font-medium py-4 text-center"
                       >
                         #
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium  px-6 py-4 text-left"
+                        className="text-sm font-medium py-4 text-center"
                       >
                         Subject Code
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium  px-6 py-4 text-left"
+                        className="text-sm font-medium py-4 text-center"
                       >
                         Subject Name
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium  px-6 py-4 text-left"
+                        className="text-sm font-medium py-4 text-center"
                       >
                         Subject Level
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium  px-6 py-4 text-left"
+                        className="text-sm font-medium py-4 text-center"
                       >
                         Subject Tag
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium  px-6 py-4 text-left"
-                      ></th>
+                        className="text-sm font-medium py-4 text-center"
+                      >
+                        View
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-sm font-medium py-4 text-center"
+                      >
+                        Id
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -134,27 +142,32 @@ function Curriculum(props) {
                       ? allData.map((ele, index) => {
                           return (
                             <tr className="border-b" key={index}>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                              <td className=" text-sm font-medium py-4 text-center">
                                 {index + 1}
                               </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium ">
+                              <td className=" text-sm font-medium py-4 text-center">
                                 {ele.code}
                               </td>
-                              <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                              <td className="text-sm font-light py-4 text-center">
                                 {ele.title}
                               </td>
-                              <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                              <td className="text-sm font-light py-4 text-center">
                                 {ele.level}
                               </td>
-                              <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                              <td className="text-sm font-light py-4 text-center">
                                 {ele.tag}
                               </td>
-                              <td className="text-sm  font-light px-6 py-4 whitespace-nowrap">
+                              <td className="text-sm font-light py-4 text-center">
                                 <a target="_blank" href={ele.fileUrl}>
                                   <button className="btn-compatible font-bold py-2 px-4 rounded-full">
                                     Open
                                   </button>
                                 </a>
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                <button className="btn-compatible font-bold py-2 px-4 rounded-full">
+                                  Copy Id
+                                </button>
                               </td>
                             </tr>
                           );

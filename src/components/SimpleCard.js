@@ -17,25 +17,25 @@ function SimpleCard(props) {
           </div>
         </div>
         <div className="m-4">
-          <div className="rounded-3xl px-6 py-2 btn-compatible text-center  font-bold">
-            <Link
-              to={`${
-                window.location.pathname === "/University/institutes/courses"
-                  ? `${window.location.pathname}/departments`
-                  : `${window.location.pathname}/curriculums`
-              }`}
-              className="btn cursor-pointer w-full"
-              onClick={() => {
-                if (!props.deptCode) {
-                  props.getSelectedCourseCode(props.data.code);
-                } else {
-                  props.getSelectedDepartmentCode(props.deptCode);
-                }
-              }}
-            >
+          <Link
+            to={`${
+              window.location.pathname === "/University/institutes/courses"
+                ? `${window.location.pathname}/departments`
+                : `${window.location.pathname}/curriculums`
+            }`}
+            className="btn cursor-pointer w-full"
+            onClick={() => {
+              if (!props.deptCode) {
+                props.getSelectedCourseCode(props.data.code);
+              } else {
+                props.getSelectedDepartmentCode(props.deptCode);
+              }
+            }}
+          >
+            <div className="rounded-3xl px-6 py-2 btn-compatible text-center font-bold">
               View
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       </div>
     </div>

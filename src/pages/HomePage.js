@@ -18,7 +18,7 @@ function HomePage() {
     <>
       {currentUser && currentUser.currentUser ? (
         <Routes>
-          <Route path="*" element={<Home user={currentUser.email} />} />
+          <Route path="/*" element={<Home user={currentUser.email} />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
       ) : (

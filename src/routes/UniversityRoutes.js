@@ -60,45 +60,59 @@ export default function UniversityRoutes() {
   }
   return (
     <div className="parent-section darkMode" id="formRoot">
-      <Routes>
-        <Route
-          path="/*"
-          element={
-            <>
-              <Header />
-              <SubHead title={"University"} btnFunc={createUniversity} />
-              <div className="university-boxes jsGridView">
-                {data &&
-                  data.map((ele, index) => {
-                    return (
-                      <Card
-                        logo={MSBTE_logo}
-                        title={ele.initialName}
-                        fullName={ele.fullName}
-                        phone={ele.phone}
-                        email={ele.email}
-                        code={ele.code}
-                        location={ele.location}
-                        institutes={ele.institutes}
-                        website={ele.website}
-                        index={index}
-                        key={index}
-                        getSelectedInstitute={getSelectedInstitute}
-                      />
-                    );
-                  })}
-              </div>
-              <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                <UniversityForm btnFunc={closeModal} />
-              </Modal>
-            </>
-          }
-        />
-        <Route
-          path="institutes/*"
-          element={<Institutes data={index ? data[index] : null} />}
-        ></Route>
-      </Routes>
+      {loading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "85vh",
+            width: "100%",
+          }}
+        >
+          <HashLoader size={36} margin={2} loading={loading} />
+        </div>
+      ) : (
+        <Routes>
+          <Route
+            path="/*"
+            element={
+              <>
+                <Header />
+                <SubHead title={"University"} btnFunc={createUniversity} />
+                <div className="university-boxes jsGridView">
+                  {data &&
+                    data.map((ele, index) => {
+                      return (
+                        <Card
+                          logo={MSBTE_logo}
+                          title={ele.initialName}
+                          fullName={ele.fullName}
+                          phone={ele.phone}
+                          email={ele.email}
+                          code={ele.code}
+                          location={ele.location}
+                          institutes={ele.institutes}
+                          website={ele.website}
+                          index={index}
+                          key={index}
+                          getSelectedInstitute={getSelectedInstitute}
+                        />
+                      );
+                    })}
+                </div>
+                <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+                  <UniversityForm btnFunc={closeModal} />
+                </Modal>
+              </>
+            }
+          />
+          <Route
+            path="institutes/*"
+            element={<Institutes data={index ? data[index] : null} />}
+          ></Route>
+        </Routes>
+      )}
       <Outlet />
     </div>
   );
