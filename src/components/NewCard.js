@@ -1,20 +1,34 @@
-import React, {useState} from "react";
-import DetailCard from "../pages/TrendingPortal/DetailCard";
+import React, { useState } from "react";
+import Modal from "react-modal";
+import NewReport from "../pages/forms/NewReport";
 
-function NewCard(props) {
-  const [ShowModal, setShowModal] = useState(false);
+function NewCard() {
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function createUniversity() {
+    openModal();
+    Modal.setAppElement("#formRoot");
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div className="flex">
-        <div onClick={() => setShowModal(true)} className="border-2 flex justify-center items-center cursor-pointer hover:shadow-lg border-compatible border-black bg-white  card w-32 h-32 rounded-lg">
-          <div className="text-center text-6xl font-medium">+</div>
-        </div>
-
-        <div onClick={() => setShowModal(false)} className="border-2 flex justify-center items-center cursor-pointer hover:shadow-lg border-compatible border-black bg-white  card w-32 h-32 rounded-lg mx-4" >
-          <div className="text-center text-xl font-medium">{props.date}
-          <button className="bg-slate-500 rounded-md mt-2 p-1 text-white	text-sm">Details</button>
-          </div>
-        </div>
-        <DetailCard onClose={() => setShowModal(false)} visible={ShowModal}/>
+      <div
+        onClick={() => setIsOpen(true)}
+        className="border-2 flex justify-center items-center cursor-pointer hover:shadow-lg border-compatible border-black bg-white  card w-52 h-40 rounded-lg"
+      >
+        <div className="text-center text-6xl font-medium">+</div>
+      </div>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <NewReport btnFunc={closeModal} />
+      </Modal>
     </div>
   );
 }
