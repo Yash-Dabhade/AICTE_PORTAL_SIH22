@@ -155,7 +155,7 @@ function saveNewCurriculum(
     });
 }
 
-function saveNewReport(reportName) {
+function saveNewReport(reportName, btnFunc) {
   const db = database;
   let newRef = push(dbref(db, "/reportsList/")).key;
   update(dbref(db, `/reportsList/${newRef}/`), {
@@ -164,7 +164,8 @@ function saveNewReport(reportName) {
     date: new Date(Date.now()),
   })
     .then((snapshot) => {
-      window.location.reload();
+      console.log("Saved new report");
+      btnFunc();
     })
     .catch((error) => {
       console.log(error);
