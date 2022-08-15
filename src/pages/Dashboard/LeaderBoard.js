@@ -29,9 +29,12 @@ export default function LeaderBoard() {
     },
   ];
 
-  const card = demo.map((ele) => {
+  const card = demo.map((ele, index) => {
     return (
-      <div className="max-w-sm rounded-2xl text-white overflow-hidden shadow-xl border-solid border-2 border-slate-700 bg-slate-900">
+      <div
+        key={index}
+        className="max-w-sm rounded-2xl text-white overflow-hidden shadow-xl border-solid border-2 border-slate-700 bg-slate-900"
+      >
         <div className="px-6 py-4 ">
           <p className="font-sans">{ele.index}</p>
           <div className="font-bold font-sans text-xl mb-2">{ele.title}</div>

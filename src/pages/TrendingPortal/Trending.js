@@ -44,9 +44,9 @@ function Trending() {
         <Route
           path="*"
           element={
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center">
               <TrendingIntro />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 overflow-auto h-report md:h-4/5 lg:h-full overflow-y-visible">
+              <div className="report-boxes grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 overflow-auto h-report overflow-y-scroll">
                 <NewCard />
                 {allReports.map((data) => {
                   return (

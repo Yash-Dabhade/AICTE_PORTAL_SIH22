@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../styles/Dashboard.css";
 
 export default function Sidebar({ links, icons, isNavOpen }) {
@@ -22,10 +22,12 @@ export default function Sidebar({ links, icons, isNavOpen }) {
         {links.map((ele, index) => {
           return (
             <li className="w-full" key={index}>
-              <Link
+              <NavLink
                 to={`/${ele}`}
                 className={
-                  index == 0 ? "app-sidebar-link active" : "app-sidebar-link"
+                  index === 0 && window.location.pathname === "/"
+                    ? "app-sidebar-link active"
+                    : "app-sidebar-link"
                 }
                 onClick={(e) => {
                   makeActive(e);
@@ -35,7 +37,7 @@ export default function Sidebar({ links, icons, isNavOpen }) {
                   {icons[index]}
                   <span>{ele}</span>
                 </div>
-              </Link>
+              </NavLink>
             </li>
           );
         })}

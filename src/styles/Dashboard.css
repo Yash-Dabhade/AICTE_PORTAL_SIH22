@@ -316,6 +316,16 @@ a {
   background: transparent;
 }
 
+.report-boxes {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.report-boxes::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
 @media (max-width: 865px) {
   .app-sidebar span {
     display: none;

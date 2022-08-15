@@ -6,6 +6,7 @@ module.exports = {
       spacing: {
         card: "28rem",
         report: "55vh",
+        intro: "14%",
       },
     },
   },
