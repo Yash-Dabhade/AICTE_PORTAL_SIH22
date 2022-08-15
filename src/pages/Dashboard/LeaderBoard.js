@@ -37,7 +37,7 @@ export default function LeaderBoard() {
 
   const card = demo.map((ele)=> {
     return (
-    <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl" style={{backgroundColor: "#ddddeb"}}>
+    <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl border-solid border-2 border-slate-700" style={{backgroundColor: "#ddddeb"}}>
     <div className="px-6 py-4 ">
       <p className='text-slate-400'>{ele.index}</p>
       <div className="font-bold text-xl mb-2">{ele.title}</div>
