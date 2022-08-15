@@ -48,7 +48,7 @@ class TrendingGraph extends React.Component{
 render(){
   return (
     <div className=" mt-11 ">
-    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 shadow-2xl rounded-2xl border-solid border-2 border-black-900 text-center">
+    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 shadow-2xl rounded-2xl border-solid border-2 border-slate-700 text-center">
                 <dt className="text-sm font-medium text-gray-500 ">
                   <b> Market Capture</b>
                   </dt>
