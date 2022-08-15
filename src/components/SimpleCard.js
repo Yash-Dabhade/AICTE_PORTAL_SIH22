@@ -1,20 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function SimpleCard(props) {
+function SimpleCard({
+  data,
+  getSelectedCourseCode,
+  getSelectedDepartmentCode,
+  deptCode,
+}) {
   return (
     <div className="university-box-wrapper darkMode">
       <div className="border-2 border-compatible rounded-lg py-3 w-card">
         <div className="font-bold text-xl p-3 m-4 border-b-2 border-compatible">
-          {props.data.title}
+          {data.title}
         </div>
         <div className="flex justify-between itmes-center ">
-          <div className="p-3 text-lg m-4">
-            {props.data.level || props.data.desc}
-          </div>
-          <div className="p-3 text-lg min-w-fit m-4">
-            Code : {props.data.code}
-          </div>
+          <div className="p-3 text-lg m-4">{data.level || data.desc}</div>
+          <div className="p-3 text-lg min-w-fit m-4">Code : {data.code}</div>
         </div>
         <div className="m-4">
           <Link
@@ -25,10 +26,10 @@ function SimpleCard(props) {
             }`}
             className="btn cursor-pointer w-full"
             onClick={() => {
-              if (!props.deptCode) {
-                props.getSelectedCourseCode(props.data.code);
+              if (!deptCode) {
+                getSelectedCourseCode(data.code);
               } else {
-                props.getSelectedDepartmentCode(props.deptCode);
+                getSelectedDepartmentCode(deptCode);
               }
             }}
           >

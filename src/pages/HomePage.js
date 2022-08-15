@@ -1,5 +1,5 @@
 import React from "react";
-import Home from "../components/Home";
+import AdminHome from "../components/AdminHome";
 import { useAuth } from "../contexts/AuthContext";
 import SignIn from "./Authentication/SignIn";
 import Register from "./Register";
@@ -18,7 +18,7 @@ function HomePage() {
     <>
       {currentUser && currentUser.currentUser ? (
         <Routes>
-          <Route path="/*" element={<Home user={currentUser.email} />} />
+          <Route path="/*" element={<AdminHome user={currentUser.email} />} />
           <Route path="/forgetpassword" element={<ForgetPassword />} />
         </Routes>
       ) : (

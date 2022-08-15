@@ -3,8 +3,8 @@ import Modal from "react-modal";
 import Header from "../../components/Header";
 import SubHead from "../../components/SubHead";
 import NewCurriculum from "../forms/NewCurriculum";
-import DataTable from "react-data-table-component";
-import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { database } from "../../firebase/init-firebase";
 import { ref as dbref, child, get, push } from "firebase/database";
 
@@ -80,11 +80,28 @@ function Curriculum(props) {
     setIsOpen(false);
   }
 
+  const notify = () => {
+    toast.success("ID Copied to Clipboard !", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   return (
     <>
       <Header title={"Curriculum"} />
-      <SubHead title={"Curriculum"} btnFunc={openModal} />
-
+      <SubHead
+        title={"Curriculum"}
+        btnFunc={openModal}
+        copyRef={curriculumId}
+        copyRefBtnFunc={notify}
+      />
+      <ToastContainer />
       <div className="university-boxes">
         <div className="flex flex-col">
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -129,12 +146,6 @@ function Curriculum(props) {
                       >
                         View
                       </th>
-                      <th
-                        scope="col"
-                        className="text-sm font-medium py-4 text-center"
-                      >
-                        Id
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -163,11 +174,6 @@ function Curriculum(props) {
                                     Open
                                   </button>
                                 </a>
-                              </td>
-                              <td className="text-sm font-light py-4 text-center">
-                                <button className="btn-compatible font-bold py-2 px-4 rounded-full">
-                                  Copy Id
-                                </button>
                               </td>
                             </tr>
                           );

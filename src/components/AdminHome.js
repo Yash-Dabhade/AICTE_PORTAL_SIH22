@@ -19,7 +19,7 @@ import UniversityRoutes from "../routes/UniversityRoutes";
 import { Route, Routes, useOutletContext, Link } from "react-router-dom";
 import PastReports from "../pages/PastReports/PastReports";
 
-function Home() {
+function AdminHome() {
   const { logout, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(true);
 
@@ -152,7 +152,7 @@ function Home() {
             <Route path="/University/*" element={<UniversityRoutes />}>
               {/* <Route path="institute" element={<Institutes />} /> */}
             </Route>
-            <Route path="/Trending" element={<Trending />} />
+            <Route path="/Trending/*" element={<Trending />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Past%20Reports" element={<PastReports />} />
             <Route path="/Settings" element={<Settings />} />
@@ -165,4 +165,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AdminHome;
