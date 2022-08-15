@@ -70,17 +70,12 @@ export default function UniversityRoutes() {
             width: "100%",
           }}
         >
-          <HashLoader
-            className="darkMode"
-            size={36}
-            margin={2}
-            loading={loading}
-          />
+          <HashLoader size={36} margin={2} loading={loading} />
         </div>
       ) : (
         <Routes>
           <Route
-            path="/"
+            path="/*"
             element={
               <>
                 <Header />

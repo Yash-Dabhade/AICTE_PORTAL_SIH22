@@ -19,33 +19,12 @@ import UniversityRoutes from "../routes/UniversityRoutes";
 import { Route, Routes, useOutletContext, Link } from "react-router-dom";
 import PastReports from "../pages/PastReports/PastReports";
 
-function Home() {
+function AdminHome() {
   const { logout, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(true);
-  const [universityOpen, setUniversityOpen] = useState(true);
-  const [trendingOpen, setTrendingOpen] = useState(false);
-  const [CurriculumOpen, setCurriculumOpen] = useState(false);
-  const [reportsOpen, setReportsOpen] = useState(false);
-  const [settingOpen, setSettingOpen] = useState(false);
-  const [admin, setAdmin] = useState(false);
-
-  let outletData = useOutletContext();
 
   function modeSwitch() {
     document.documentElement.classList.toggle("dark");
-  }
-
-  function removeActive() {
-    let actives = document.querySelectorAll(".active");
-    actives.forEach((a) => {
-      a.classList.remove("active");
-    });
-  }
-
-  function makeActive(e) {
-    removeActive();
-    let ele = e.target.closest("a");
-    ele.classList.add("active");
   }
 
   function toggleLogout() {
@@ -58,22 +37,6 @@ function Home() {
     const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
 
     return capitalized;
-  }
-
-  function getUniversityOpen(e) {
-    setUniversityOpen(e);
-  }
-  function getTrendingOpen(e) {
-    setTrendingOpen(e);
-  }
-  function getCurricumOpen(e) {
-    setCurriculumOpen(e);
-  }
-  function getReportsOpen(e) {
-    setReportsOpen(e);
-  }
-  function getSettingOpen(e) {
-    setSettingOpen(e);
   }
 
   const links = [
@@ -89,13 +52,6 @@ function Home() {
     <BsFillBarChartLineFill size={22} className="mx-2" />,
     <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />,
     <BsGearFill size={22} className="mx-2" />,
-  ];
-  const linkFunc = [
-    getUniversityOpen,
-    getTrendingOpen,
-    getCurricumOpen,
-    getReportsOpen,
-    getSettingOpen,
   ];
 
   return (
@@ -190,18 +146,13 @@ function Home() {
       </div>
       {currentUser && currentUser.email == "admin@gmail.com" ? (
         <div className="app-content">
-          <Sidebar
-            links={links}
-            icons={icons}
-            linkFunc={linkFunc}
-            isNavOpen={isNavOpen}
-          />
+          <Sidebar links={links} icons={icons} isNavOpen={isNavOpen} />
           <Routes>
-            <Route path="/" element={<University />} />
+            <Route path="/*" element={<UniversityRoutes />} />
             <Route path="/University/*" element={<UniversityRoutes />}>
               {/* <Route path="institute" element={<Institutes />} /> */}
             </Route>
-            <Route path="/Trending" element={<Trending />} />
+            <Route path="/Trending/*" element={<Trending />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Past%20Reports" element={<PastReports />} />
             <Route path="/Settings" element={<Settings />} />
@@ -214,4 +165,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AdminHome;

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function ReportCard(props) {
   function getFromDate(date) {
     let d = new Date(date);
@@ -16,9 +16,15 @@ function ReportCard(props) {
     <div className="border-2 rounded-xl shadow-xl border-compatible border-gray-800 w-56 h-40 flex flex-col gap-4 px-3 items-start justify-center">
       <p className="font-bold text-xl font-serif">{props.title}</p>
       <p>{getFromDate(props.date)}</p>
-      <button className="bg-slate-900 text-white border-compatible border-2 border-black p-2 rounded-lg shadow-lg">
+      <Link
+        onClick={() => {
+          props.getSelectedReportId(props.id);
+        }}
+        to="/Trending/ReportDetails"
+        className="bg-slate-900 text-white border-compatible border-2 border-black p-2 rounded-lg shadow-lg"
+      >
         View Report
-      </button>
+      </Link>
     </div>
   );
 }

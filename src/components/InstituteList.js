@@ -8,10 +8,11 @@ function InstituteList(props) {
 
   function getAllInstitutes() {
     if (!props.institutes) return;
+    let institutesArray = [];
     Object.keys(props.institutes).forEach((key) => {
-      userData.push(props.institutes[key]);
+      institutesArray.push(props.institutes[key]);
     });
-    setInstitutes(userData);
+    setInstitutes(institutesArray);
   }
 
   useEffect(() => {
