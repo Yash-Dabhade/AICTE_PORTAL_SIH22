@@ -1,34 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";
+import { ref as dbref, set, update, child, get, push } from "firebase/database";
+import { database } from "../firebase/init-firebase";
 
 const App = () => {
   const [value, setvalue] = useState("");
+  const [options, setOptions] = useState([]);
 
   const handleOnchange = (val) => {
+    console.log(val);
     setvalue(val);
   };
 
-  const options = [
-    { label: "Name sakshi@gmail.com", value: "option_1"},
-    { label: "Option 2", value: "option_2" },
-    { label: "Option 3", value: "option_3" },
-    { label: "Option 4", value: "option_4" }
-  ];
-  
+  function getAllExpertEmails() {
+    const db = dbref(database);
+    get(child(db, `/expertsEmails/`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          let allData = new Array();
+          Object.keys(data).forEach((key) => {
+            allData.push({ label: data[key].email, value: data[key].email });
+          });
+          // setState here
+          setOptions(allData);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  useEffect(() => {
+    getAllExpertEmails();
+    return () => {};
+  }, []);
+
   return (
     <div className="app">
-      {value}
-      <MultiSelect className="text-black "
-      
+      <MultiSelect
+        className="text-black "
         onChange={handleOnchange}
         options={options}
       />
     </div>
   );
 };
- export default App;
-
-
-
-
+export default App;
