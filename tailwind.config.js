@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       spacing: {
         card: "28rem",
+        report: "55vh",
       },
     },
   },

@@ -2,7 +2,15 @@ import { ref as dbref, set, update, child, get, push } from "firebase/database";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, database } from "../firebase/init-firebase";
 
-function saveNewUniversity(initialName, fullName, code, email, phone, website) {
+function saveNewUniversity(
+  initialName,
+  fullName,
+  code,
+  email,
+  phone,
+  location,
+  website
+) {
   const db = database;
   update(dbref(db, "/universities/" + code), {
     initialName: initialName,
@@ -10,6 +18,7 @@ function saveNewUniversity(initialName, fullName, code, email, phone, website) {
     code: code,
     email: email,
     phone: phone,
+    location: location,
     website: website,
   })
     .then((snapshot) => {
@@ -37,6 +46,7 @@ function saveNewInstitute(
     code: code,
     email: email,
     phone: phone,
+    location: location,
     website: website,
   })
     .then((snapshot) => {
@@ -70,6 +80,7 @@ function saveNewDepartment(
   title,
   code,
   desc,
+  totalSems,
   initialName
 ) {
   const db = database;
@@ -83,6 +94,7 @@ function saveNewDepartment(
       title: title,
       code: code,
       desc: desc,
+      totalSems: totalSems,
     }
   )
     .then((snapshot) => {

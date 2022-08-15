@@ -3,27 +3,28 @@ import Modal from "react-modal";
 import NewReport from "../pages/forms/NewReport";
 
 function NewCard() {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  function createUniversity() {
+  function createNewReport() {
+    Modal.setAppElement("#newCardParent");
     openModal();
-    Modal.setAppElement("#formRoot");
   }
 
   function openModal() {
-    setIsOpen(true);
+    setModalIsOpen(true);
   }
 
   function closeModal() {
-    setIsOpen(false);
+    setModalIsOpen(false);
   }
 
   return (
-    <div className="flex">
-      <div
-        onClick={() => setIsOpen(true)}
-        className="border-2 flex justify-center items-center cursor-pointer hover:shadow-lg border-compatible border-black bg-white  card w-52 h-40 rounded-lg"
-      >
+    <div
+      onClick={createNewReport}
+      className="border-2 rounded-xl border-compatible w-56 h-40 flex items-center justify-center cursor-pointer"
+      id="newCardParent"
+    >
+      <div>
         <div className="text-center text-6xl font-medium">+</div>
       </div>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>

@@ -57,7 +57,6 @@ function Institutes(props) {
               <InstituteList
                 institutes={props.data.institutes}
                 getInstituteCode={getInstituteCode}
-                root={props.data.root}
               />
               <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
                 <InstituteForm
