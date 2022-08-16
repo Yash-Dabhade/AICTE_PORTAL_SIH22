@@ -18,7 +18,7 @@ function ReportCard(props) {
       <p>{getFromDate(props.date)}</p>
       <Link
         onClick={() => {
-          props.getSelectedReportId(props.id);
+          props.getSelectedReportDetails(props.id, props.title, props.date);
         }}
         to="/Trending/ReportDetails"
         className="bg-slate-900 text-white border-compatible border-2 border-black p-2 rounded-lg shadow-lg"

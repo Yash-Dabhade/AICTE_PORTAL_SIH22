@@ -8,12 +8,7 @@ export default function ExpertLists({ experts, btnFunc }) {
     alert(`Remove Expert ${e}`);
 
     const db = dbref(database);
-    remove(child(db, `/expertDetails/${e}/`)).catch((error) => {
-      console.log(error);
-    });
-    remove(child(db, `/expertsInfo/${e}/`)).catch((error) => {
-      console.log(error);
-    });
+
     remove(child(db, `/expertsEmails/${e}/`))
       .then(() => {
         window.location.reload();

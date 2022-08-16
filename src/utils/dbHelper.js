@@ -7,8 +7,7 @@ import {
   push,
   remove,
 } from "firebase/database";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage, database } from "../firebase/init-firebase";
+import { database } from "../firebase/init-firebase";
 
 function saveNewUniversity(
   initialName,
@@ -259,8 +258,8 @@ function saveNewTrendingResponse(
   concept,
   reference,
   level,
-  author,
-  btnFunc
+  author
+  // btnFunc
 ) {
   const db = database;
   let responseID = push(dbref(db, `/reportDetails/${reportID}/responses/`)).key;
@@ -277,14 +276,15 @@ function saveNewTrendingResponse(
     author: author,
   })
     .then((snapshot) => {
-      btnFunc();
+      // btnFunc();
+      window.location.href = "/";
     })
     .catch((error) => {
       console.log(error);
     });
 }
 
-function assignToExperts(reportID, emails) {
+function assignToExperts(reportID, name, date, emails) {
   const db = database;
   update(dbref(db, `/reportDetails/${reportID}/expertsEmails/`), {
     ...emails,
@@ -295,6 +295,8 @@ function assignToExperts(reportID, emails) {
         let emailID = String(email).split("@")[0];
         update(dbref(db, `/expertDetails/${emailID}/pending/${reportID}/`), {
           ID: reportID,
+          name: name,
+          date,
         })
           .then((snapshot) => {})
           .catch((err) => {
@@ -536,6 +538,27 @@ function getAllExpertEmailsByReportID(reportID) {
         // });
       }
       //set state
+      //setData(allData)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function getAllExpertAssignedReports(email) {
+  const db = dbref(database);
+  let emailID = String(email).split("@")[0];
+  get(child(db, `/expertDetails/${emailID}/pending/`))
+    .then((snapshot) => {
+      let allData = new Array();
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+      }
+      //set state
+      console.log(allData);
       //setData(allData)
     })
     .catch((error) => {

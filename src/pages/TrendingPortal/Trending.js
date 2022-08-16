@@ -8,7 +8,10 @@ import ReportDetails from "./ReportDetails";
 import { Routes, Route, Outlet } from "react-router-dom";
 function Trending() {
   const [allReports, setReports] = useState([]);
-  const [selectedReportId, setSelectedReportId] = useState();
+  const [selectedReportId, setSelectedReportId] = useState(null);
+  const [selectedReportName, setSelectedReportName] = useState(null);
+  const [selectedReportDate, setSelectedReportDate] = useState(null);
+
   function getAllReports() {
     const db = dbref(database);
     get(child(db, `/reportsList/`))
@@ -28,8 +31,10 @@ function Trending() {
       });
   }
 
-  const getSelectedReportId = (e) => {
-    setSelectedReportId(e);
+  const getSelectedReportDetails = (id, title, date) => {
+    setSelectedReportId(id);
+    setSelectedReportName(title);
+    setSelectedReportDate(date);
   };
 
   useEffect(() => {
@@ -48,6 +53,7 @@ function Trending() {
               <TrendingIntro />
               <div className="report-boxes grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 overflow-auto h-report overflow-y-scroll">
                 <NewCard />
+
                 {allReports.map((data) => {
                   return (
                     <ReportCard
@@ -55,7 +61,7 @@ function Trending() {
                       title={data.name}
                       date={data.date}
                       id={data.id}
-                      getSelectedReportId={getSelectedReportId}
+                      getSelectedReportDetails={getSelectedReportDetails}
                     />
                   );
                 })}
@@ -65,7 +71,13 @@ function Trending() {
         />
         <Route
           path="ReportDetails/*"
-          element={<ReportDetails reportId={selectedReportId} />}
+          element={
+            <ReportDetails
+              reportId={selectedReportId}
+              name={selectedReportName}
+              date={selectedReportDate}
+            />
+          }
         />
       </Routes>
       <Outlet />

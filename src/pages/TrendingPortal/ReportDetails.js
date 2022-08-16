@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ComboBoxExpert from "../../components/ComboBoxExpert";
 import SubjectBannerCard from "../../components/SubjectBannerCard";
 
-export default function ReportDetails({ reportId }) {
+export default function ReportDetails({ reportId, name, date }) {
   return (
     <div>
       <h2 className="flex items-center justify-start font-bold font-serif text-2xl mt-2 border-compatible border-b-2 pb-2 border-b-slate-500">
@@ -38,7 +38,7 @@ export default function ReportDetails({ reportId }) {
             </Link>
           </div>
           <div className="px-8 py-2">
-            <ComboBoxExpert reportId={reportId} />
+            <ComboBoxExpert reportId={reportId} name={name} date={date} />
           </div>
         </div>
       </div>

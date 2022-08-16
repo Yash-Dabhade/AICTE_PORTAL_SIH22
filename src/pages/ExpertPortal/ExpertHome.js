@@ -10,7 +10,7 @@ import {
 import ExpertDetails from "./ExpertDetails";
 import { Routes, Route } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-
+import Assigned from "./Assigned";
 function ExpertHome({ isNavOpen }) {
   // const [isNavOpen, setIsNavOpen] = useState(true);
 
@@ -25,15 +25,19 @@ function ExpertHome({ isNavOpen }) {
   return (
     <div className="app-content Expert">
       <Sidebar links={links} icons={icons} isNavOpen={isNavOpen} />
-      <Routes>
-        <Route path="/*" element={<ExpertDetails />} />
-        {/* <Route path="/*" element={<UniversityRoutes />} /> */}
-        {/* <Route path="/University/*" element={<UniversityRoutes />} />
+      <div className="parent-section darkMode">
+        <Routes>
+          <Route path="/Assigned/*" element={<Assigned />} />
+          {/* <Route path="/*" element={<ExpertDetails />} /> */}
+
+          {/* <Route path="/*" element={<UniversityRoutes />} /> */}
+          {/* <Route path="/University/*" element={<UniversityRoutes />} />
         <Route path="/Trending" element={<Trending />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Past%20Reports" element={<PastReports />} />
-        <Route path="/Settings" element={<Settings />} /> */}
-      </Routes>
+      <Route path="/Settings" element={<Settings />} /> */}
+        </Routes>
+      </div>
     </div>
   );
 }
