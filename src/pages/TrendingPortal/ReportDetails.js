@@ -36,12 +36,9 @@ export default function ReportDetails({ reportId }) {
                 Add New Expert
               </button>
             </Link>
-            {/* <button className="border-2 border-compatible border-slate-800 rounded-xl mt-2 p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full">
-              Apply and Save
-            </button> */}
           </div>
           <div className="px-8 py-2">
-            <ComboBoxExpert />
+            <ComboBoxExpert reportId={reportId} />
           </div>
         </div>
       </div>

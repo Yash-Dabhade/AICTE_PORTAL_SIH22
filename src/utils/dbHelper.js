@@ -283,16 +283,30 @@ function saveNewTrendingResponse(
     });
 }
 
-function assignToExperts(reportID, emails, btnFunc) {
+function assignToExperts(reportID, emails) {
   const db = database;
   update(dbref(db, `/reportDetails/${reportID}/expertsEmails/`), {
     ...emails,
   })
     .then((snapshot) => {
-      btnFunc();
+      // btnFunc();
+      emails.forEach((email) => {
+        let emailID = String(email).split("@")[0];
+        update(dbref(db, `/expertDetails/${emailID}/pending/${reportID}/`), {
+          ID: reportID,
+        })
+          .then((snapshot) => {})
+          .catch((err) => {
+            alert("Something went wrong !");
+            console.log(err);
+          });
+      });
     })
     .catch((error) => {
       console.log(error);
+    })
+    .finally(() => {
+      alert("Assigned successfully");
     });
 }
 
@@ -515,9 +529,10 @@ function getAllExpertEmailsByReportID(reportID) {
       let allData = new Array();
       if (snapshot.exists()) {
         let data = snapshot.val();
-        Object.keys(data).forEach((key) => {
-          allData.push(data[key]);
-        });
+        console.log(data);
+        // Object.keys(data).forEach((key) => {
+        //   allData.push(data[key]);
+        // });
       }
       //set state
       //setData(allData)

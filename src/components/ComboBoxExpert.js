@@ -3,17 +3,19 @@ import MultiSelect from "react-multiple-select-dropdown-lite";
 import "react-multiple-select-dropdown-lite/dist/index.css";
 import { ref as dbref, set, update, child, get, push } from "firebase/database";
 import { database } from "../firebase/init-firebase";
+import { assignToExperts } from "../utils/dbHelper";
 
-const App = () => {
-  const [value, setvalue] = useState("");
+const App = ({ reportId }) => {
+  const [emailsToAssign, setEmailsToAssign] = useState("");
   const [options, setOptions] = useState([]);
+  const [selectedEmails, setSelectedEmails] = useState([]);
 
   const handleOnchange = (val) => {
-    console.log(val);
-    setvalue(val);
+    // console.log(val);
+    setEmailsToAssign(val);
   };
 
-  function getAllExpertEmails() {
+  function getAllExpertEmails(selected) {
     const db = dbref(database);
     get(child(db, `/expertsEmails/`))
       .then((snapshot) => {
@@ -21,9 +23,16 @@ const App = () => {
           let data = snapshot.val();
           let allData = new Array();
           Object.keys(data).forEach((key) => {
-            allData.push({ label: data[key].email, value: data[key].email });
+            //showing only unselected emails
+            if (!selected.includes(data[key].email))
+              allData.push({ label: data[key].email, value: data[key].email });
+            else
+              allData.push({
+                label: data[key].email,
+                value: data[key].email,
+                disabled: true,
+              });
           });
-          // setState here
           setOptions(allData);
         }
       })
@@ -32,21 +41,49 @@ const App = () => {
       });
   }
 
+  function getAllExpertEmailsByReportID(reportID) {
+    const db = dbref(database);
+    get(child(db, `/reportDetails/${reportID}/expertsEmails/`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          setSelectedEmails(data);
+          getAllExpertEmails(data);
+        } else {
+          getAllExpertEmails([]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function handleAssignToExperts() {
+    let finalSelected = selectedEmails;
+    finalSelected.push(...emailsToAssign.split(","));
+    assignToExperts(reportId, finalSelected);
+  }
+
   useEffect(() => {
-    getAllExpertEmails();
+    getAllExpertEmailsByReportID(reportId);
     return () => {};
   }, []);
 
   return (
-    <div className="app">
-      <button className="border-2 mb-4 border-compatible border-slate-800 rounded-xl mt-2 p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full">
+    <div className="app min-h-report">
+      <button
+        onClick={handleAssignToExperts}
+        className="border-2 mb-4 border-compatible border-slate-800 rounded-xl mt-2 p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full"
+      >
         Apply Changes
       </button>
+      {/* <div className="h-36 overflow-y-auto overflow-x-hidden"> */}
       <MultiSelect
-        className="text-black "
+        className="text-black w-52"
         onChange={handleOnchange}
         options={options}
       />
+      {/* </div> */}
     </div>
   );
 };
