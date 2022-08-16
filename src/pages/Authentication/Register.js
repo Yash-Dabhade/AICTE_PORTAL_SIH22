@@ -4,13 +4,14 @@ import { database } from "../../firebase/init-firebase";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import useMounted from "../../hooks/useMounted";
-import logo from "../../res/AICTE_logo.png";
-import { ToastContainer, toast } from "react-toastify";
+import styled from "styled-components";
+import { toast } from "react-toastify";
+import Modal from "react-modal";
 import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
-  const notify = () => {
-    toast.error("Wrong email or password !", {
+  const notify = (e) => {
+    toast.error(e, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -43,104 +44,132 @@ function Register() {
   }, []);
 
   function registerNow() {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let confirmPass = document.getElementById("confirmPass").value;
+    let email = document.getElementById("regEmail").value;
+    let password = document.getElementById("regPassword").value;
+    let confirmPass = document.getElementById("confirmRegPass").value;
 
     document.getElementById("registerBtn").style.disabeld = true;
-    if (password != confirmPass) {
-      alert("Details does not match  !");
+    if (password !== confirmPass) {
+      notify("Password does not match  !");
+      console.log("first");
       document.getElementById("registerBtn").style.disabeld = false;
-      return;
+    } else {
+      const db = dbref(database);
+      let emailName = String(email).split("@")[0];
+      get(child(db, `/expertsEmails/${emailName}`))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            // console.log(fname, lname, email, enroll);
+
+            if (data.email == email) {
+              setIsSubmitting(true);
+              register(email, password)
+                .then((res) => {
+                  data.registerStatus.isRegister = false;
+                })
+                .catch((error) => {
+                  console.log(error.message);
+                })
+                .finally(() => {
+                  mounted.current && setIsSubmitting(false);
+                });
+            } else {
+              notify("Details does not match the records !");
+              document.getElementById("registerBtn").style.disabeld = false;
+            }
+          } else {
+            notify("Expert email not found !");
+            document.getElementById("registerBtn").style.disabeld = false;
+          }
+        })
+        .catch((error) => {
+          notify("Some error occured");
+          document.getElementById("registerBtn").style.disabeld = false;
+          return;
+        });
     }
+  }
 
-    // const db = dbref(database);
-    // get(child(db, `/authenticate/${enroll}`))
-    //   .then((snapshot) => {
-    //     if (snapshot.exists()) {
-    //       const data = snapshot.val();
-    //       // console.log(data);
-    //       // console.log(fname, lname, email, enroll);
+  // To take details of the Expert
 
-    // if (data.Email == email) {
-    setIsSubmitting(true);
-    register(email, password)
-      .then((res) => {
-        console.log("Registered");
-        window.location.href = "/home";
-      })
-      .catch((error) => {
-        console.log(error.message);
-      })
-      .finally(() => {
-        mounted.current && setIsSubmitting(false);
-      });
-    // } else {
-    //   alert("Details does not match the records !");
-    //   document.getElementById("RegisterButton").style.disabeld = false;
-    // }
-    //     } else {
-    //       alert("No Student found in the record !");
-    //       document.getElementById("RegisterButton").style.disabeld = false;
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     alert("Some error occured");
-    //     document.getElementById("RegisterButton").style.disabeld = false;
-    //     return;
-    //   });
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function collectDetails() {
+    openModal();
+    Modal.setAppElement("#formRoot");
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   return (
-    <div className="contain">
-      <div className="flex flex-col justify-center items-center bg-slate-100 ">
-        <div>
-          <img className="h-28 mt-2  mx-auto w-28" src={logo} alt="Logo" />
-          <p className="text-3xl font-bold text-center mt-2">
-            Register account
-          </p>
-        </div>
-        <div className="flex flex-col bg-white  mt-10 p-10 w-card rounded-xl drop-shadow-xl ">
-          <p>Email</p>
-          <input
-            id="email"
-            className=" mt-2 text-lg px-3 h-10  border border-gray-400 outline-1 outline-blue-500 rounded-md"
-            type="text"
-            placeholder="Email address"
-          />
-          <h2 className="mt-2">Password</h2>
-          <input
-            id="password"
-            className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
-            type="password"
-            placeholder="Password"
-          />
-          <h2 className="mt-2">Confirm Password</h2>
-          <input
-            id="confirmPass"
-            className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
-            type="password"
-            placeholder="Confirm Password"
-          />
-          <div className="flex justify-between items-center mt-3">
-            <a href="/signin">
-              <span className="mt-3 mx-2 text-violet-900   cursor-pointer hover:underline">
-                Already have an account ? Sign In
-              </span>
-            </a>
-          </div>
-          <button
-            id="registerBtn"
-            onClick={registerNow}
-            className="btn px-3 mt-4 h-10 rounded-lg bg-blue-700   hover:bg-blue-600 font-bold text-white text-xl"
-          >
-            Register
-          </button>
-        </div>
+    <div
+      className="container flex flex-col justify-center items-center"
+      id="formRoot"
+    >
+      <div>
+        <p className="text-3xl font-bold text-center mt-2">Register account</p>
       </div>
-      <ToastContainer />
+      <div className="flex flex-col bg-white mt-10 p-5 md:p-10 w-80 md:w-card rounded-xl drop-shadow-xl">
+        <p>Email</p>
+        <input
+          id="regEmail"
+          className=" mt-2 text-lg px-3 h-10  border border-gray-400 outline-1 outline-blue-500 rounded-md"
+          type="text"
+          placeholder="Email address"
+        />
+        <h2 className="mt-2">Password</h2>
+        <input
+          id="regPassword"
+          className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
+          type="password"
+          placeholder="Password"
+        />
+        <h2 className="mt-2">Confirm Password</h2>
+        <input
+          id="confirmRegPass"
+          className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
+          type="password"
+          placeholder="Confirm Password"
+        />
+        <div className="flex justify-between items-center mt-3">
+          <Link to="/forgetpassword">
+            <span className=" text-violet-900   cursor-pointer hover:underline">
+              Forgot password ?
+            </span>
+          </Link>
+          <Link to="/signin">
+            <span className=" text-violet-900   cursor-pointer hover:underline">
+              Already have an account ?
+            </span>
+          </Link>
+        </div>
+        <button
+          id="registerBtn"
+          onClick={registerNow}
+          className="btn btn-compatible px-3 mt-4 h-10 rounded-lg hover:border-[#1f1c2e] hover:border-2 font-bold text-white text-xl"
+        >
+          Register
+        </button>
+      </div>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}></Modal>
     </div>
   );
 }
+
+const Contain = styled.div`
+  @media (max-width: 650px) {
+    position: absolute;
+    background-attachment: fixed;
+    height: fit-content;
+    width: 110wh;
+  }
+`;
 
 export default Register;

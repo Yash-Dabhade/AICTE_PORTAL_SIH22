@@ -9,14 +9,13 @@ import {
 } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext";
 import { FaUserAlt } from "react-icons/fa";
-import University from "../pages/CurriculumPortal/University";
 import Trending from "../pages/TrendingPortal/Trending";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ExpertHome from "../pages/ExpertPortal/ExpertHome";
 import Settings from "../pages/Settings/Settings";
 import Sidebar from "./Sidebar";
 import UniversityRoutes from "../routes/UniversityRoutes";
-import { Route, Routes, useOutletContext, Link } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import PastReports from "../pages/PastReports/PastReports";
 
 function AdminHome() {

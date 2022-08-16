@@ -1,9 +1,8 @@
 import React from "react";
-import logo from "../../res/AICTE_logo.png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, Outlet } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignIn() {
   const { login } = useAuth();
@@ -44,50 +43,47 @@ function SignIn() {
   };
 
   return (
-    <div>
-      <div className="container flex flex-col justify-center items-center bg-slate-100 ">
-        <img className="h-28 mt-2  mx-auto w-28" src={logo} alt="Logo" />
-        <p className="text-3xl font-bold text-center mt-2">
-          Sign in to your account
-        </p>
-        <div className="right flex flex-col bg-white mt-10 p-10 w-card h-1/6 rounded-xl drop-shadow-xl">
-          <p>Email address</p>
-          <input
-            id="email"
-            className=" mt-2 text-lg px-3 h-10  border border-gray-400 outline-1 outline-blue-500 rounded-md"
-            type="text"
-            placeholder="Email address"
-          />
-          <h2 className="mt-2">Password</h2>
-          <input
-            id="password"
-            className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
-            type="password"
-            placeholder="Password"
-          />
-          <div className="flex justify-between items-center mt-3">
-            <Link to="/forgetpassword">
-              <span className=" text-violet-900   cursor-pointer hover:underline">
-                Forgot your password?
-              </span>
-            </Link>
-            <Link to="/register">
-              <span className=" text-violet-900   cursor-pointer hover:underline">
-                New ? Create account
-              </span>
-            </Link>
-          </div>
-          <button
-            id="signInBtn"
-            onClick={signInNow}
-            className="btn btn-compatible px-3 mt-4 h-10 rounded-lg  hover:border-[#1f1c2e] hover:border-2  font-bold text-white text-xl"
-          >
-            Sign In
-          </button>
+    <div className="container flex flex-col justify-center items-center">
+      <p className="text-3xl font-bold text-center mt-2">
+        Sign in to your account
+      </p>
+      <div className="flex flex-col bg-white mt-10 p-5 md:p-10 w-80 md:w-card rounded-xl drop-shadow-xl">
+        <p>Email address</p>
+        <input
+          id="email"
+          className=" mt-2 text-lg px-3 h-10  border border-gray-400 outline-1 outline-blue-500 rounded-md"
+          type="text"
+          placeholder="Email address"
+        />
+        <h2 className="mt-2">Password</h2>
+        <input
+          id="password"
+          className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
+          type="password"
+          placeholder="Password"
+        />
+        <div className="flex justify-between items-center mt-3">
+          <Link to="/forgetpassword">
+            <span className=" text-violet-900   cursor-pointer hover:underline">
+              Forgot password ?
+            </span>
+          </Link>
+          <Link to="/register">
+            <span className=" text-violet-900 cursor-pointer hover:underline">
+              Create account
+            </span>
+          </Link>
         </div>
+        <button
+          id="signInBtn"
+          onClick={signInNow}
+          className="btn btn-compatible px-3 mt-4 h-10 rounded-lg  hover:border-[#1f1c2e] hover:border-2  font-bold text-white text-xl"
+        >
+          Sign In
+        </button>
       </div>
-      <ToastContainer />
       <Outlet />
+      {/* <ToastContainer /> */}
     </div>
   );
 }
