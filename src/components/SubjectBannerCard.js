@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import {
+  ref as dbref,
+  set,
+  update,
+  child,
+  get,
+  push,
+  remove,
+} from "firebase/database";
+import { database } from "../firebase/init-firebase";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function SubjectBannerCard(props) {
   return (
     <>
       <div className="container w-80 mx-3 my-1 p-4 border-compatible border border-stone-500 rounded-md shadow-zinc-600">
-        <p className="text-lg font-bold">{props.title}</p>
-        <p className="float-left">{props.tag} </p>
-        <p className="float-right">{props.market}</p>
+        <div className="text-lg font-bold">{props.title}</div>
+        <div className="flex justify-between items-center">
+          <div>{props.tag} </div>
+          <div>
+            <CircularProgressbar
+              value={props.market}
+              text={`${props.market}`}
+              strokeWidth={6}
+              styles={buildStyles({
+                textColor: "black",
+                pathColor: "#0F172A",
+                trailColor: "gray",
+              })}
+              className="w-12 h-12"
+            />
+          </div>
+        </div>
 
         <button
           id="details"

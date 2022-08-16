@@ -258,6 +258,7 @@ function saveNewTrendingResponse(
   concept,
   reference,
   level,
+  tag,
   author
   // btnFunc
 ) {
@@ -265,6 +266,7 @@ function saveNewTrendingResponse(
   let responseID = push(dbref(db, `/reportDetails/${reportID}/responses/`)).key;
   update(dbref(db, `/reportDetails/${reportID}/responses/${responseID}/`), {
     reportID: reportID,
+    id: responseID,
     title: title,
     mcapture: mcapture,
     prereq: prereq,
@@ -274,6 +276,7 @@ function saveNewTrendingResponse(
     reference: reference,
     level: level,
     author: author,
+    tag: tag,
   })
     .then((snapshot) => {
       // btnFunc();
