@@ -39,6 +39,9 @@ const App = () => {
 
   return (
     <div className="app">
+      <button className="border-2 mb-4 border-compatible border-slate-800 rounded-xl mt-2 p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full">
+        Apply Changes
+      </button>
       <MultiSelect
         className="text-black "
         onChange={handleOnchange}

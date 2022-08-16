@@ -7,6 +7,7 @@ import useMounted from "../../hooks/useMounted";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import Modal from "react-modal";
+import CollectExpertDetails from "../forms/CollectExpertDetails";
 import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
@@ -61,19 +62,11 @@ function Register() {
           if (snapshot.exists()) {
             const data = snapshot.val();
             // console.log(fname, lname, email, enroll);
-
-            if (data.email == email) {
-              setIsSubmitting(true);
-              register(email, password)
-                .then((res) => {
-                  data.registerStatus.isRegister = false;
-                })
-                .catch((error) => {
-                  console.log(error.message);
-                })
-                .finally(() => {
-                  mounted.current && setIsSubmitting(false);
-                });
+            console.log(data);
+            if (data.email === email) {
+              setEmail(email);
+              setPassword(password);
+              collectDetails();
             } else {
               notify("Details does not match the records !");
               document.getElementById("registerBtn").style.disabeld = false;
@@ -158,7 +151,13 @@ function Register() {
           Register
         </button>
       </div>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}></Modal>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <CollectExpertDetails
+          btnFunc={closeModal}
+          email={email ? email : null}
+          password={password ? password : null}
+        />
+      </Modal>
     </div>
   );
 }

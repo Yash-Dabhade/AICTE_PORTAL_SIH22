@@ -1,4 +1,12 @@
-import { ref as dbref, set, update, child, get, push } from "firebase/database";
+import {
+  ref as dbref,
+  set,
+  update,
+  child,
+  get,
+  push,
+  remove,
+} from "firebase/database";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, database } from "../firebase/init-firebase";
 
@@ -151,7 +159,6 @@ function saveNewCurriculum(
         )
           .then((snapshot) => {
             alert("Data Submitted successfully");
-            window.location.href = "/home";
           })
           .catch((error) => {
             console.log(error);
@@ -159,7 +166,6 @@ function saveNewCurriculum(
           });
       } else {
         alert("Data Submitted successfully");
-        window.location.href = "/home";
       }
     })
     .catch((error) => {
@@ -222,6 +228,106 @@ function addNewExpert(email, field, btnFunc) {
     .catch((error) => {
       console.log(error);
       return false;
+    });
+}
+
+function saveExpertDetails(name, email, position, company, contact, btnFunc) {
+  const db = database;
+  let emailID = String(email).split("@")[0];
+  set(dbref(db, `/expertsInfo/${emailID}/data/`), {
+    name: name,
+    email: email,
+    company: company,
+    contact: contact,
+  })
+    .then((snapshot) => {
+      btnFunc();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function saveNewTrendingResponse(
+  reportID,
+  title,
+  mcapture,
+  prereq,
+  company,
+  project,
+  concept,
+  reference,
+  level,
+  author,
+  btnFunc
+) {
+  const db = database;
+  let responseID = push(dbref(db, `/reportDetails/${reportID}/responses/`)).key;
+  update(dbref(db, `/reportDetails/${reportID}/responses/${responseID}/`), {
+    reportID: reportID,
+    title: title,
+    mcapture: mcapture,
+    prereq: prereq,
+    company: company,
+    project: project,
+    concept: concept,
+    reference: reference,
+    level: level,
+    author: author,
+  })
+    .then((snapshot) => {
+      btnFunc();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function assignToExperts(reportID, emails, btnFunc) {
+  const db = database;
+  update(dbref(db, `/reportDetails/${reportID}/expertsEmails/`), {
+    ...emails,
+  })
+    .then((snapshot) => {
+      btnFunc();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function removeAssignedFormsFromExpert(reportID, email) {
+  let emailID = String(email).split("@")[0];
+  const db = database;
+  remove(dbref(db, `/expertsInfo/${emailID}/pending/${reportID}`))
+    .then(() => {
+      alert("Removed Assigned Form successfully");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function removeExpert(email) {
+  let emailID = String(email).split("@")[0];
+  const db = database;
+  remove(dbref(db, `/expertsEmails/${emailID}`))
+    .then(() => {
+      alert("Removed Expert successfully");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function removeTag(tagName) {
+  const db = database;
+  remove(dbref(db, `/tags/${tagName}`))
+    .then(() => {
+      alert("Removed Tag successfully");
+    })
+    .catch((error) => {
+      console.log(error);
     });
 }
 
@@ -343,6 +449,7 @@ function getAllReports() {
     })
     .catch((error) => {
       console.error(error);
+      console.error(error);
     });
 }
 
@@ -366,6 +473,60 @@ function getAllExpertEmails() {
     });
 }
 
+function getExpertDetails(email) {
+  const db = dbref(database);
+  let emailID = String(email).split("@")[0];
+  get(child(db, `/expertDetails/${emailID}/`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let val = snapshot.val();
+        //set state
+        //setData(val.data);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function getAllResponsesByReportID(reportID) {
+  const db = dbref(database);
+  get(child(db, `/reportDetails/${reportID}/responses/`))
+    .then((snapshot) => {
+      let allData = new Array();
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+      }
+      //set state
+      //setData(allData)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function getAllExpertEmailsByReportID(reportID) {
+  const db = dbref(database);
+  get(child(db, `/reportDetails/${reportID}/expertsEmails/`))
+    .then((snapshot) => {
+      let allData = new Array();
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+      }
+      //set state
+      //setData(allData)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 export {
   saveNewUniversity,
   getAllUniversities,
@@ -381,4 +542,7 @@ export {
   saveNewReport,
   getAllReports,
   getAllExpertEmails,
+  saveExpertDetails,
+  saveNewTrendingResponse,
+  assignToExperts,
 };

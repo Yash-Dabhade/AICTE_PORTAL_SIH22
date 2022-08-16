@@ -1,32 +1,45 @@
 import React from "react";
-import { saveNewDepartment } from "../../utils/dbHelper";
+import { saveExpertDetails } from "../../utils/dbHelper";
+import { useAuth } from "../../contexts/AuthContext";
+import useMounted from "../../hooks/useMounted";
 
-export default function collectDetails(props) {
+export default function CollectExpertDetails(props) {
+  const regmounted = useRef(false);
+  const mounted = useMounted();
+  const { register } = useAuth();
+
   function handleSubmit() {
-    let title = document.getElementById("deptTitle").value;
-    let code = document.getElementById("deptCode").value;
-    let desc = document.getElementById("deptDesc").value;
-    let totalSems = document.getElementById("totalSems").value;
-    let shortInitials = document.getElementById("deptShortInitials").value;
+    let name = document.getElementById("fullName").value;
+    let position = document.getElementById("expertPosition").value;
+    let company = document.getElementById("expertCompany").value;
+    let contact = document.getElementById("expertContact").value;
 
     if (
-      title.length === 0 ||
-      code.length === 0 ||
-      desc.length === 0 ||
-      totalSems.length === 0 ||
-      shortInitials.length === 0
+      name.length === 0 ||
+      position.length === 0 ||
+      company.length === 0 ||
+      contact.length === 0
     ) {
       alert("Invalid data");
     } else {
-      // saveNewDepartment(
-      //   props.instituteCode,
-      //   props.courseCode,
-      //   title,
-      //   code,
-      //   desc,
-      //   totalSems,
-      //   shortInitials
-      // );
+      saveExpertDetails(
+        name,
+        props.email,
+        position,
+        company,
+        contact,
+        props.btnFunc
+      );
+      register(props.email, props.password)
+        .then(() => {
+          data.registerStatus.isRegister = false;
+        })
+        .catch((error) => {
+          console.log(error.message);
+        })
+        .finally(() => {
+          mounted.current;
+        });
     }
   }
 
@@ -80,67 +93,54 @@ export default function collectDetails(props) {
                     name="fullName"
                     id="fullName"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-                    placeholder="Electronics, MIC"
+                    placeholder="Name and Surname"
                     required=""
                   />
                 </div>
 
                 <div>
                   <label
-                    htmlFor="ex"
+                    htmlFor="expertPosition"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black-900"
                   >
                     Position
                   </label>
                   <input
                     name="expertPosition"
-                    id="deptCode"
-                    placeholder="22617, 22619"
+                    id="expertPosition"
+                    placeholder="Your Position"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="totalSems"
+                    htmlFor="expertCompany"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black-900"
                   >
-                    Total Semesters
+                    Company
                   </label>
                   <input
-                    name="totalSems"
-                    id="totalSems"
+                    name="expertCompany"
+                    id="expertCompany"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
+                    placeholder="Company Name"
                   />
                 </div>
 
                 <div>
                   <label
-                    htmlFor="shortInitials"
+                    htmlFor="expertContact"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black-900"
                   >
-                    Description
+                    Contact
                   </label>
-                  <textarea
-                    id="deptDesc"
-                    rows="4"
+                  <input
+                    type="text"
+                    name="expertContact"
+                    id="expertContact"
                     className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-white-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Your message..."
-                  ></textarea>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="shortInitials"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-black-900"
-                  >
-                    Short Initials
-                  </label>
-                  <input
-                    name="shortInitials"
-                    id="deptShortInitials"
-                    placeholder="Type .."
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-white-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-                  />
+                    placeholder="Contact Number"
+                  ></input>
                 </div>
 
                 <button
