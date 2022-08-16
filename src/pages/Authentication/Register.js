@@ -51,19 +51,19 @@ function Register() {
 
     document.getElementById("registerBtn").style.disabeld = true;
     if (password !== confirmPass) {
-      notify("Password does not match  !");
-      console.log("first");
+      notify("Password does not match !");
       document.getElementById("registerBtn").style.disabeld = false;
     } else {
       const db = dbref(database);
-      let emailName = String(email).split("@")[0];
+      let emailName = String(email).toLowerCase().split("@")[0];
       get(child(db, `/expertsEmails/${emailName}`))
         .then((snapshot) => {
           if (snapshot.exists()) {
             const data = snapshot.val();
             // console.log(fname, lname, email, enroll);
-            console.log(data);
-            if (data.email === email) {
+            if (
+              String(data.email).toLowerCase() === String(email).toLowerCase()
+            ) {
               setEmail(email);
               setPassword(password);
               collectDetails();
@@ -156,6 +156,7 @@ function Register() {
           btnFunc={closeModal}
           email={email ? email : null}
           password={password ? password : null}
+          notify={notify}
         />
       </Modal>
     </div>

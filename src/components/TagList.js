@@ -1,8 +1,17 @@
 import React from "react";
-// import { getAllTags } from "../utils/dbHelper";
+import { child, remove, ref as dbref } from "firebase/database";
+import { database } from "../firebase/init-firebase";
 import ListCard from "./ListCard";
 
-export default function TagList({ tags, btnFunc }) {
+export default function TagList({ tags, btnFunc, notify }) {
+  function removeTag(e) {
+    notify(`Remove Tag ${e}`);
+    const db = dbref(database);
+    remove(child(db, `/tags/${e}/`)).then(() => {
+      window.location.reload();
+    });
+  }
+
   return (
     <div className="flex flex-wrap w-full">
       <button
@@ -24,7 +33,14 @@ export default function TagList({ tags, btnFunc }) {
       </button>
       {tags &&
         Object.keys(tags).map((key, index) => {
-          return <ListCard name={key} key={index} />;
+          return (
+            <ListCard
+              name={key}
+              key={index}
+              index={index}
+              btnFunc={removeTag}
+            />
+          );
         })}
     </div>
   );

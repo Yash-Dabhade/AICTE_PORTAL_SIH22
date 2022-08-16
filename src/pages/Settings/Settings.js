@@ -7,6 +7,7 @@ import ExpertLists from "../../components/ExpertLists";
 import NewTag from "../forms/NewTag";
 import TagList from "../../components/TagList";
 import { Routes, Route, Link, Outlet } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 import { child, get, ref as dbref } from "firebase/database";
 import { database } from "../../firebase/init-firebase";
@@ -72,6 +73,18 @@ export default function Settings() {
     });
   }
 
+  function notify(e) {
+    toast(e, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+
   return (
     <div className="parent-section gap-4 darkMode" id="formRoot">
       <div className="flex flex-col text-center w-full">
@@ -118,14 +131,15 @@ export default function Settings() {
         <NewExpertForm btnFunc={closeModal} />
       </Modal>
       <Modal isOpen={ExpertDetailsModalIsOpen} onRequestClose={closeModal}>
-        <ExpertLists btnFunc={closeModal} experts={experts} />
+        <ExpertLists btnFunc={closeModal} experts={experts} notify={notify} />
       </Modal>
       <Modal isOpen={addTagModalIsOpen} onRequestClose={closeModal}>
         <NewTag btnFunc={closeModal} />
       </Modal>
       <Modal isOpen={TagDetailsModalIsOpen} onRequestClose={closeModal}>
-        <TagList btnFunc={closeModal} tags={tags} />
+        <TagList btnFunc={closeModal} tags={tags} notify={notify} />
       </Modal>
+      <ToastContainer />
     </div>
   );
 }

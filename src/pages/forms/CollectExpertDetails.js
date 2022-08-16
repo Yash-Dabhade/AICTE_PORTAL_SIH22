@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import useMounted from "../../hooks/useMounted";
 
 export default function CollectExpertDetails(props) {
-  const regmounted = useRef(false);
+  const regmounted = React.useRef(false);
   const mounted = useMounted();
   const { register } = useAuth();
 
@@ -14,33 +14,32 @@ export default function CollectExpertDetails(props) {
     let company = document.getElementById("expertCompany").value;
     let contact = document.getElementById("expertContact").value;
 
-    if (
-      name.length === 0 ||
-      position.length === 0 ||
-      company.length === 0 ||
-      contact.length === 0
-    ) {
-      alert("Invalid data");
-    } else {
-      saveExpertDetails(
-        name,
-        props.email,
-        position,
-        company,
-        contact,
-        props.btnFunc
-      );
-      register(props.email, props.password)
-        .then(() => {
-          data.registerStatus.isRegister = false;
-        })
-        .catch((error) => {
-          console.log(error.message);
-        })
-        .finally(() => {
-          mounted.current;
-        });
-    }
+    // if (
+    //   name.length === 0 ||
+    //   position.length === 0 ||
+    //   company.length === 0 ||
+    //   contact.length === 0
+    // ) {
+    //   alert("Invalid data");
+    // } else {
+    saveExpertDetails(
+      name,
+      props.email,
+      position,
+      company,
+      contact,
+      props.btnFunc
+    );
+    register(props.email, props.password)
+      .then(() => {
+        // data.registerStatus.isRegister = false;
+        window.location.href = "/";
+        props.notify("Registered and Logged In successfully");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    // }
   }
 
   return (

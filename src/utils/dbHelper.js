@@ -214,7 +214,7 @@ function addNewExpert(email, field, btnFunc) {
     isRegistered: false,
   };
 
-  let expertName = String(email).split("@")[0];
+  let expertName = String(email).toLowerCase().split("@")[0];
 
   update(dbref(db, `/expertsEmails/${expertName}`), {
     email: email,
@@ -233,10 +233,11 @@ function addNewExpert(email, field, btnFunc) {
 
 function saveExpertDetails(name, email, position, company, contact, btnFunc) {
   const db = database;
-  let emailID = String(email).split("@")[0];
+  let emailID = String(email).toLowerCase().split("@")[0];
   set(dbref(db, `/expertsInfo/${emailID}/data/`), {
     name: name,
     email: email,
+    position: position,
     company: company,
     contact: contact,
   })

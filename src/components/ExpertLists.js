@@ -1,7 +1,28 @@
 import React from "react";
 import ListCard from "./ListCard";
+import { child, remove, ref as dbref } from "firebase/database";
+import { database } from "../firebase/init-firebase";
 
 export default function ExpertLists({ experts, btnFunc }) {
+  function removeExpert(e) {
+    alert(`Remove Expert ${e}`);
+
+    const db = dbref(database);
+    remove(child(db, `/expertDetails/${e}/`)).catch((error) => {
+      console.log(error);
+    });
+    remove(child(db, `/expertsInfo/${e}/`)).catch((error) => {
+      console.log(error);
+    });
+    remove(child(db, `/expertsEmails/${e}/`))
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   return (
     <div className="flex flex-wrap w-full">
       <button
@@ -23,7 +44,15 @@ export default function ExpertLists({ experts, btnFunc }) {
       </button>
       {experts &&
         Object.keys(experts).map((key, index) => {
-          return <ListCard name={key} field={experts[key].field} key={index} />;
+          return (
+            <ListCard
+              name={key}
+              field={experts[key].field}
+              btnFunc={removeExpert}
+              index={index}
+              key={index}
+            />
+          );
         })}
     </div>
   );

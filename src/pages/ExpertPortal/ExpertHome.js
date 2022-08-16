@@ -9,6 +9,7 @@ import {
 } from "react-icons/bs";
 import ExpertDetails from "./ExpertDetails";
 import { Routes, Route } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 function ExpertHome({ isNavOpen }) {
   // const [isNavOpen, setIsNavOpen] = useState(true);

@@ -5,7 +5,9 @@ import "react-toastify/dist/ReactToastify.css";
 export default function NewExpertForm({ btnFunc }) {
   function handleSubmit(e) {
     e.preventDefault();
-    let email = document.getElementById("expertEmail").value;
+    let email = String(
+      document.getElementById("expertEmail").value
+    ).toLowerCase();
     let area = document.getElementById("faculty").value;
     addNewExpert(email, area, btnFunc);
   }
