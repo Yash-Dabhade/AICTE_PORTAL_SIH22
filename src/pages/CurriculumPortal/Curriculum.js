@@ -104,9 +104,9 @@ function Curriculum(props) {
       <ToastContainer />
       <div className="university-boxes">
         <div className="flex flex-col">
-          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="overflow-y-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="overflow-x-auto">
+              <div className="overflow-y-scroll h-report">
                 <table className="min-w-full darkMode">
                   <thead className="border-b">
                     <tr>
