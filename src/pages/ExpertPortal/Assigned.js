@@ -27,6 +27,17 @@ export default function Assigned() {
       });
   }
 
+  function getFromDate(date) {
+    let d = new Date(date);
+    let val = "";
+    let day = d.getDate();
+    let mon = d.getMonth() + 1;
+    let year = d.getFullYear();
+
+    val = day + "/" + mon + "/" + year;
+    return val;
+  }
+
   useEffect(() => {
     getAllExpertAssignedReports("yash@gmail.com");
     return () => {};
@@ -82,7 +93,7 @@ export default function Assigned() {
                                 {ele.name}
                               </td>
                               <td className="text-sm font-light py-4 text-center">
-                                {ele.date}
+                                {getFromDate(ele.date)}
                               </td>
                               <td className="text-sm font-light py-4 text-center">
                                 <Link
