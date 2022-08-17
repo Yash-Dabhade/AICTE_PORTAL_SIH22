@@ -54,8 +54,7 @@ export default function NewCurriculum(props) {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        document.getElementById("submitBtn").innerHTML =
-          "Uploading " + progress + "%";
+        document.getElementById("submitBtn").innerHTML = "Uploading ";
       },
       (error) => {
         console.log(error);

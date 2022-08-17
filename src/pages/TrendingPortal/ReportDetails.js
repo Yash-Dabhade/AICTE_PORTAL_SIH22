@@ -72,15 +72,6 @@ export default function ReportDetails({ reportId, name, date }) {
                         />
                       );
                     })}
-                    {responses.map((response) => {
-                      return (
-                        <SubjectBannerCard
-                          key={response.id}
-                          responseObj={response}
-                          getSelectedResponse={getSelectedResponse}
-                        />
-                      );
-                    })}
                   </div>
                 </div>
                 <div className=" h-report w-report border-2 rounded-xl shadow-lg border-compatible border-slate-800">
