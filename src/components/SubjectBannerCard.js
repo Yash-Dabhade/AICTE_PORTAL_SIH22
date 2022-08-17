@@ -8,21 +8,25 @@ import {
   push,
   remove,
 } from "firebase/database";
+import { Link } from "react-router-dom";
 import { database } from "../firebase/init-firebase";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-export default function SubjectBannerCard(props) {
+export default function SubjectBannerCard({
+  responseObj,
+  getSelectedResponse,
+}) {
   return (
     <>
       <div className="container w-80 mx-3 my-1 p-4 border-compatible border border-stone-500 rounded-md shadow-zinc-600">
-        <div className="text-lg font-bold">{props.title}</div>
+        <div className="text-lg font-bold">{responseObj.title}</div>
         <div className="flex justify-between items-center">
-          <div>{props.tag} </div>
+          <div>{responseObj.tag} </div>
           <div>
             <CircularProgressbar
-              value={props.market}
-              text={`${props.market}`}
+              value={responseObj.mcapture}
+              text={`${responseObj.mcapture}`}
               strokeWidth={6}
               styles={buildStyles({
                 textColor: "black",
@@ -34,12 +38,15 @@ export default function SubjectBannerCard(props) {
           </div>
         </div>
 
-        <button
-          id="details"
-          className="btn items-center mt-5 mx-12 w-44 border-compatible h-8 border border-bg-slate-700 bg-slate-900 text-white hover:bg-slate-400  rounded-md"
+        <Link
+          to={"/Trending/ReportDetails/ResponseDetails/"}
+          onClick={() => {
+            getSelectedResponse(responseObj);
+          }}
+          className="btn items-center p-2 mt-5 mx-12 w-44 border-compatible h-8 border border-bg-slate-700 bg-slate-900 text-white hover:bg-slate-400  rounded-md"
         >
           View Full Details
-        </button>
+        </Link>
       </div>
     </>
   );
