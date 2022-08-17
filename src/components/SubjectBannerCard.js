@@ -37,16 +37,17 @@ export default function SubjectBannerCard({
             />
           </div>
         </div>
-
-        <Link
-          to={"/Trending/ReportDetails/ResponseDetails/"}
-          onClick={() => {
-            getSelectedResponse(responseObj);
-          }}
-          className="btn items-center p-2 mt-5 mx-12 w-44 border-compatible h-8 border border-bg-slate-700 bg-slate-900 text-white hover:bg-slate-400  rounded-md"
-        >
-          View Full Details
-        </Link>
+        <div className="flex items-center ">
+          <Link
+            to={"/Trending/ReportDetails/ResponseDetails/"}
+            onClick={() => {
+              getSelectedResponse(responseObj);
+            }}
+            className="btn text-center p-2  mx-12 w-44 border-compatible border border-bg-slate-700 bg-slate-900 text-white hover:bg-slate-400  rounded-md"
+          >
+            View Full Details
+          </Link>
+        </div>
       </div>
     </>
   );
