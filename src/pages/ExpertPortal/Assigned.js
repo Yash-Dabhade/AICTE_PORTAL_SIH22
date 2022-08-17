@@ -33,7 +33,7 @@ export default function Assigned() {
   }, []);
 
   return (
-    <div>
+    <div className="h-screen">
       <Routes>
         <Route
           path="*"
