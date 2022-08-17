@@ -13,6 +13,7 @@ function Curriculum(props) {
   const [allData, setAllData] = useState([]);
   const [tags, setTags] = useState([]);
   const [curriculumId, setCurriculumId] = useState("");
+  const [totalSem, setTotalSem] = useState(null);
 
   function getAllTags() {
     const db = dbref(database);
@@ -59,6 +60,7 @@ function Curriculum(props) {
   function getCurriculumId() {
     props.data.forEach((ele) => {
       if (ele.curriculum) {
+        setTotalSem(ele.totalSems);
         setCurriculumId(ele.curriculum.curriculumId);
         getAllCurriculums(ele.curriculum.curriculumId);
       }
@@ -193,6 +195,7 @@ function Curriculum(props) {
           instituteCode={props.instituteCode}
           courseCode={props.courseCode}
           departmentCode={props.departmentCode}
+          totalSems={totalSem ? totalSem : null}
           tags={tags}
         />
       </Modal>

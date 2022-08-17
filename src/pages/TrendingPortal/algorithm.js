@@ -2,9 +2,28 @@ import React, { useState, useEffect } from "react";
 
 function algorithm(props) {
   const [curriulum, setCurriculum] = useState(null);
+  const [message, setMessage] = useState("");
 
   function getCurriculumFromRef(reference) {
-    //get curriculum and setState
+    const db = dbref(database);
+    get(child(db, "/curriculumDetials/" + reference + "/"))
+      .then((snapshot) => {
+        let allData = new Array();
+        if (snapshot.exists()) {
+          let data = snapshot.val();
+          Object.keys(data).forEach((key) => {
+            // if (data[key].departmentCode === props.departmentCode)
+            allData.push(data[key]);
+          });
+          //setState
+          setCurriculum(allData);
+        } else {
+          console.log(snapshot);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   function checkIfAlreadyExisit(title) {
@@ -50,8 +69,8 @@ function algorithm(props) {
   }
 
   useEffect(() => {
-    //getCurriculumFromRef(reference)
-    //compute()
+    getCurriculumFromRef(props.reference);
+    compute();
   }, []);
 
   return <div>algorithm</div>;

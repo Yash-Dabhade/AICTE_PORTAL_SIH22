@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { saveNewCurriculum } from "../../utils/dbHelper";
 import { storage } from "../../firebase/init-firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -75,7 +75,8 @@ export default function NewCurriculum(props) {
               semester,
               tag,
               downloadURL,
-              props.reference
+              props.reference,
+              props.totalSems
             );
             document.getElementById("submitBtn").innerHTML = "Saving";
           })
@@ -85,6 +86,22 @@ export default function NewCurriculum(props) {
       }
     );
   };
+
+  function getAllOptions(totalSems) {
+    for (let i = 1; i <= totalSems; i++) {
+      document.querySelector("#currSem").appendChild(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+  }
+
+  useEffect(() => {
+    getAllOptions(props.totalSems);
+
+    return () => {};
+  }, []);
 
   return (
     <div className="container flex justify-center items-center mt-7 darkMode">
@@ -165,16 +182,7 @@ export default function NewCurriculum(props) {
                     onChange={(e) => {
                       handleSemChange(e.target.value);
                     }}
-                  >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                  </select>
+                  ></select>
                 </div>
 
                 <div className="mt-6">

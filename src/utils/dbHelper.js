@@ -123,7 +123,8 @@ function saveNewCurriculum(
   semester,
   tag,
   fileUrl,
-  reference
+  reference,
+  totalSems
 ) {
   // console.log(instituteCode, courseCode, departmentCode);
   const db = database;
@@ -143,6 +144,7 @@ function saveNewCurriculum(
     instituteCode: instituteCode,
     departmentCode: departmentCode,
     fileUrl: fileUrl,
+    totalSems: totalSems,
   })
     .then((snapshot) => {
       console.log("Uploaded");
@@ -157,11 +159,11 @@ function saveNewCurriculum(
           }
         )
           .then((snapshot) => {
-            alert("Data Submitted successfully");
+            // alert("Data Submitted successfully");
+            window.location.href = "/";
           })
           .catch((error) => {
             console.log(error);
-            return false;
           });
       } else {
         alert("Data Submitted successfully");

@@ -47,68 +47,84 @@ export default function ReportDetails({ reportId, name, date }) {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/*"
-        element={
-          <>
-            <h2 className="flex items-center justify-start font-bold font-serif text-2xl mt-2 border-compatible border-b-2 pb-2 border-b-slate-500">
-              {name} Report Details
-            </h2>
-            <div className="my-2">Search bar and filter</div>
-            <div className="h-report flex flex-col md:flex-row lg:flex-row my-4 items-center justify-between gap-3">
-              <div className="w-full h-full border-2 rounded-xl shadow-lg border-compatible">
-                <h3 className="text-center  font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white border-b-slate-900 rounded-xl">
-                  Responses By Experts
-                </h3>
-                <div className="h-11/12 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mt-2 gap-3 overflow-y-scroll">
-                  {responses.map((response, index) => {
-                    return (
-                      <SubjectBannerCard
-                        key={index}
-                        responseObj={response}
-                        getSelectedResponse={getSelectedResponse}
-                      />
-                    );
-                  })}
+    <div id="formRoot" className="parent-section darkMode">
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            <div>
+              <h2 className="flex items-center justify-start font-bold font-serif text-2xl mt-2 border-compatible border-b-2 pb-2 border-b-slate-500">
+                {name} Report Details
+              </h2>
+              <div className="my-2">Search bar and filter</div>
+              <div className="flex h-report my-4 items-center justify-between gap-2">
+                <div className="h-report w-8/12  border-2 rounded-xl shadow-lg border-compatible border-slate-800">
+                  <h3 className="text-center  font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white border-b-slate-900 rounded-xl">
+                    Responses By Experts
+                  </h3>
+                  <div className="grid max-h-72 grid-cols-2 overflow-y-scroll mt-2">
+                    {responses.map((response) => {
+                      return (
+                        <SubjectBannerCard
+                          key={response.id}
+                          responseObj={response}
+                          getSelectedResponse={getSelectedResponse}
+                        />
+                      );
+                    })}
+                    {responses.map((response) => {
+                      return (
+                        <SubjectBannerCard
+                          key={response.id}
+                          responseObj={response}
+                          getSelectedResponse={getSelectedResponse}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className=" h-report w-report border-2 rounded-xl shadow-lg border-compatible border-slate-800">
+                  <h3 className="text-center  font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white border-b-slate-900 rounded-xl">
+                    Experts Control Panel
+                  </h3>
+                  <div className="px-8 mt-3">
+                    <Link to="/Settings">
+                      <button className="border-2 border-compatible border-slate-800 rounded-xl p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full">
+                        Add New Expert
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="px-8 py-2">
+                    <ComboBoxExpert
+                      reportId={reportId}
+                      name={name}
+                      date={date}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="w-full h-full md:w-report border-2 rounded-xl shadow-lg border-compatible">
-                <h3 className="text-center font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white  rounded-xl">
-                  Experts Control Panel
-                </h3>
-                <div className="px-1 lg:px-8 mt-3">
-                  <Link to="/Settings">
-                    <button className="btn btn-compatible border border-compatible rounded-xl p-2 font-semibold font-serif w-full">
-                      Add New Expert
-                    </button>
-                  </Link>
-                </div>
-                <div className="px-1 lg:px-8 py-2">
-                  <ComboBoxExpert reportId={reportId} name={name} date={date} />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <Link to="/Past%20Reports">
-                <button className="btn btn-compatible border border-compatible rounded-xl p-2 font-semibold font-serif ">
-                  Previous Reports
+              <div className="flex items-center justify-between">
+                <Link to="/Past%20Reports">
+                  <button className="border-2  hover:bg-slate-600 hover:text-zinc-100 border-compatible border-slate-800 rounded-xl p-2 font-semibold font-serif shadow-lg">
+                    Previous Reports
+                  </button>
+                </Link>
+                <button className="border-2  hover:bg-slate-600 hover:text-zinc-100 border-compatible border-slate-800 rounded-xl p-2 font-semibold font-serif shadow-lg">
+                  Generate Report
                 </button>
-              </Link>
-              <button className="btn btn-compatible border border-compatible rounded-xl p-2 font-semibold font-serif ">
-                Generate Report
-              </button>
+              </div>
             </div>
-          </>
-        }
-      />
-      <Route
-        path="ResponseDetails/*"
-        element={
-          //element
-          <ResponseDetails responseObj={selectedResponse} />
-        }
-      />
-    </Routes>
+          }
+        />
+        <Route
+          path="ResponseDetails/*"
+          element={
+            //element
+            <ResponseDetails responseObj={selectedResponse} />
+          }
+        />
+      </Routes>
+      <Outlet />
+    </div>
   );
 }
