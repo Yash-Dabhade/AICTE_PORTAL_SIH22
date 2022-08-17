@@ -127,10 +127,10 @@ function ResponseDetails({ responseObj }) {
         {/* right section/////////////////////////////////////////////////////////////////// */}
         <div className="w-2/5 h-report flex flex-col  justify-center ">
           <div className="items-center justify-center border-b border-b-slate-300  bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-lg text-left  font-medium text-gray-500 ">
+              Market Capture
+            </dt>
             <dd className="mt-1 text-sm  text-gray-900 sm:mt-0 sm:col-span-2">
-              <dt className="text-lg text-left  font-medium text-gray-500 ">
-                Market Capture
-              </dt>
               <PieChart width={300} height={250}>
                 <Pie
                   data={pieData}

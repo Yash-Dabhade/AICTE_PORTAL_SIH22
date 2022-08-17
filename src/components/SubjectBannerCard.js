@@ -19,10 +19,10 @@ export default function SubjectBannerCard({
 }) {
   return (
     <>
-      <div className="container w-80 mx-3 my-1 p-4 border-compatible border border-stone-500 rounded-md shadow-zinc-600">
+      <div className="w-11/12 mx-3 my-1 p-2 border-compatible border  rounded-md ">
         <div className="text-lg font-bold">{responseObj.title}</div>
-        <div className="flex justify-between items-center">
-          <div>{responseObj.tag} </div>
+        <div className="flex justify-between items-center mb-3 lg:mb-0">
+          <div>{responseObj.tag || "Tag"} </div>
           <div>
             <CircularProgressbar
               value={responseObj.mcapture}
@@ -37,17 +37,16 @@ export default function SubjectBannerCard({
             />
           </div>
         </div>
-        <div className="flex items-center ">
-          <Link
-            to={"/Trending/ReportDetails/ResponseDetails/"}
-            onClick={() => {
-              getSelectedResponse(responseObj);
-            }}
-            className="btn text-center p-2  mx-12 w-44 border-compatible border border-bg-slate-700 bg-slate-900 text-white hover:bg-slate-400  rounded-md"
-          >
-            View Full Details
-          </Link>
-        </div>
+
+        <Link
+          to={"/Trending/ReportDetails/ResponseDetails/"}
+          onClick={() => {
+            getSelectedResponse(responseObj);
+          }}
+          className="btn btn-compatible border border-compatible p-2 rounded-md"
+        >
+          View Full Details
+        </Link>
       </div>
     </>
   );

@@ -70,16 +70,16 @@ const App = ({ reportId, name, date }) => {
   }, []);
 
   return (
-    <div className="app min-h-report">
+    <div className="app min-h-report w-full">
       <button
         onClick={handleAssignToExperts}
-        className="border-2 mb-4 border-compatible border-slate-800 rounded-xl mt-2 p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full"
+        className="btn btn-compatible border border-compatible rounded-xl p-2 font-semibold font-serif mb-3 w-full"
       >
         Apply Changes
       </button>
       {/* <div className="h-36 overflow-y-auto overflow-x-hidden"> */}
       <MultiSelect
-        className="text-black w-52"
+        className="text-black w-full"
         onChange={handleOnchange}
         options={options}
       />

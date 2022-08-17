@@ -21,7 +21,7 @@ import PastReports from "../pages/PastReports/PastReports";
 function AdminHome() {
   const { logout, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(true);
-
+  const [searchQuery, setSearchQuery] = useState("");
   function modeSwitch() {
     document.documentElement.classList.toggle("dark");
   }
@@ -38,6 +38,13 @@ function AdminHome() {
     return capitalized;
   }
 
+  // Search Bar
+  function handleSearch() {
+    if (!searchQuery) return;
+    console.log(searchQuery);
+  }
+
+  // Sidebar
   const links = [
     "University",
     "Trending",
@@ -45,6 +52,7 @@ function AdminHome() {
     "Past Reports",
     "Settings",
   ];
+
   const icons = [
     <BsBookFill size={22} className="mx-2" />,
     <BsFillDiagram3Fill size={22} className="mx-2" />,
@@ -75,7 +83,13 @@ function AdminHome() {
             AICTE
           </Link>
           <div className="search-wrapper">
-            <input className="search-input" type="text" placeholder="Search" />
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search"
+              id="pageSearch"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -87,6 +101,7 @@ function AdminHome() {
               strokeWidth="2"
               className="feather feather-search"
               viewBox="0 0 24 24"
+              onClick={handleSearch}
             >
               <defs></defs>
               <circle cx="11" cy="11" r="8"></circle>
