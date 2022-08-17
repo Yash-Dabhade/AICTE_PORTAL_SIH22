@@ -5,16 +5,16 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function NewCurriculum(props) {
   const [uploadedFile, setFile] = useState(null);
-
   const [tagValue, setTagValue] = useState("basic");
+  const [semValue, setSemValue] = useState("1");
+  const [semElements, setSemElements] = useState([]);
+  const [levelValue, setLevelValue] = useState("basic");
   const handleTagChange = (e) => {
     setTagValue(e);
   };
-  const [semValue, setSemValue] = useState("1");
   const handleSemChange = (e) => {
     setSemValue(e);
   };
-  const [levelValue, setLevelValue] = useState("basic");
   const handleLevelChange = (e) => {
     setLevelValue(e);
   };
@@ -87,20 +87,16 @@ export default function NewCurriculum(props) {
     );
   };
 
-  function getAllOptions(totalSems) {
-    for (let i = 1; i <= totalSems; i++) {
-      document.querySelector("#currSem").appendChild(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
+  function semOptions() {
+    let options = [];
+    for (let i = 1; i <= props.totalSems; i++) {
+      options.push(<option value={i}>{i}</option>);
     }
+    setSemElements(options);
   }
 
   useEffect(() => {
-    getAllOptions(props.totalSems);
-
-    return () => {};
+    semOptions();
   }, []);
 
   return (
@@ -182,7 +178,11 @@ export default function NewCurriculum(props) {
                     onChange={(e) => {
                       handleSemChange(e.target.value);
                     }}
-                  ></select>
+                  >
+                    {semElements.map((element) => {
+                      return element;
+                    })}
+                  </select>
                 </div>
 
                 <div className="mt-6">
