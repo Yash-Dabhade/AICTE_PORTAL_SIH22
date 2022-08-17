@@ -29,6 +29,7 @@ export default function NewTrendingResponse({ reportID }) {
       concept,
       reference,
       level,
+      tagValue,
       author
     );
   }
@@ -88,7 +89,7 @@ export default function NewTrendingResponse({ reportID }) {
             type="text"
             id="mcapture"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-            placeholder="Market capture of the subject in percentage"
+            placeholder="60%"
           />
         </div>
         <div>
@@ -99,7 +100,7 @@ export default function NewTrendingResponse({ reportID }) {
             type="text"
             id="preq"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-            placeholder=""
+            placeholder="Javascript"
           />
         </div>
         <div>
@@ -121,7 +122,7 @@ export default function NewTrendingResponse({ reportID }) {
             type="text"
             id="project"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-            placeholder=""
+            placeholder="High"
           />
         </div>
         <div>
@@ -143,7 +144,7 @@ export default function NewTrendingResponse({ reportID }) {
             type="text"
             id="reference"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-            placeholder="reference"
+            placeholder="blog links, books"
           />
         </div>
         <div>
@@ -152,8 +153,8 @@ export default function NewTrendingResponse({ reportID }) {
           </label>
           <select
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/5 p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-            name="level"
-            id="level"
+            name="tag"
+            id="tag"
             value={tagValue}
             onChange={handleTagChange}
           >

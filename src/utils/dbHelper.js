@@ -299,7 +299,7 @@ function assignToExperts(reportID, name, date, emails) {
         update(dbref(db, `/expertDetails/${emailID}/pending/${reportID}/`), {
           ID: reportID,
           name: name,
-          date,
+          date: date,
         })
           .then((snapshot) => {})
           .catch((err) => {
