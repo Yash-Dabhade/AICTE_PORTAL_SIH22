@@ -16,11 +16,12 @@ function CompareSubject({ responseObj }) {
   const [curriculum, setCurriculum] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dataFound, setDataFound] = useState(false);
 
   function getCurriculumFromRef(reference) {
     const db = dbref(database);
     let allData = new Array();
-    get(child(db, "/curriculumDetials/" + reference + "/"))
+    get(child(db, "/curriculumDetails/" + reference + "/"))
       .then((snapshot) => {
         if (snapshot.exists()) {
           let data = snapshot.val();
@@ -30,6 +31,7 @@ function CompareSubject({ responseObj }) {
           setCurriculum(allData);
           setMessage("Data found Click on the button to compare");
           setLoading(false);
+          setDataFound(true);
         } else {
           setLoading(false);
           setMessage("Unable to find curriculum from given ID !");
@@ -72,6 +74,7 @@ function CompareSubject({ responseObj }) {
   function compute() {
     //check if curriculum already exisits
     //pass report subject title
+    setDataFound(false);
     setLoading(true);
     if (checkIfAlreadyExisit(responseObj.title)) {
       //show modal
@@ -102,7 +105,9 @@ function CompareSubject({ responseObj }) {
             `${responseObj.title} not found ! 
            add ${responseObj.title} in ` +
               new Number(++prerequisitesInSem) +
-              " semester. "
+              ` semester which is right after it's prerequsite ${
+                responseObj.prereq
+              } lies in ${--prerequisitesInSem}`
           );
         }
       }
@@ -134,20 +139,13 @@ function CompareSubject({ responseObj }) {
           />
           <BiHelpCircle className="mx-2 cursor-pointer" size="30px" />
         </div>
+
         <div className="flex items-center gap-1">
           <button
             onClick={handleCompareCurriculum}
             className="font-medium  border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
           >
-            Get Data
-          </button>
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={compute}
-            className="font-medium  border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
-          >
-            Compare Curriculum
+            Get Curriculum
           </button>
         </div>
       </div>
@@ -162,7 +160,16 @@ function CompareSubject({ responseObj }) {
             <GridLoader size={20} margin={2} loading={loading} />
           </div>
         ) : (
-          <div className="flex h-4/5 items-center justify-center">
+          <div className="flex flex-col h-4/5 items-center justify-center">
+            {dataFound && (
+              <button
+                id="compareCurriculumBtn"
+                onClick={compute}
+                className="font-medium  border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
+              >
+                Compare Curriculum
+              </button>
+            )}
             <h4 className="text-slate-700 font-mono">{message}</h4>
           </div>
         )}

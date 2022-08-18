@@ -80,9 +80,9 @@ function AdminHome() {
           </button>
 
           <Link to="/" className="app-name">
-            AICTE
+            AICTE Curriculum Control & Development Portal
           </Link>
-          <div className="search-wrapper">
+          {/* <div className="search-wrapper">
             <input
               className="search-input"
               type="text"
@@ -107,7 +107,7 @@ function AdminHome() {
               <circle cx="11" cy="11" r="8"></circle>
               <path d="M21 21l-4.35-4.35"></path>
             </svg>
-          </div>
+          </div> */}
         </div>
         <div className="app-header-right">
           <button

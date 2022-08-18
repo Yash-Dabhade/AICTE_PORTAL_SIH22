@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function SimpleCard({
   data,
   getSelectedCourseCode,
-  getSelectedDepartmentCode,
+  getSelectedDepartment,
   deptCode,
 }) {
   return (
@@ -29,7 +29,7 @@ function SimpleCard({
               if (!deptCode) {
                 getSelectedCourseCode(data.code);
               } else {
-                getSelectedDepartmentCode(deptCode);
+                getSelectedDepartment(data);
               }
             }}
           >

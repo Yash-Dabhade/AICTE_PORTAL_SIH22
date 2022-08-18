@@ -135,7 +135,7 @@ function saveNewCurriculum(
     newRef = push(dbref(db, "/curriculumDetails/")).key;
   }
 
-  update(dbref(db, `/curriculumDetials/${newRef}/${code}`), {
+  update(dbref(db, `/curriculumDetails/${newRef}/${code}`), {
     title: title,
     code: code,
     level: level,

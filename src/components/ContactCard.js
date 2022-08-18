@@ -20,10 +20,12 @@ export default function ContactCard(props) {
           <TiLocation className="mx-2" size="26px " />
           {props.location}
         </p>
-        <p className="font-bold mt-2 w-80 cursor-pointer flex">
-          <IoEarthSharp className="mx-2" size="26px " />
-          {props.website}
-        </p>
+        <a target="_blank" href={props.website}>
+          <p className="font-bold mt-2 w-80 cursor-pointer flex">
+            <IoEarthSharp className="mx-2" size="26px " />
+            {props.website}
+          </p>
+        </a>
       </div>
     </>
   );

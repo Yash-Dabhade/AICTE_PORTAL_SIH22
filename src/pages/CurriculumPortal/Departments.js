@@ -11,7 +11,7 @@ function Departments(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [allData, setAllData] = React.useState([]);
   const [deptCodes, setDeptCode] = React.useState([]);
-  const [selectedDepartmentCode, setSelectedDepartmentCode] = React.useState();
+  const [selectedDepartment, setSelectedDepartment] = React.useState();
 
   function getDeparments(data, courseCode) {
     let allDept = {};
@@ -25,6 +25,7 @@ function Departments(props) {
       deptData.push(allDept[ele]);
     });
     setAllData(deptData);
+    console.log(allDept);
   }
 
   React.useEffect(() => {
@@ -32,8 +33,8 @@ function Departments(props) {
     return () => {};
   }, []);
 
-  const getSelectedDepartmentCode = (code) => {
-    setSelectedDepartmentCode(code);
+  const getSelectedDepartment = (obj) => {
+    setSelectedDepartment(obj);
   };
 
   function openModal() {
@@ -57,7 +58,7 @@ function Departments(props) {
               {allData.map((ele, index) => {
                 return (
                   <SimpleCard
-                    getSelectedDepartmentCode={getSelectedDepartmentCode}
+                    getSelectedDepartment={getSelectedDepartment}
                     data={ele}
                     key={index}
                     deptCode={deptCodes[index]}
@@ -81,8 +82,8 @@ function Departments(props) {
           <Curriculum
             instituteCode={props.instituteCode}
             courseCode={props.courseCode}
-            departmentCode={selectedDepartmentCode}
-            data={allData}
+            departmentCode={selectedDepartment ? selectedDepartment.code : null}
+            selectedDept={selectedDepartment}
           />
         }
       />

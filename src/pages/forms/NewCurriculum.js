@@ -88,8 +88,13 @@ export default function NewCurriculum(props) {
 
   function semOptions() {
     let options = [];
+    console.log(props.totalSems);
     for (let i = 1; i <= props.totalSems; i++) {
-      options.push(<option value={i}>{i}</option>);
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
     }
     setSemElements(options);
   }

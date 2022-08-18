@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { database } from "../../firebase/init-firebase";
 import { ref as dbref, child, get, push } from "firebase/database";
+import { data } from "jquery";
 
 function Curriculum(props) {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ function Curriculum(props) {
   function getAllCurriculums(reference) {
     const db = dbref(database);
 
-    get(child(db, "/curriculumDetials/" + reference + "/"))
+    get(child(db, "/curriculumDetails/" + reference + "/"))
       .then((snapshot) => {
         let allData = new Array();
 
@@ -58,13 +59,11 @@ function Curriculum(props) {
   }
 
   function getCurriculumId() {
-    props.data.forEach((ele) => {
-      if (ele.curriculum) {
-        setTotalSem(ele.totalSems);
-        setCurriculumId(ele.curriculum.curriculumId);
-        getAllCurriculums(ele.curriculum.curriculumId);
-      }
-    });
+    setTotalSem(props.selectedDept.totalSems);
+    if (props.selectedDept.curriculum) {
+      setCurriculumId(props.selectedDept.curriculum.curriculumId);
+      getAllCurriculums(props.selectedDept.curriculum.curriculumId);
+    }
   }
 
   React.useEffect(() => {
