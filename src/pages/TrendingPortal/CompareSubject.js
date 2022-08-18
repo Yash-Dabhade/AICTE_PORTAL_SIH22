@@ -14,23 +14,22 @@ import GridLoader from "react-spinners/GridLoader";
 
 function CompareSubject({ responseObj }) {
   const [curriculum, setCurriculum] = useState(null);
-  const [message, setMessage] = useState("No previous data found !");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   function getCurriculumFromRef(reference) {
     const db = dbref(database);
+    let allData = new Array();
     get(child(db, "/curriculumDetials/" + reference + "/"))
       .then((snapshot) => {
-        let allData = new Array();
         if (snapshot.exists()) {
           let data = snapshot.val();
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
           setCurriculum(allData);
-          setTimeout(() => {
-            compute(allData);
-          }, 2000);
+          setMessage("Data found Click on the button to compare");
+          setLoading(false);
         } else {
           setLoading(false);
           setMessage("Unable to find curriculum from given ID !");
@@ -46,9 +45,11 @@ function CompareSubject({ responseObj }) {
   function checkIfAlreadyExisit(title) {
     //return true or false based on the
     let subject = new String(title).toLowerCase();
-    for (let i = 0; i < curriculum.length; i++) {
-      if (new String(curriculum[i].title).toLowerCase().includes(subject)) {
-        return true;
+    if (curriculum) {
+      for (let i = 0; i < curriculum.length; i++) {
+        if (new String(curriculum[i].title).toLowerCase().includes(subject)) {
+          return true;
+        }
       }
     }
     return false;
@@ -57,10 +58,12 @@ function CompareSubject({ responseObj }) {
   function searchPrerequisitesSem(prerequisite) {
     //return -1 if not found, else return the semeter number where it is found
     let subject = new String(prerequisite).toLowerCase();
-    for (let i = 0; i < curriculum.length; i++) {
-      let curriculumSub = curriculum[i].title.toLowerCase();
-      if (curriculumSub.includes(subject)) {
-        return curriculum[i].semester;
+    if (curriculum) {
+      for (let i = 0; i < curriculum.length; i++) {
+        let curriculumSub = curriculum[i].title.toLowerCase();
+        if (curriculumSub.includes(subject)) {
+          return curriculum[i].semester;
+        }
       }
     }
     return -1;
@@ -69,6 +72,7 @@ function CompareSubject({ responseObj }) {
   function compute() {
     //check if curriculum already exisits
     //pass report subject title
+    setLoading(true);
     if (checkIfAlreadyExisit(responseObj.title)) {
       //show modal
       setMessage(responseObj.title + " already exists in the curriculum ! ");
@@ -88,13 +92,17 @@ function CompareSubject({ responseObj }) {
           setMessage(
             `${responseObj.title} not found ! shift ${responseObj.prereq} to ${
               prerequisitesInSem - 1
-            } semester and add ${responseObj.title} in ${prerequisitesInSem}`
+            } semester and add ${
+              responseObj.title
+            } in ${prerequisitesInSem} semester. `
           );
         } else {
           // message =  suggest to put props.title in prerequisitiesInSem + 1
           setMessage(
             `${responseObj.title} not found ! 
-           add ${responseObj.title} in ` + new Number(++prerequisitesInSem)
+           add ${responseObj.title} in ` +
+              new Number(++prerequisitesInSem) +
+              " semester. "
           );
         }
       }
@@ -129,6 +137,14 @@ function CompareSubject({ responseObj }) {
         <div className="flex items-center gap-1">
           <button
             onClick={handleCompareCurriculum}
+            className="font-medium  border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
+          >
+            Get Data
+          </button>
+        </div>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={compute}
             className="font-medium  border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
           >
             Compare Curriculum

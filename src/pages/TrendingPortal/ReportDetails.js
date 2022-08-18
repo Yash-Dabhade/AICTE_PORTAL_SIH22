@@ -63,10 +63,10 @@ export default function ReportDetails({ reportId, name, date }) {
                     Responses By Experts
                   </h3>
                   <div className="grid max-h-72 grid-cols-2 overflow-y-scroll mt-2">
-                    {responses.map((response) => {
+                    {responses.map((response, index) => {
                       return (
                         <SubjectBannerCard
-                          key={response.id}
+                          key={index}
                           responseObj={response}
                           getSelectedResponse={getSelectedResponse}
                         />
