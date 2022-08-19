@@ -20,6 +20,7 @@ function CompareSubject({ responseObj }) {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [dataFound, setDataFound] = useState(false);
+  const [infoMessage, setInfoMessage] = useState(true);
   const [prerequisiteSem, setPrerequisiteSem] = useState(-1);
   const [titleSem, setTitleSem] = useState(-1);
   const [calculatedResults, setCalculatedResults] = useState(false);
@@ -42,12 +43,17 @@ function CompareSubject({ responseObj }) {
           setDataFound(true);
         } else {
           setLoading(false);
+          setCalculatedResults(false);
+          setDataFound(false);
           setMessage("Unable to find curriculum from given ID !");
+          setInfoMessage(true);
         }
       })
       .catch((err) => {
         setLoading(false);
         console.log("I am running " + err);
+        setInfoMessage(true);
+        setCalculatedResults(false);
         setMessage("Unable to find curriculum from given ID !");
       });
   }
@@ -122,14 +128,18 @@ function CompareSubject({ responseObj }) {
         }
       }
     }
+    setInfoMessage(false);
     setCalculatedResults(true);
     setLoading(false);
   }
 
   function handleCompareCurriculum() {
     let id = document.getElementById("curriculumIdInput").value;
-    if (!id) setMessage("Invalid ID");
-    else {
+    if (!id) {
+      setMessage("Invalid Curriculum ID");
+      setCalculatedResults(false);
+      setInfoMessage(true);
+    } else {
       setLoading(true);
       getCurriculumFromRef(id);
     }
@@ -175,8 +185,8 @@ function CompareSubject({ responseObj }) {
             id="resultContainer"
             className="flex flex-col h-4/5 items-center justify-center"
           >
-            {dataFound && (
-              <div className="flex flex-col h-4/5 items-center justify-center">
+            <div className="flex flex-col  items-center justify-center">
+              {dataFound && (
                 <button
                   id="compareCurriculumBtn"
                   onClick={compute}
@@ -184,9 +194,9 @@ function CompareSubject({ responseObj }) {
                 >
                   Compare Curriculum
                 </button>
-                <h4 className=" font-mono">{message}</h4>
-              </div>
-            )}
+              )}
+              {infoMessage && <p className=" font-mono">{message}</p>}
+            </div>
             {calculatedResults && (
               <div className="flex flex-col items-center w-full">
                 <div className="flex items-center justify-between m-1 gap-2 border-b-slate-700 border-b w-full">
