@@ -18,7 +18,9 @@ function InstituteList(props) {
     if (props.institutes) {
       getAllInstitutes(props.institutes);
     } else {
-      getAllInstitutes(JSON.parse(window.localStorage.getItem("institutes")));
+      if (window.localStorage.getItem("institutes")) {
+        getAllInstitutes(JSON.parse(window.localStorage.getItem("institutes")));
+      }
     }
 
     return () => {};

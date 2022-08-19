@@ -42,6 +42,8 @@ function Departments(props) {
   const getSelectedDepartment = (obj) => {
     setSelectedDepartment(obj);
     window.localStorage.setItem("selectedDepartment", JSON.stringify(obj));
+    console.log(obj);
+    window.localStorage.setItem("selectedDepartmentCode", obj.code);
   };
 
   function openModal() {
@@ -100,8 +102,7 @@ function Departments(props) {
             departmentCode={
               selectedDepartment
                 ? selectedDepartment.code
-                : JSON.parse(window.localStorage.getItem("selectedDepartment"))
-                    .code
+                : window.localStorage.getItem("selectedDepartmentCode")
             }
             selectedDept={selectedDepartment}
           />

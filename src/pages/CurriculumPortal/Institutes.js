@@ -33,15 +33,18 @@ function Institutes(props) {
 
   React.useEffect(() => {
     if (props.data !== null) {
+      setInstitutesData(props.data);
       window.localStorage.setItem("institutesData", JSON.stringify(props.data));
+      if (!props.data.institutes) return;
       window.localStorage.setItem(
         "institutes",
         JSON.stringify(props.data.institutes)
       );
     } else {
-      setInstitutesData(
-        JSON.parse(window.localStorage.getItem("institutesData"))
-      );
+      if (window.localStorage.getItem("institutes") !== null) {
+        let data = JSON.parse(window.localStorage.getItem("institutesData"));
+        setInstitutesData(data);
+      }
     }
     return () => {};
   }, []);
@@ -49,43 +52,7 @@ function Institutes(props) {
   return (
     <>
       <Routes>
-        {props.data ? (
-          <Route
-            path="/"
-            element={
-              <>
-                <Header />
-                <SubHead title={"Institute"} btnFunc={createInstitute} />
-                <div className="flex justify-between ">
-                  <Description
-                    title={props.data.initialName}
-                    code={props.data.code}
-                    fullName={props.data.fullName}
-                  />
-                  <ContactCard
-                    email={props.data.email}
-                    phone={props.data.phone}
-                    location={props.data.location}
-                    website={props.data.website}
-                  />
-                </div>
-                <div className="universities-section-header">
-                  <p>Institutes</p>
-                </div>
-                <InstituteList
-                  institutes={props.data.institutes}
-                  getInstituteCode={getInstituteCode}
-                />
-                <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-                  <InstituteForm
-                    btnFunc={closeModal}
-                    universityCode={props.data.code}
-                  />
-                </Modal>
-              </>
-            }
-          ></Route>
-        ) : (
+        {institutesData ? (
           <Route
             path="/"
             element={
@@ -109,7 +76,7 @@ function Institutes(props) {
                   <p>Institutes</p>
                 </div>
                 <InstituteList
-                  institutes={institutesData.institutes}
+                  institutes={institutesData ? institutesData.institutes : null}
                   getInstituteCode={getInstituteCode}
                 />
                 <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
@@ -121,6 +88,8 @@ function Institutes(props) {
               </>
             }
           />
+        ) : (
+          (window.location.href = "/University")
         )}
         <Route
           path="courses/*"
