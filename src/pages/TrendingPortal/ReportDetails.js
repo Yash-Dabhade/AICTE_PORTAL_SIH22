@@ -68,8 +68,9 @@ export default function ReportDetails({ reportId, name, date }) {
   function handleTagschange(tag) {
     if (tag.length > 0) {
       const filteredResponses = responses.filter((response) => {
-        return JSON.stringify(response).includes(tag);
+        return tag.trim() === response.tag.trim();
       });
+
       setResponses(filteredResponses);
     } else {
       getAllResponsesByReportID(reportId);
@@ -136,6 +137,7 @@ export default function ReportDetails({ reportId, name, date }) {
                 </div>
                 <div className="px-8 py-2">
                   <MultiSelect
+                    singleSelect={true}
                     className="text-black w-full"
                     onChange={handleTagschange}
                     options={tags}
@@ -147,7 +149,7 @@ export default function ReportDetails({ reportId, name, date }) {
                   <h3 className="text-center  font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white border-b-slate-900 rounded-xl">
                     Responses By Experts
                   </h3>
-                  <div className="grid max-h-72 grid-cols-2 overflow-y-scroll mt-2">
+                  <div className="grid max-h-responseContainer grid-cols-2 overflow-y-scroll mt-2">
                     {responses.map((response, index) => {
                       return (
                         <SubjectBannerCard
@@ -178,16 +180,6 @@ export default function ReportDetails({ reportId, name, date }) {
                     />
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center justify-between">
-                <Link to="/Past%20Reports">
-                  <button className="border-2  hover:bg-slate-600 hover:text-zinc-100 border-compatible border-slate-800 rounded-xl p-2 font-semibold font-serif shadow-lg">
-                    Previous Reports
-                  </button>
-                </Link>
-                <button className="border-2  hover:bg-slate-600 hover:text-zinc-100 border-compatible border-slate-800 rounded-xl p-2 font-semibold font-serif shadow-lg">
-                  Generate Report
-                </button>
               </div>
             </div>
           }

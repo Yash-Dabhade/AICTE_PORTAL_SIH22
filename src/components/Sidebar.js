@@ -16,6 +16,7 @@ export default function Sidebar({ links, icons, isNavOpen }) {
     ele.classList.add("active");
     window.localStorage.removeItem("instituteCode");
     window.localStorage.removeItem("institutesData");
+    window.localStorage.removeItem("courseCode");
     window.localStorage.removeItem("CoursesData");
     window.localStorage.removeItem("selectedDepartment");
     window.localStorage.removeItem("institutes");
