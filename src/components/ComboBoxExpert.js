@@ -11,7 +11,6 @@ const App = ({ reportId, name, date }) => {
   const [selectedEmails, setSelectedEmails] = useState([]);
 
   const handleOnchange = (val) => {
-    // console.log(val);
     setEmailsToAssign(val);
   };
 

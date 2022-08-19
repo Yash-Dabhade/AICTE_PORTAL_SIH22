@@ -14,6 +14,14 @@ export default function Sidebar({ links, icons, isNavOpen }) {
     removeActive();
     let ele = e.target.closest("a");
     ele.classList.add("active");
+    window.localStorage.removeItem("instituteCode");
+    window.localStorage.removeItem("institutesData");
+    window.localStorage.removeItem("CoursesData");
+    window.localStorage.removeItem("selectedDepartment");
+    window.localStorage.removeItem("institutes");
+    window.localStorage.removeItem("selectedReportId");
+    window.localStorage.removeItem("selectedReportName");
+    window.localStorage.removeItem("selectedReportDate");
   }
 
   return (

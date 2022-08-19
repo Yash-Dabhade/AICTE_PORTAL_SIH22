@@ -111,7 +111,7 @@ a {
 .search-wrapper {
   border-radius: 20px;
   background-color: var(--search-area-bg);
-  padding-right: 12px;
+  padding: 12px;
   height: 40px;
   display: flex;
   justify-content: space-between;
