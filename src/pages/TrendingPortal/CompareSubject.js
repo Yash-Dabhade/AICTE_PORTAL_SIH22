@@ -14,6 +14,7 @@ import GridLoader from "react-spinners/GridLoader";
 import { IoSaveSharp } from "react-icons/io5";
 import { IoIosRemoveCircle } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
+import { publishReport, saveReport } from "../../utils/dbHelper";
 
 function CompareSubject({ responseObj }) {
   const [curriculum, setCurriculum] = useState(null);
@@ -143,6 +144,22 @@ function CompareSubject({ responseObj }) {
       setLoading(true);
       getCurriculumFromRef(id);
     }
+  }
+
+  function handleSaveReport() {
+    saveReport(responseObj);
+  }
+
+  function discardReport() {
+    // setCalculatedResults(false);
+    setCalculatedResults(false);
+    setDataFound(false);
+    setMessage("Report Discarded !");
+    setInfoMessage(true);
+  }
+
+  function handlePublishReport() {
+    publishReport(responseObj);
   }
 
   return (
@@ -286,15 +303,24 @@ function CompareSubject({ responseObj }) {
                     </tbody>
                   </table>
                   <div className="flex gap-2  flex-col w-report">
-                    <button className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                    <button
+                      onClick={handleSaveReport}
+                      className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800"
+                    >
                       <IoSaveSharp className="mx-1" size="24px" />
                       Save Report
                     </button>
-                    <button className="font-medium flex items-center justify-center m-1 border gap-1 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                    <button
+                      onClick={discardReport}
+                      className="font-medium flex items-center justify-center m-1 border gap-1 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800"
+                    >
                       <IoIosRemoveCircle className="mx-2" size="24px" />
                       Discard Report
                     </button>
-                    <button className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                    <button
+                      onClick={handlePublishReport}
+                      className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800"
+                    >
                       <FaShare className="mx-2" size="24px" />
                       Publish Report
                     </button>

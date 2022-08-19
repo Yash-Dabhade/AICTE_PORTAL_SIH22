@@ -167,9 +167,9 @@ function AdminHome() {
               {/* <Route path="institute" element={<Institutes />} /> */}
             </Route>
             <Route path="/Trending/*" element={<Trending />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/Past%20Reports" element={<PastReports />} />
-            <Route path="/Settings" element={<Settings />} />
+            <Route path="/Dashboard/*" element={<Dashboard />} />
+            <Route path="/Past%20Reports/*" element={<PastReports />} />
+            <Route path="/Settings/*" element={<Settings />} />
           </Routes>
         </div>
       ) : (

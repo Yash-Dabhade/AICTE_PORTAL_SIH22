@@ -105,8 +105,8 @@ export default function ReportDetails({ reportId, name, date }) {
               <h2 className="flex items-center justify-start font-bold font-serif text-2xl mt-2 border-compatible border-b-2 pb-2 border-b-slate-500">
                 {name} Report Details
               </h2>
-              <div className="my-4 flex items-center justify-between">
-                <div className="search-wrapper ">
+              <div className="my-4 flex items-center justify-between ">
+                <div className="search-wrapper border">
                   <input
                     className="search-input"
                     type="text"
@@ -162,9 +162,9 @@ export default function ReportDetails({ reportId, name, date }) {
                   </div>
                 </div>
                 <div className=" h-report w-report border-2 rounded-xl shadow-lg border-compatible border-slate-800">
-                  <h3 className="text-center  font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white border-b-slate-900 rounded-xl">
+                  <p className="text-center  font-bold py-1 border-b-2 border-compatible bg-slate-900 text-white border-b-slate-900 rounded-xl">
                     Experts Control Panel
-                  </h3>
+                  </p>
                   <div className="px-8 mt-3">
                     <Link to="/Settings">
                       <button className="border-2 border-compatible border-slate-800 rounded-xl p-2 hover:bg-slate-600 hover:text-zinc-100 font-semibold font-serif w-full">

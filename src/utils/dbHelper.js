@@ -208,6 +208,38 @@ function saveNewTag(name, btnFunc) {
     });
 }
 
+function publishReport(data) {
+  const db = database;
+
+  update(dbref(db, `/publishedReports/${data.id}/`), {
+    ...data,
+    dateSaved: new Date(Date.now()),
+    upVote: 0,
+    downVote: 0,
+  })
+    .then((snapshot) => {
+      alert("Published");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
+function saveReport(data) {
+  const db = database;
+
+  update(dbref(db, `/savedReports/${data.id}/`), {
+    ...data,
+    dateSaved: new Date(Date.now()),
+  })
+    .then((snapshot) => {
+      alert("Saved");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 function addNewExpert(email, field, btnFunc) {
   const db = database;
 
@@ -530,6 +562,25 @@ function getAllResponsesByReportID(reportID) {
     });
 }
 
+function getAllSavedReports() {
+  const db = dbref(database);
+  get(child(db, `/savedReports/`))
+    .then((snapshot) => {
+      let allData = new Array();
+      if (snapshot.exists()) {
+        let data = snapshot.val();
+        Object.keys(data).forEach((key) => {
+          allData.push(data[key]);
+        });
+      }
+      //set state
+      //setData(allData)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
 function getAllExpertEmailsByReportID(reportID) {
   const db = dbref(database);
   get(child(db, `/reportDetails/${reportID}/expertsEmails/`))
@@ -589,4 +640,6 @@ export {
   saveExpertDetails,
   saveNewTrendingResponse,
   assignToExperts,
+  publishReport,
+  saveReport,
 };
