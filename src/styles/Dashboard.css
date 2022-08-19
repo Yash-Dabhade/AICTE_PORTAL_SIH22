@@ -208,7 +208,7 @@ a {
   margin: 10px 0;
   padding: 5px;
   transition: 0.2s;
-  border: 1px solid var(--link-color-active-bg);
+  border: 1px solid var(--main-color);
   border-radius: 10px;
   flex-shrink: 0;
   width: 100%;

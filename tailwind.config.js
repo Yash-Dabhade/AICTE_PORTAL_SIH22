@@ -7,6 +7,7 @@ module.exports = {
         card: "28rem",
         report: "55vh",
         intro: "14%",
+        DetailContainer: "60vh",
       },
     },
   },

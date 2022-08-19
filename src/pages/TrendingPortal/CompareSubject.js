@@ -11,12 +11,19 @@ import {
 } from "firebase/database";
 import { database } from "../../firebase/init-firebase";
 import GridLoader from "react-spinners/GridLoader";
+import { IoSaveSharp } from "react-icons/io5";
+import { IoIosRemoveCircle } from "react-icons/io";
+import { FaShare } from "react-icons/fa";
 
 function CompareSubject({ responseObj }) {
   const [curriculum, setCurriculum] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [dataFound, setDataFound] = useState(false);
+  const [prerequisiteSem, setPrerequisiteSem] = useState(-1);
+  const [titleSem, setTitleSem] = useState(-1);
+  const [calculatedResults, setCalculatedResults] = useState(false);
+  const [subjectToBeReplaced, setSubjectToBeReplaced] = useState(null);
 
   function getCurriculumFromRef(reference) {
     const db = dbref(database);
@@ -29,8 +36,9 @@ function CompareSubject({ responseObj }) {
             allData.push(data[key]);
           });
           setCurriculum(allData);
-          setMessage("Data found Click on the button to compare");
+          setMessage("Curriculum fetched, Click on Above Button");
           setLoading(false);
+          setCalculatedResults(false);
           setDataFound(true);
         } else {
           setLoading(false);
@@ -50,6 +58,7 @@ function CompareSubject({ responseObj }) {
     if (curriculum) {
       for (let i = 0; i < curriculum.length; i++) {
         if (new String(curriculum[i].title).toLowerCase().includes(subject)) {
+          setTitleSem(curriculum[i].semester);
           return true;
         }
       }
@@ -64,6 +73,7 @@ function CompareSubject({ responseObj }) {
       for (let i = 0; i < curriculum.length; i++) {
         let curriculumSub = curriculum[i].title.toLowerCase();
         if (curriculumSub.includes(subject)) {
+          setPrerequisiteSem(curriculum[i].semester);
           return curriculum[i].semester;
         }
       }
@@ -95,7 +105,7 @@ function CompareSubject({ responseObj }) {
           setMessage(
             `${responseObj.title} not found ! shift ${responseObj.prereq} to ${
               prerequisitesInSem - 1
-            } semester and add ${
+            } semester and Add ${
               responseObj.title
             } in ${prerequisitesInSem} semester. `
           );
@@ -103,15 +113,16 @@ function CompareSubject({ responseObj }) {
           // message =  suggest to put props.title in prerequisitiesInSem + 1
           setMessage(
             `${responseObj.title} not found ! 
-           add ${responseObj.title} in ` +
+           Add ${responseObj.title} in ` +
               new Number(++prerequisitesInSem) +
               ` semester which is right after it's prerequsite ${
                 responseObj.prereq
-              } lies in ${--prerequisitesInSem}`
+              } in ${--prerequisitesInSem} semester.`
           );
         }
       }
     }
+    setCalculatedResults(true);
     setLoading(false);
   }
 
@@ -125,15 +136,15 @@ function CompareSubject({ responseObj }) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 darkMode">
       <div className="flex items-center justify-between w-full h-16">
         <div className="flex h-16 gap-1 items-center justify-start">
-          <h4 className="font-bold m-3  text-slate-900">
+          <h4 className="font-bold m-3  ">
             Enter Curriculum ID to be compared :{" "}
           </h4>
           <input
             id="curriculumIdInput"
-            className="px-8 border border-slate-700 rounded-lg p-2 shadow-lg font-semibold text-black text-sm"
+            className="px-8 border border-slate-700 rounded-lg p-2 shadow-lg  font-semibold border-compatible text-sm"
             type={"text"}
             placeholder="Paste Curriculum ID..."
           />
@@ -150,8 +161,8 @@ function CompareSubject({ responseObj }) {
         </div>
       </div>
 
-      <div className="border border-slate-500 rounded-xl shadow-2xl w-full h-report">
-        <h2 className="font-bold font-serif text-xl border-b border-b-gray-600 text-slate-800 p-4">
+      <div className="border border-slate-500 rounded-xl shadow-2xl w-full h-DetailContainer">
+        <h2 className="font-bold font-serif text-xl border-b border-b-gray-600  p-4">
           Comparison Details Of{" "}
           {responseObj ? responseObj.title : "Subject To Be Compared"}
         </h2>
@@ -160,17 +171,132 @@ function CompareSubject({ responseObj }) {
             <GridLoader size={20} margin={2} loading={loading} />
           </div>
         ) : (
-          <div className="flex flex-col h-4/5 items-center justify-center">
+          <div
+            id="resultContainer"
+            className="flex flex-col h-4/5 items-center justify-center"
+          >
             {dataFound && (
-              <button
-                id="compareCurriculumBtn"
-                onClick={compute}
-                className="font-medium  border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
-              >
-                Compare Curriculum
-              </button>
+              <div className="flex flex-col h-4/5 items-center justify-center">
+                <button
+                  id="compareCurriculumBtn"
+                  onClick={compute}
+                  className="font-medium btn-compatible border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500"
+                >
+                  Compare Curriculum
+                </button>
+                <h4 className=" font-mono">{message}</h4>
+              </div>
             )}
-            <h4 className="text-slate-700 font-mono">{message}</h4>
+            {calculatedResults && (
+              <div className="flex flex-col items-center w-full">
+                <div className="flex items-center justify-between m-1 gap-2 border-b-slate-700 border-b w-full">
+                  <table className="w-full mx-2 my-1 h-1/3 border text-left">
+                    <thead className="border-b ">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="text-sm font-medium px-3 py-4 border-r"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
+                          className="text-sm font-medium  px-6 py-4 border-r"
+                        >
+                          Check
+                        </th>
+                        <th
+                          scope="col"
+                          className="text-sm font-medium  px-6 py-4 border-r"
+                        >
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  border-r">
+                          1
+                        </td>
+                        <td className="text-sm  font-bold px-6 py-4 whitespace-nowrap border-r">
+                          SUBJECT PRESENT
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap border-r">
+                          {titleSem == -1 ? (
+                            <span className="font-semibold text-red-600">
+                              ABSENT
+                            </span>
+                          ) : (
+                            <span className="font-semibold text-green-600">
+                              PRESENT IN SEM {titleSem}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+
+                      <tr className="border-b">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium border-r">
+                          2
+                        </td>
+                        <td className="text-sm font-bold  px-6 py-4 whitespace-nowrap border-r">
+                          PREREQUISITE PRESENT
+                        </td>
+                        <td className="text-sm  font-light px-6 py-4 whitespace-nowrap border-r">
+                          {prerequisiteSem == -1 ? (
+                            <span className="font-semibold text-red-600">
+                              ABSENT
+                            </span>
+                          ) : (
+                            <span className="font-semibold text-green-600">
+                              PRESENT IN SEM {prerequisiteSem}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+
+                      <tr className="border-b">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium border-r">
+                          3
+                        </td>
+                        <td className="text-sm font-bold px-6 py-4 whitespace-nowrap border-r">
+                          SUBJECT TO BE REPLACED
+                        </td>
+                        <td className="text-sm font-light px-6 py-4 whitespace-nowrap border-r">
+                          {!subjectToBeReplaced ? (
+                            <span className="font-semibold text-red-600">
+                              NOT FOUND
+                            </span>
+                          ) : (
+                            <span className="font-semibold text-green-600">
+                              {subjectToBeReplaced}
+                            </span>
+                          )}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="flex gap-2  flex-col w-report">
+                    <button className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                      <IoSaveSharp className="mx-1" size="24px" />
+                      Save Report
+                    </button>
+                    <button className="font-medium flex items-center justify-center m-1 border gap-1 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                      <IoIosRemoveCircle className="mx-2" size="24px" />
+                      Discard Report
+                    </button>
+                    <button className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                      <FaShare className="mx-2" size="24px" />
+                      Publish Report
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center mt-5 justify-center ">
+                  <p className="text-green-700 font-bold text-md font-sans">
+                    {message}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
