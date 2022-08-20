@@ -24,7 +24,7 @@ export default function PastReports() {
                     <IoSaveSharp className="mx-2" size="134px" />
                   </div>
                   <Link to="/Past%20Reports/SavedReportsList">
-                    <button className="font-medium border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500">
+                    <button className="w-full font-medium border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500">
                       View Now
                     </button>
                   </Link>
@@ -36,9 +36,11 @@ export default function PastReports() {
                   <div>
                     <FaShare className="mx-2" size="134px" />
                   </div>
-                  <button className="font-medium w-full m-2  border  bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500">
-                    View Now
-                  </button>
+                  <Link to="/Past%20Reports/SavedReportsList">
+                    <button className="w-full font-medium border m-2 bg-slate-800 text-white border-slate-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-slate-500">
+                      View Now
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -26,18 +26,23 @@ function CompareSubject({ responseObj }) {
   const [titleSem, setTitleSem] = useState(-1);
   const [calculatedResults, setCalculatedResults] = useState(false);
   const [subjectToBeReplaced, setSubjectToBeReplaced] = useState(null);
+  const [curriculumsByTag, setCurriculumsByTag] = useState([]);
 
   function getCurriculumFromRef(reference) {
     const db = dbref(database);
     let allData = new Array();
+    let filterByTag = new Array();
     get(child(db, "/curriculumDetails/" + reference + "/"))
       .then((snapshot) => {
         if (snapshot.exists()) {
           let data = snapshot.val();
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
+            if (data[key].tag.trim() == responseObj.tag.trim())
+              filterByTag.push(data[key]);
           });
           setCurriculum(allData);
+          setCurriculumsByTag(filterByTag);
           setMessage("Curriculum fetched, Click on Above Button");
           setLoading(false);
           setCalculatedResults(false);
@@ -88,6 +93,17 @@ function CompareSubject({ responseObj }) {
     return -1;
   }
 
+  function searchReplaceableBySem(semester) {
+    if (curriculumsByTag) {
+      curriculumsByTag.forEach((ele) => {
+        if (ele.semester == ++semester) setSubjectToBeReplaced(ele.title);
+      });
+      console.log(subjectToBeReplaced);
+    } else {
+      setSubjectToBeReplaced(null);
+    }
+  }
+
   function compute() {
     //check if curriculum already exisits
     //pass report subject title
@@ -108,6 +124,7 @@ function CompareSubject({ responseObj }) {
         if (curriculum.totalSems) limit = curriculum.totalSems;
         else limit = 6;
         if (prerequisitesInSem == limit) {
+          searchReplaceableBySem(prerequisitesInSem);
           // message = Shift preqruisite in prerequisitesInSem-1 and suggest to put props.title in prerequisitiesInSem
           setMessage(
             `${responseObj.title} not found ! shift ${responseObj.prereq} to ${
@@ -118,6 +135,7 @@ function CompareSubject({ responseObj }) {
           );
         } else {
           // message =  suggest to put props.title in prerequisitiesInSem + 1
+          searchReplaceableBySem(prerequisitesInSem);
           setMessage(
             `${responseObj.title} not found ! 
            Add ${responseObj.title} in ` +
