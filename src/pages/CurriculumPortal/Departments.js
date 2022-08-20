@@ -25,16 +25,25 @@ function Departments(props) {
       deptData.push(allDept[ele]);
     });
     setAllData(deptData);
-    console.log(allDept);
   }
 
   React.useEffect(() => {
-    getDeparments(props.data, props.courseCode);
+    if (props.data.length > 0) {
+      getDeparments(props.data, props.courseCode);
+    } else {
+      getDeparments(
+        JSON.parse(window.localStorage.getItem("CoursesData")),
+        props.courseCode
+      );
+    }
     return () => {};
   }, []);
 
   const getSelectedDepartment = (obj) => {
     setSelectedDepartment(obj);
+    window.localStorage.setItem("selectedDepartment", JSON.stringify(obj));
+    console.log(obj);
+    window.localStorage.setItem("selectedDepartmentCode", obj.code);
   };
 
   function openModal() {
@@ -80,9 +89,21 @@ function Departments(props) {
         path={`/curriculums`}
         element={
           <Curriculum
-            instituteCode={props.instituteCode}
-            courseCode={props.courseCode}
-            departmentCode={selectedDepartment ? selectedDepartment.code : null}
+            instituteCode={
+              props.instituteCode
+                ? props.instituteCode
+                : window.localStorage.getItem("instituteCode")
+            }
+            courseCode={
+              props.courseCode
+                ? props.courseCode
+                : window.localStorage.getItem("courseCode")
+            }
+            departmentCode={
+              selectedDepartment
+                ? selectedDepartment.code
+                : window.localStorage.getItem("selectedDepartmentCode")
+            }
             selectedDept={selectedDepartment}
           />
         }

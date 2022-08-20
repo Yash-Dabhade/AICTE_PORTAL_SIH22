@@ -49,8 +49,6 @@ function Curriculum(props) {
           });
           //setState
           setAllData(allData);
-        } else {
-          console.log(snapshot);
         }
       })
       .catch((error) => {
@@ -59,10 +57,22 @@ function Curriculum(props) {
   }
 
   function getCurriculumId() {
-    setTotalSem(props.selectedDept.totalSems);
-    if (props.selectedDept.curriculum) {
-      setCurriculumId(props.selectedDept.curriculum.curriculumId);
-      getAllCurriculums(props.selectedDept.curriculum.curriculumId);
+    if (props.selectedDept) {
+      setTotalSem(props.selectedDept.totalSems);
+      if (props.selectedDept.curriculum) {
+        setCurriculumId(props.selectedDept.curriculum.curriculumId);
+        getAllCurriculums(props.selectedDept.curriculum.curriculumId);
+      }
+    } else {
+      let selectedDept = JSON.parse(
+        window.localStorage.getItem("selectedDepartment")
+      );
+      setTotalSem(selectedDept.totalSems);
+      if (selectedDept.curriculum) {
+        setCurriculumId(selectedDept.curriculum.curriculumId);
+        getAllCurriculums(selectedDept.curriculum.curriculumId);
+      }
+      // }
     }
   }
 
@@ -150,36 +160,35 @@ function Curriculum(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {allData
-                      ? allData.map((ele, index) => {
-                          return (
-                            <tr className="border-b" key={index}>
-                              <td className=" text-sm font-medium py-4 text-center">
-                                {index + 1}
-                              </td>
-                              <td className=" text-sm font-medium py-4 text-center">
-                                {ele.code}
-                              </td>
-                              <td className="text-sm font-light py-4 text-center">
-                                {ele.title}
-                              </td>
-                              <td className="text-sm font-light py-4 text-center">
-                                {ele.level}
-                              </td>
-                              <td className="text-sm font-light py-4 text-center">
-                                {ele.tag}
-                              </td>
-                              <td className="text-sm font-light py-4 text-center">
-                                <a target="_blank" href={ele.fileUrl}>
-                                  <button className="btn-compatible font-bold py-2 px-4 rounded-full">
-                                    Open
-                                  </button>
-                                </a>
-                              </td>
-                            </tr>
-                          );
-                        })
-                      : null}
+                    {allData &&
+                      allData.map((ele, index) => {
+                        return (
+                          <tr className="border-b" key={index}>
+                            <td className=" text-sm font-medium py-4 text-center">
+                              {index + 1}
+                            </td>
+                            <td className=" text-sm font-medium py-4 text-center">
+                              {ele.code}
+                            </td>
+                            <td className="text-sm font-light py-4 text-center">
+                              {ele.title}
+                            </td>
+                            <td className="text-sm font-light py-4 text-center">
+                              {ele.level}
+                            </td>
+                            <td className="text-sm font-light py-4 text-center">
+                              {ele.tag}
+                            </td>
+                            <td className="text-sm font-light py-4 text-center">
+                              <a target="_blank" href={ele.fileUrl}>
+                                <button className="btn-compatible font-bold py-2 px-4 rounded-full">
+                                  Open
+                                </button>
+                              </a>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

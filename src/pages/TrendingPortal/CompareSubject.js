@@ -14,12 +14,14 @@ import GridLoader from "react-spinners/GridLoader";
 import { IoSaveSharp } from "react-icons/io5";
 import { IoIosRemoveCircle } from "react-icons/io";
 import { FaShare } from "react-icons/fa";
+import { publishReport, saveReport } from "../../utils/dbHelper";
 
 function CompareSubject({ responseObj }) {
   const [curriculum, setCurriculum] = useState(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [dataFound, setDataFound] = useState(false);
+  const [infoMessage, setInfoMessage] = useState(true);
   const [prerequisiteSem, setPrerequisiteSem] = useState(-1);
   const [titleSem, setTitleSem] = useState(-1);
   const [calculatedResults, setCalculatedResults] = useState(false);
@@ -42,12 +44,17 @@ function CompareSubject({ responseObj }) {
           setDataFound(true);
         } else {
           setLoading(false);
+          setCalculatedResults(false);
+          setDataFound(false);
           setMessage("Unable to find curriculum from given ID !");
+          setInfoMessage(true);
         }
       })
       .catch((err) => {
         setLoading(false);
         console.log("I am running " + err);
+        setInfoMessage(true);
+        setCalculatedResults(false);
         setMessage("Unable to find curriculum from given ID !");
       });
   }
@@ -122,17 +129,37 @@ function CompareSubject({ responseObj }) {
         }
       }
     }
+    setInfoMessage(false);
     setCalculatedResults(true);
     setLoading(false);
   }
 
   function handleCompareCurriculum() {
     let id = document.getElementById("curriculumIdInput").value;
-    if (!id) setMessage("Invalid ID");
-    else {
+    if (!id) {
+      setMessage("Invalid Curriculum ID");
+      setCalculatedResults(false);
+      setInfoMessage(true);
+    } else {
       setLoading(true);
       getCurriculumFromRef(id);
     }
+  }
+
+  function handleSaveReport() {
+    saveReport(responseObj);
+  }
+
+  function discardReport() {
+    // setCalculatedResults(false);
+    setCalculatedResults(false);
+    setDataFound(false);
+    setMessage("Report Discarded !");
+    setInfoMessage(true);
+  }
+
+  function handlePublishReport() {
+    publishReport(responseObj);
   }
 
   return (
@@ -175,8 +202,8 @@ function CompareSubject({ responseObj }) {
             id="resultContainer"
             className="flex flex-col h-4/5 items-center justify-center"
           >
-            {dataFound && (
-              <div className="flex flex-col h-4/5 items-center justify-center">
+            <div className="flex flex-col  items-center justify-center">
+              {dataFound && (
                 <button
                   id="compareCurriculumBtn"
                   onClick={compute}
@@ -184,9 +211,9 @@ function CompareSubject({ responseObj }) {
                 >
                   Compare Curriculum
                 </button>
-                <h4 className=" font-mono">{message}</h4>
-              </div>
-            )}
+              )}
+              {infoMessage && <p className=" font-mono">{message}</p>}
+            </div>
             {calculatedResults && (
               <div className="flex flex-col items-center w-full">
                 <div className="flex items-center justify-between m-1 gap-2 border-b-slate-700 border-b w-full">
@@ -276,15 +303,24 @@ function CompareSubject({ responseObj }) {
                     </tbody>
                   </table>
                   <div className="flex gap-2  flex-col w-report">
-                    <button className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                    <button
+                      onClick={handleSaveReport}
+                      className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800"
+                    >
                       <IoSaveSharp className="mx-1" size="24px" />
                       Save Report
                     </button>
-                    <button className="font-medium flex items-center justify-center m-1 border gap-1 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                    <button
+                      onClick={discardReport}
+                      className="font-medium flex items-center justify-center m-1 border gap-1 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800"
+                    >
                       <IoIosRemoveCircle className="mx-2" size="24px" />
                       Discard Report
                     </button>
-                    <button className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800">
+                    <button
+                      onClick={handlePublishReport}
+                      className="font-medium flex items-center justify-center m-2 border gap-2 bg-slate-900 text-white border-gray-700 p-2 shadow-lg rounded-xl border-compatible hover:bg-white hover:text-slate-800"
+                    >
                       <FaShare className="mx-2" size="24px" />
                       Publish Report
                     </button>

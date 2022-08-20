@@ -25,9 +25,6 @@ export default function Courses(props) {
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
-          // Object.keys(data).forEach((key) => {
-          //   allData.push(Object.values(data[key]));
-          // });
           let finalData = new Array();
           allData.map((ele) => {
             Object.keys(ele).forEach((key) => {
@@ -35,6 +32,7 @@ export default function Courses(props) {
             });
           });
           setData(finalData);
+          window.localStorage.setItem("CoursesData", JSON.stringify(finalData));
         }
       })
       .catch((error) => {
@@ -43,12 +41,18 @@ export default function Courses(props) {
   }
 
   useEffect(() => {
-    getFullInstituteDetails(props.code);
+    if (props.code) {
+      getFullInstituteDetails(props.code);
+      window.localStorage.setItem("instituteCode", props.code);
+    } else {
+      getFullInstituteDetails(window.localStorage.getItem("instituteCode"));
+    }
     return () => {};
   }, []);
 
   const getSelectedCourseCode = (e) => {
     setCourseCode(e);
+    window.localStorage.setItem("courseCode", e);
   };
 
   function createCourses() {
@@ -88,7 +92,11 @@ export default function Courses(props) {
               <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
                 <InstituteCourses
                   btnFunc={closeModal}
-                  instituteCode={props.code}
+                  instituteCode={
+                    props.code
+                      ? props.code
+                      : window.localStorage.getItem("instituteCode")
+                  }
                 />
               </Modal>
             </>
@@ -99,8 +107,16 @@ export default function Courses(props) {
           element={
             <Departments
               data={data}
-              courseCode={courseCode ? courseCode : null}
-              instituteCode={props.code}
+              courseCode={
+                courseCode
+                  ? courseCode
+                  : window.localStorage.getItem("courseCode")
+              }
+              instituteCode={
+                props.code
+                  ? props.code
+                  : window.localStorage.getItem("instituteCode")
+              }
             />
           }
         />

@@ -3,20 +3,26 @@ import { Link } from "react-router-dom";
 import Courses from "../pages/CurriculumPortal/Courses";
 
 function InstituteList(props) {
-  const [institutes, setInstitutes] = useState([]);
-  let userData = [];
+  const [institutes, setInstitutes] = useState();
 
-  function getAllInstitutes() {
-    if (!props.institutes) return;
+  function getAllInstitutes(data) {
+    if (!data) return;
     let institutesArray = [];
-    Object.keys(props.institutes).forEach((key) => {
-      institutesArray.push(props.institutes[key]);
+    Object.keys(data).forEach((key) => {
+      institutesArray.push(data[key]);
     });
     setInstitutes(institutesArray);
   }
 
   useEffect(() => {
-    getAllInstitutes();
+    if (props.institutes) {
+      getAllInstitutes(props.institutes);
+    } else {
+      if (window.localStorage.getItem("institutes")) {
+        getAllInstitutes(JSON.parse(window.localStorage.getItem("institutes")));
+      }
+    }
+
     return () => {};
   }, []);
 

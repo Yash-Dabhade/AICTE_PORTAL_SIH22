@@ -35,6 +35,9 @@ function Trending() {
     setSelectedReportId(id);
     setSelectedReportName(title);
     setSelectedReportDate(date);
+    window.localStorage.setItem("selectedReportId", id);
+    window.localStorage.setItem("selectedReportName", title);
+    window.localStorage.setItem("selectedReportDate", date);
   };
 
   useEffect(() => {
@@ -73,9 +76,18 @@ function Trending() {
           path="ReportDetails/*"
           element={
             <ReportDetails
-              reportId={selectedReportId}
-              name={selectedReportName}
-              date={selectedReportDate}
+              reportId={
+                selectedReportId ||
+                window.localStorage.getItem("selectedReportId")
+              }
+              name={
+                selectedReportName ||
+                window.localStorage.getItem("selectedReportName")
+              }
+              date={
+                selectedReportDate ||
+                window.localStorage.getItem("selectedReportDate")
+              }
             />
           }
         />

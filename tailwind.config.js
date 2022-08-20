@@ -8,6 +8,7 @@ module.exports = {
         report: "55vh",
         intro: "14%",
         DetailContainer: "60vh",
+        responseContainer: "49vh",
       },
     },
   },
