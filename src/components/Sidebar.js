@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Dashboard.css";
 
-export default function Sidebar(props) {
+export default function Sidebar({ links, icons, isNavOpen }) {
   function removeActive() {
     let actives = document.querySelectorAll(".active");
     actives.forEach((a) => {
@@ -13,33 +14,45 @@ export default function Sidebar(props) {
     removeActive();
     let ele = e.target.closest("a");
     ele.classList.add("active");
-
-    props.linkFunc.map((ele) => {
-      ele(false);
-    });
+    window.localStorage.removeItem("instituteCode");
+    window.localStorage.removeItem("institutesData");
+    window.localStorage.removeItem("courseCode");
+    window.localStorage.removeItem("CoursesData");
+    window.localStorage.removeItem("selectedDepartment");
+    window.localStorage.removeItem("institutes");
+    window.localStorage.removeItem("selectedReportId");
+    window.localStorage.removeItem("selectedReportName");
+    window.localStorage.removeItem("selectedReportDate");
   }
 
   return (
-    <div className={props.isNavOpen ? "app-sidebar" : "hideMenuNav"}>
-      <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px]">
-        {props.links.map((ele, index) => {
+    <div className={isNavOpen ? "app-sidebar" : "hideMenuNav"}>
+      <ul className="MENU-LINK-MOBILE-OPEN flex flex-col items-center justify-between min-h-[250px] mt-5">
+        {links.map((ele, index) => {
           return (
             <li className="w-full" key={index}>
-              <a
-                href={`#${ele}`}
-                className={
-                  index == 0 ? "app-sidebar-link active" : "app-sidebar-link"
-                }
+              <Link
+                to={`/${ele}`}
+                // className={
+                //   index === 0 && window.location.pathname === "/"
+                //     ? "app-sidebar-link active"
+                //     : "app-sidebar-link"
+                // }
+                className={`app-sidebar-link ${
+                  (index === 0 && window.location.pathname === "/") ||
+                  window.location.pathname.includes(ele)
+                    ? "active"
+                    : ""
+                }`}
                 onClick={(e) => {
                   makeActive(e);
-                  props.linkFunc[index](true);
                 }}
               >
                 <div className="flex justify-start items-center">
-                  {props.icons[index]}
+                  {icons[index]}
                   <span>{ele}</span>
                 </div>
-              </a>
+              </Link>
             </li>
           );
         })}

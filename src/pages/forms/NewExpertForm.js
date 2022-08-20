@@ -1,111 +1,98 @@
-import React, { Component } from "react";
-import { saveNewUniversity } from "../../utils/dbHelper";
-import { ToastContainer, toast } from "react-toastify";
+import React from "react";
+import { addNewExpert } from "../../utils/dbHelper";
 import "react-toastify/dist/ReactToastify.css";
 
-export class NewExpertForm extends Component {
-  render() {
-    function handleSubmit(e) {
-      e.preventDefault();
-      let name = document.getElementById("Name").value;
-      let position = document.getElementById("position").value;
-      let email = document.getElementById("Email").value;
-      let phone = document.getElementById("Phone").value;
-      let Company = document.getElementById("Company").value;
+export default function NewExpertForm({ btnFunc }) {
+  function handleSubmit(e) {
+    e.preventDefault();
+    let email = String(
+      document.getElementById("expertEmail").value
+    ).toLowerCase();
+    let area = document.getElementById("faculty").value;
+    addNewExpert(email, area, btnFunc);
+  }
 
-      console.log(Company, name, email, phone, position);
-      //   saveNewUniversity(initialName, name, code, email, phone, website);
-    }
-
-    return (
-      <div className="container darkMode flex flex-col content-center justify-center mt-10 items-center">
-        <button
-          className="CROSS-ICON absolute top-0 right-0 px-8 py-8 darkMode"
-          onClick={this.props.btnFunc}
-        >
-          <svg
-            className="h-8 w-8"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+  return (
+    <div
+      id="authentication-modal"
+      tabIndex="-1"
+      className=" shadow-xl overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex"
+      aria-modal="true"
+      role="dialog"
+    >
+      <div className="relative p-4 w-full max-w-md h-full md:h-auto">
+        <div className="relative bg-white rounded-lg shadow dark:bg-white-200">
+          <button
+            onClick={btnFunc}
+            type="button"
+            className=" shadow-2xl absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            data-modal-toggle="authentication-modal"
           >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-        <div className="content flex-col">
-          <div className="title flex justify-center mb-10 ">
-            <label className="title text-4xl">New Expert Form</label>
-          </div>
-          <form className="form w-fit px-20 pb-5 pt-3 border-2 border-[#eeeeee] rounded-md">
-            <div className="cont flex-col m-3  ">
-              <label className="label2 flex ml-3">Name : </label>
-              <input
-                type="text"
-                id="Name"
-                className="name  border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
-              "
-                placeholder="Name"
-              />
-            </div>
+            <svg
+              aria-hidden="true"
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+            <span className="sr-only">Close modal</span>
+          </button>
+          <div className="py-6 px-6 lg:px-8">
+            <h3 className="mb-4 text-xl font-medium text-gray-900">
+              Expert Form
+            </h3>
 
-            <div className="cont3 flex-col m-3  ">
-              <label className="label4 flex ml-3">Email : </label>
-              <input
-                type="email"
-                id="Email"
-                className="email border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
-                "
-                placeholder="example123@gmail.com"
-              />
-            </div>
-            <div className="cont4 flex-col align-middle m-3  ">
-              <label className="label5 flex ml-3 ">Position : </label>
-              <input
-                type="position"
-                id="position"
-                className="position border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
-                "
-                placeholder="+91 1234567890"
-              />
-            </div>
-            <div className="cont flex-col m-3 ">
-              <label className="label6 flex ml-3">Company : </label>
-              <input
-                type="text"
-                id="Company"
-                className="Company border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
-              "
-                placeholder="Company Name"
-              />
-            </div>
-            <div className="cont flex-col m-3 ">
-              <label className="label6 flex ml-3">Phone : </label>
-              <input
-                type="text"
-                id="Phone"
-                className="Phone border-2 border-[#9a9a9a] rounded-md w-96 h-8  pl-3
-              "
-                placeholder="+91 0000000000"
-              />
-            </div>
-            <div className="cont5 justify-center flex m-3 ">
+            <form className="space-y-6" action="#">
+              <div>
+                <label
+                  htmlFor="newTitle"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Email
+                </label>
+                <input
+                  type="text"
+                  name="newEmail"
+                  id="expertEmail"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
+                  placeholder="Email of expert"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="faculty"
+                  className="block mb-2 text-sm font-medium text-gray-900"
+                >
+                  Field of Experty
+                </label>
+                <input
+                  type="text"
+                  name="faculty"
+                  id="faculty"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-black-100 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
+                  placeholder="Area of Experty"
+                  required
+                />
+              </div>
+
               <button
+                type="submit"
+                className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center btn-compatible"
                 onClick={handleSubmit}
-                className="submit text-white border-2  border-[#021a36] py-1 px-10 w-96 mt-5 text-center rounded-md bg-[#2d8cff] "
               >
-                Submit
+                Add
               </button>
-            </div>
-          </form>
-          <ToastContainer />
+            </form>
+          </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default NewExpertForm;

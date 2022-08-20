@@ -90,7 +90,7 @@ export default function InstituteCourses(props) {
                 </div>
 
                 <div className="mt-6 ">
-                  <label className="">Select Level</label>
+                  <label className="">Select Level*</label>
                   <select
                     className="ml-36"
                     name="level"
@@ -110,7 +110,7 @@ export default function InstituteCourses(props) {
 
                 <button
                   type="submit"
-                  className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-full font-medium rounded-lg text-sm px-5 py-2.5 text-center btn btn-compatible border-2 border-compatible"
                   onClick={handleSubmit}
                 >
                   Submit

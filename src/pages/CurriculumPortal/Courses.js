@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { ref as dbref, child, get } from "firebase/database";
+import { ref as dbref, child, get, set } from "firebase/database";
 import { database } from "../../firebase/init-firebase";
 import SimpleCard from "../../components/SimpleCard";
 import Header from "../../components/Header";
 import SubHead from "../../components/SubHead";
 import Departments from "./Departments";
 import InstituteCourses from "../forms/InstituteCourses";
+import { Route, Routes, Outlet } from "react-router-dom";
 
 export default function Courses(props) {
   const [courses, setCourses] = useState([]);
   const [data, setData] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [courseCode, setCourseCode] = useState();
 
   function getFullInstituteDetails(instituteCode) {
     const db = dbref(database);
@@ -23,9 +25,6 @@ export default function Courses(props) {
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
-          // Object.keys(data).forEach((key) => {
-          //   allData.push(Object.values(data[key]));
-          // });
           let finalData = new Array();
           allData.map((ele) => {
             Object.keys(ele).forEach((key) => {
@@ -33,6 +32,7 @@ export default function Courses(props) {
             });
           });
           setData(finalData);
+          window.localStorage.setItem("CoursesData", JSON.stringify(finalData));
         }
       })
       .catch((error) => {
@@ -41,20 +41,19 @@ export default function Courses(props) {
   }
 
   useEffect(() => {
-    getFullInstituteDetails(props.code);
+    if (props.code) {
+      getFullInstituteDetails(props.code);
+      window.localStorage.setItem("instituteCode", props.code);
+    } else {
+      getFullInstituteDetails(window.localStorage.getItem("instituteCode"));
+    }
     return () => {};
   }, []);
 
-  function renderCourseDetails(code) {
-    props.root.render(
-      <Departments
-        data={data}
-        root={props.root}
-        instituteCode={props.code}
-        courseCode={code}
-      />
-    );
-  }
+  const getSelectedCourseCode = (e) => {
+    setCourseCode(e);
+    window.localStorage.setItem("courseCode", e);
+  };
 
   function createCourses() {
     openModal();
@@ -71,23 +70,57 @@ export default function Courses(props) {
 
   return (
     <>
-      <Header />
-      <SubHead title={"Courses"} btnFunc={createCourses} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <SubHead title={"Courses"} btnFunc={createCourses} />
 
-      <div className="university-boxes jsGridView">
-        {data.map((ele, index) => {
-          return (
-            <SimpleCard
-              renderDetails={renderCourseDetails}
-              key={index}
-              data={ele}
+              <div className="university-boxes jsGridView">
+                {data.map((ele, index) => {
+                  return (
+                    <SimpleCard
+                      getSelectedCourseCode={getSelectedCourseCode}
+                      key={index}
+                      data={ele}
+                    />
+                  );
+                })}
+              </div>
+              <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+                <InstituteCourses
+                  btnFunc={closeModal}
+                  instituteCode={
+                    props.code
+                      ? props.code
+                      : window.localStorage.getItem("instituteCode")
+                  }
+                />
+              </Modal>
+            </>
+          }
+        />
+        <Route
+          path="departments/*"
+          element={
+            <Departments
+              data={data}
+              courseCode={
+                courseCode
+                  ? courseCode
+                  : window.localStorage.getItem("courseCode")
+              }
+              instituteCode={
+                props.code
+                  ? props.code
+                  : window.localStorage.getItem("instituteCode")
+              }
             />
-          );
-        })}
-      </div>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
-        <InstituteCourses btnFunc={closeModal} instituteCode={props.code} />
-      </Modal>
+          }
+        />
+      </Routes>
     </>
   );
 }

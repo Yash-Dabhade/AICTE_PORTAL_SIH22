@@ -9,34 +9,21 @@ import {
 } from "react-icons/bs";
 import { useAuth } from "../contexts/AuthContext";
 import { FaUserAlt } from "react-icons/fa";
-import University from "../pages/CurriculumPortal/University";
 import Trending from "../pages/TrendingPortal/Trending";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import ExpertHome from "../pages/ExpertPortal/ExpertHome";
+import Settings from "../pages/Settings/Settings";
 import Sidebar from "./Sidebar";
+import UniversityRoutes from "../routes/UniversityRoutes";
+import { Route, Routes, Link } from "react-router-dom";
+import PastReports from "../pages/PastReports/PastReports";
 
-function Home(props) {
+function AdminHome() {
   const { logout, currentUser } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(true);
-  const [universityOpen, setUniversityOpen] = useState(true);
-  const [trendingOpen, setTrendingOpen] = useState(false);
-  const [settingOpen, setSettingOpen] = useState(false);
-  const [admin, setAdmin] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
   function modeSwitch() {
     document.documentElement.classList.toggle("dark");
-  }
-
-  function removeActive() {
-    let actives = document.querySelectorAll(".active");
-    actives.forEach((a) => {
-      a.classList.remove("active");
-    });
-  }
-
-  function makeActive(e) {
-    removeActive();
-    let ele = e.target.closest("a");
-    ele.classList.add("active");
   }
 
   function toggleLogout() {
@@ -51,37 +38,28 @@ function Home(props) {
     return capitalized;
   }
 
-  function getUniversityOpen(e) {
-    setUniversityOpen(e);
+  // Search Bar
+  function handleSearch() {
+    if (!searchQuery) return;
+    console.log(searchQuery);
   }
-  function getTrendingOpen(e) {
-    setTrendingOpen(e);
-  }
-  function getSettingOpen(e) {
-    setSettingOpen(e);
-  }
-  // function getTrendingOpen(e) {
-  //   setTrendingOpen(e);
-  // }
-  // function getTrendingOpen(e) {
-  //   setTrendingOpen(e);
-  // }
 
+  // Sidebar
   const links = [
     "University",
-    "Curriculum",
-    "CurriculumDev",
+    "Trending",
+    "Dashboard",
     "Past Reports",
     "Settings",
   ];
+
   const icons = [
     <BsBookFill size={22} className="mx-2" />,
-    <BsFillBarChartLineFill size={22} className="mx-2" />,
     <BsFillDiagram3Fill size={22} className="mx-2" />,
+    <BsFillBarChartLineFill size={22} className="mx-2" />,
     <BsFillFileEarmarkArrowDownFill size={22} className="mx-2" />,
     <BsGearFill size={22} className="mx-2" />,
   ];
-  const linkFunc = [getUniversityOpen, getTrendingOpen, getSettingOpen];
 
   return (
     <div className="app-container">
@@ -101,11 +79,17 @@ function Home(props) {
             </svg>
           </button>
 
-          <a href="/" className="app-name">
-            AICTE
-          </a>
-          <div className="search-wrapper">
-            <input className="search-input" type="text" placeholder="Search" />
+          <Link to="/" className="app-name">
+            AICTE Curriculum Control & Development Portal
+          </Link>
+          {/* <div className="search-wrapper">
+            <input
+              className="search-input"
+              type="text"
+              placeholder="Search"
+              id="pageSearch"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -117,12 +101,13 @@ function Home(props) {
               strokeWidth="2"
               className="feather feather-search"
               viewBox="0 0 24 24"
+              onClick={handleSearch}
             >
               <defs></defs>
               <circle cx="11" cy="11" r="8"></circle>
               <path d="M21 21l-4.35-4.35"></path>
             </svg>
-          </div>
+          </div> */}
         </div>
         <div className="app-header-right">
           <button
@@ -161,12 +146,10 @@ function Home(props) {
             </button>
             {currentUser && (
               <button
-                className="logout py-2 px-4 w-full btn-compatible rounded-lg hide"
+                className="logout py-2 px-4 w-full btn-compatible rounded-lg hide hover:border-[#1f1c2e] hover:border-2"
                 onClick={async (e) => {
                   e.preventDefault();
-                  await logout().then(() => {
-                    window.location.href = "/signin";
-                  });
+                  logout();
                 }}
               >
                 Log out
@@ -177,14 +160,17 @@ function Home(props) {
       </div>
       {currentUser && currentUser.email == "admin@gmail.com" ? (
         <div className="app-content">
-          <Sidebar
-            links={links}
-            icons={icons}
-            linkFunc={linkFunc}
-            isNavOpen={isNavOpen}
-          />
-          {universityOpen ? <University /> : null}
-          {trendingOpen ? <Trending /> : null}
+          <Sidebar links={links} icons={icons} isNavOpen={isNavOpen} />
+          <Routes>
+            <Route path="/*" element={<UniversityRoutes />} />
+            <Route path="/University/*" element={<UniversityRoutes />}>
+              {/* <Route path="institute" element={<Institutes />} /> */}
+            </Route>
+            <Route path="/Trending/*" element={<Trending />} />
+            <Route path="/Dashboard/*" element={<Dashboard />} />
+            <Route path="/Past%20Reports/*" element={<PastReports />} />
+            <Route path="/Settings/*" element={<Settings />} />
+          </Routes>
         </div>
       ) : (
         currentUser && <ExpertHome isNavOpen={isNavOpen} />
@@ -193,4 +179,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default AdminHome;

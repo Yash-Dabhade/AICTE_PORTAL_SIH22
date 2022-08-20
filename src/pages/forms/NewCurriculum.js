@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { saveNewCurriculum } from "../../utils/dbHelper";
-import { ref as dbref, set, update, child, get, push } from "firebase/database";
-import { storage, database } from "../../firebase/init-firebase";
+import { storage } from "../../firebase/init-firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function NewCurriculum(props) {
   const [uploadedFile, setFile] = useState(null);
-
   const [tagValue, setTagValue] = useState("basic");
+  const [semValue, setSemValue] = useState("1");
+  const [semElements, setSemElements] = useState([]);
+  const [levelValue, setLevelValue] = useState("basic");
   const handleTagChange = (e) => {
     setTagValue(e);
   };
-  const [semValue, setSemValue] = useState("1");
   const handleSemChange = (e) => {
     setSemValue(e);
   };
-  const [levelValue, setLevelValue] = useState("basic");
   const handleLevelChange = (e) => {
     setLevelValue(e);
   };
@@ -55,8 +54,7 @@ export default function NewCurriculum(props) {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        document.getElementById("submitBtn").innerHTML =
-          "Uploading " + progress + "%";
+        document.getElementById("submitBtn").innerHTML = "Uploading ";
       },
       (error) => {
         console.log(error);
@@ -76,9 +74,10 @@ export default function NewCurriculum(props) {
               semester,
               tag,
               downloadURL,
-              props.reference
+              props.reference,
+              props.totalSems
             );
-            document.getElementById("submitBtn").innerHTML = "Saving";
+            document.getElementById("submitBtn").innerHTML = "Finishing Up";
           })
           .catch((err) => {
             console.log(err);
@@ -87,8 +86,25 @@ export default function NewCurriculum(props) {
     );
   };
 
+  function semOptions() {
+    let options = [];
+    console.log(props.totalSems);
+    for (let i = 1; i <= props.totalSems; i++) {
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    setSemElements(options);
+  }
+
+  useEffect(() => {
+    semOptions();
+  }, []);
+
   return (
-    <div>
+    <div className="container flex justify-center items-center mt-7 darkMode">
       <div
         id="authentication-modal"
         tabIndex="-1"
@@ -167,14 +183,9 @@ export default function NewCurriculum(props) {
                       handleSemChange(e.target.value);
                     }}
                   >
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                    {semElements.map((element) => {
+                      return element;
+                    })}
                   </select>
                 </div>
 
@@ -226,7 +237,8 @@ export default function NewCurriculum(props) {
                 <button
                   type="submit"
                   id="submitBtn"
-                  className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 btn-compatible"
+                  className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center btn btn-compatible
+                  border-2 border-compatible"
                   onClick={handleSubmit}
                 >
                   Submit

@@ -1,14 +1,37 @@
-import React from 'react'
+import React, { useState } from "react";
+import Modal from "react-modal";
+import NewReport from "../pages/forms/NewReport";
 
 function NewCard() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  function createNewReport() {
+    Modal.setAppElement("#newCardParent");
+    openModal();
+  }
+
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }
+
   return (
-    <div className='card w-card'>
-      <div className='border-2  border-black bg-white w-10 h-10 rounded-lg'>
-        <div className='justify-center items-center text-center text-2xl font-medium'>+
-        </div>
+    <div
+      onClick={createNewReport}
+      className="border-2 rounded-xl border-compatible w-56 h-40 flex items-center justify-center cursor-pointer"
+      id="newCardParent"
+    >
+      <div>
+        <div className="text-center text-6xl font-medium">+</div>
       </div>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <NewReport btnFunc={closeModal} />
+      </Modal>
     </div>
-  )
+  );
 }
 
-export default NewCard
+export default NewCard;
