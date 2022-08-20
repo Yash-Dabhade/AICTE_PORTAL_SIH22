@@ -80,7 +80,7 @@ export default function UniversityRoutes() {
               <>
                 <Header />
                 <SubHead title={"University"} btnFunc={createUniversity} />
-                <div className="university-boxes jsGridView">
+                <div className="university-boxes jsGridView ">
                   {data &&
                     data.map((ele, index) => {
                       return (

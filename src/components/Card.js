@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Card(props) {
   return (
     <div className="university-box-wrapper">
-      <div className="card right bg-white mt-10 p-5 w-72 h-card rounded-lg drop-shadow-2xl scale-95 hover:scale-100 ease-in duration-500 py">
+      <div className="card right bg-white mt-10 p-5 w-72 h-card rounded-lg drop-shadow-xl py border border-compatible">
         <FaUniversity className="darkMode mb-20 mx-20" size={68} />
         <p className="font-bold mt-2">{props.title}</p>
         <p>{props.fullName}</p>

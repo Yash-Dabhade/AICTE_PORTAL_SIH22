@@ -20,8 +20,6 @@ export default function ReportDetails({ reportId, name, date }) {
   const [responses, setResponses] = useState([]);
   const [selectedResponse, setSelectedResponse] = useState(null);
   const [tags, setTags] = useState([]);
-  const [selectedTags, setSelectedTags] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
 
   function getSelectedResponse(obj) {
     setSelectedResponse(obj);
@@ -78,7 +76,7 @@ export default function ReportDetails({ reportId, name, date }) {
   }
 
   // Search Bar
-  function handleSearch(searchQuery) {
+  function handleSearchQuery(searchQuery) {
     if (searchQuery.length > 0) {
       const filteredResponses = responses.filter((response) => {
         return JSON.stringify(response).includes(searchQuery);
@@ -114,7 +112,7 @@ export default function ReportDetails({ reportId, name, date }) {
                     id="pageSearch"
                     onChange={(e) =>
                       // setSearchQuery(e.target.value)
-                      handleSearch(e.target.value)
+                      handleSearchQuery(e.target.value)
                     }
                   />
                   <svg

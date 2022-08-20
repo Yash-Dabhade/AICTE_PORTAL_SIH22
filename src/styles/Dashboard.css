@@ -325,6 +325,11 @@ a {
   background: transparent;
 }
 
+.overflow-div {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 @media (max-width: 865px) {
   .app-sidebar span {
     display: none;
@@ -336,7 +341,7 @@ a {
 }
 
 @media screen and (max-width: 720px) {
-  .app-name,
+  .desktopView,
   .profile-btn span {
     display: none;
   }
@@ -385,7 +390,7 @@ a {
   }
 
   .search-input {
-    max-width: 120px;
+    max-width: 180px;
   }
 
   .parent-section {
@@ -404,5 +409,17 @@ a {
   .universities-section-header p,
   .universities-section-header .time {
     font-size: 18px;
+  }
+
+  .overflow-div {
+    overflow-x: scroll;
+  }
+
+  .contactIcon {
+    display: none;
+  }
+
+  .overflow-contactCard {
+    overflow-x: scroll;
   }
 }

@@ -9,6 +9,8 @@ module.exports = {
         intro: "14%",
         DetailContainer: "60vh",
         responseContainer: "49vh",
+        selectBox: "100% !important",
+        instituteList: "30vh !important",
       },
     },
   },

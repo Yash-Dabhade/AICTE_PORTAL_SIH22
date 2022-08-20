@@ -78,7 +78,7 @@ const App = ({ reportId, name, date }) => {
       </button>
       {/* <div className="h-36 overflow-y-auto overflow-x-hidden"> */}
       <MultiSelect
-        className="text-black w-full"
+        className="text-black w-selectBox"
         onChange={handleOnchange}
         options={options}
       />
