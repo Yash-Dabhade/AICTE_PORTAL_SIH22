@@ -21,8 +21,12 @@ function InstituteList(props) {
       return (
         institute.name
           .toLowerCase()
-          .includes(String(searchQuery).toLowerCase()) ||
-        institute.code.toLowerCase().includes(String(searchQuery).toLowerCase())
+          .trim()
+          .includes(String(searchQuery).toLowerCase().trim()) ||
+        institute.code
+          .toLowerCase()
+          .trim()
+          .includes(String(searchQuery).toLowerCase().trim())
       );
     });
     setFilteredInstitutes(instituteArray);

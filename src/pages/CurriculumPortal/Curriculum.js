@@ -7,7 +7,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { database } from "../../firebase/init-firebase";
 import { ref as dbref, child, get, push } from "firebase/database";
-import { data } from "jquery";
 
 function Curriculum(props) {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -15,6 +14,7 @@ function Curriculum(props) {
   const [tags, setTags] = useState([]);
   const [curriculumId, setCurriculumId] = useState("");
   const [totalSem, setTotalSem] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
 
   function getAllTags() {
     const db = dbref(database);
@@ -76,12 +76,6 @@ function Curriculum(props) {
     }
   }
 
-  React.useEffect(() => {
-    getCurriculumId();
-    getAllTags();
-    return () => {};
-  }, []);
-
   function openModal() {
     Modal.setAppElement("#formRoot");
     setIsOpen(true);
@@ -103,6 +97,28 @@ function Curriculum(props) {
     });
   };
 
+  React.useEffect(() => {
+    getCurriculumId();
+    getAllTags();
+    return () => {};
+  }, []);
+
+  function handleCurriculumSearch(searchQuery) {
+    let filteredData = allData.filter((data) => {
+      return (
+        String(data.title)
+          .toLowerCase()
+          .trim()
+          .includes(String(searchQuery).toLowerCase().trim()) ||
+        String(data.code)
+          .toLowerCase()
+          .trim()
+          .includes(String(searchQuery).toLowerCase().trim())
+      );
+    });
+    setFilteredData(filteredData);
+  }
+
   return (
     <>
       <Header title={"Curriculum"} />
@@ -112,6 +128,31 @@ function Curriculum(props) {
         copyRef={curriculumId}
         copyRefBtnFunc={notify}
       />
+      <div className="search-wrapper m-2 border border-compatible">
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search"
+          id="pageSearch"
+          onChange={(e) => handleCurriculumSearch(e.target.value)}
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          className="feather feather-search"
+          viewBox="0 0 24 24"
+        >
+          <defs></defs>
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="M21 21l-4.35-4.35"></path>
+        </svg>
+      </div>
       <ToastContainer />
       <div className="university-boxes">
         <div className="flex flex-col">
@@ -160,35 +201,63 @@ function Curriculum(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {allData &&
-                      allData.map((ele, index) => {
-                        return (
-                          <tr className="border-b" key={index}>
-                            <td className=" text-sm font-medium py-4 text-center">
-                              {index + 1}
-                            </td>
-                            <td className=" text-sm font-medium py-4 text-center">
-                              {ele.code}
-                            </td>
-                            <td className="text-sm font-light py-4 text-center">
-                              {ele.title}
-                            </td>
-                            <td className="text-sm font-light py-4 text-center">
-                              {ele.level}
-                            </td>
-                            <td className="text-sm font-light py-4 text-center">
-                              {ele.tag}
-                            </td>
-                            <td className="text-sm font-light py-4 text-center">
-                              <a target="_blank" href={ele.fileUrl}>
-                                <button className="btn-compatible font-bold py-2 px-4 rounded-full">
-                                  Open
-                                </button>
-                              </a>
-                            </td>
-                          </tr>
-                        );
-                      })}
+                    {filteredData && filteredData.length > 0
+                      ? filteredData.map((ele, index) => {
+                          return (
+                            <tr className="border-b" key={index}>
+                              <td className=" text-sm font-medium py-4 text-center">
+                                {index + 1}
+                              </td>
+                              <td className=" text-sm font-medium py-4 text-center">
+                                {ele.code}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                {ele.title}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                {ele.level}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                {ele.tag}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                <a target="_blank" href={ele.fileUrl}>
+                                  <button className="btn-compatible font-bold py-2 px-4 rounded-full">
+                                    Open
+                                  </button>
+                                </a>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : allData.map((ele, index) => {
+                          return (
+                            <tr className="border-b" key={index}>
+                              <td className=" text-sm font-medium py-4 text-center">
+                                {index + 1}
+                              </td>
+                              <td className=" text-sm font-medium py-4 text-center">
+                                {ele.code}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                {ele.title}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                {ele.level}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                {ele.tag}
+                              </td>
+                              <td className="text-sm font-light py-4 text-center">
+                                <a target="_blank" href={ele.fileUrl}>
+                                  <button className="btn-compatible font-bold py-2 px-4 rounded-full">
+                                    Open
+                                  </button>
+                                </a>
+                              </td>
+                            </tr>
+                          );
+                        })}
                   </tbody>
                 </table>
               </div>
