@@ -39,9 +39,6 @@ function InstituteForm(props) {
     ) {
       toast("Enter all details");
       return;
-    } else {
-      ValidateEmail(email);
-      ValidateNumber(phone);
     }
     saveNewInstitute(
       props.universityCode,

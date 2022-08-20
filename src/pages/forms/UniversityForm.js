@@ -4,21 +4,21 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function UniversityForm(props) {
-  function ValidateEmail(email) {
-    let regexp = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
-    if (!regexp.test(email)) {
-      toast("Invalid Email");
-      return;
-    }
-  }
+  // function ValidateEmail(email) {
+  //   let regexp = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+  //   if (!regexp.test(email)) {
+  //     toast("Invalid Email");
+  //     return;
+  //   }
+  // }
 
-  function ValidateNumber(phone) {
-    var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    if (!phone.match(phoneno)) {
-      toast("Please Valid 10 digit phone number");
-      return;
-    }
-  }
+  // function ValidateNumber(phone) {
+  //   var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  //   if (!phone.match(phoneno)) {
+  //     toast("Please Valid 10 digit phone number");
+  //     return;
+  //   }
+  // }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -40,9 +40,6 @@ export default function UniversityForm(props) {
     ) {
       toast("Enter all details");
       return;
-    } else {
-      ValidateEmail(email);
-      ValidateNumber(phone);
     }
 
     saveNewUniversity(initialName, name, code, email, phone, location, website);
