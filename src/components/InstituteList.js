@@ -36,8 +36,12 @@ function InstituteList(props) {
     if (props.institutes) {
       getAllInstitutes(props.institutes);
     } else {
-      if (window.localStorage.getItem("institutes")) {
-        getAllInstitutes(JSON.parse(window.localStorage.getItem("institutes")));
+      if (window.sessionStorage.getItem(props.universityCode + "Institutes")) {
+        getAllInstitutes(
+          JSON.parse(
+            window.sessionStorage.getItem(props.universityCode + "Institutes")
+          )
+        );
       }
     }
 

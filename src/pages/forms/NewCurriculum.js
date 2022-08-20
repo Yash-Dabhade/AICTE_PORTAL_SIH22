@@ -77,7 +77,7 @@ export default function NewCurriculum(props) {
               props.reference,
               props.totalSems
             );
-            document.getElementById("submitBtn").innerHTML = "Saving";
+            document.getElementById("submitBtn").innerHTML = "Finishing Up";
           })
           .catch((err) => {
             console.log(err);

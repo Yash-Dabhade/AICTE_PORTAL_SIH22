@@ -160,7 +160,7 @@ function saveNewCurriculum(
         )
           .then((snapshot) => {
             // alert("Data Submitted successfully");
-            window.location.href = "/";
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error);
@@ -183,7 +183,7 @@ function saveNewReport(reportName, btnFunc) {
     date: new Date(Date.now()),
   })
     .then((snapshot) => {
-      console.log("Saved new report");
+      window.location.reload();
       btnFunc();
     })
     .catch((error) => {

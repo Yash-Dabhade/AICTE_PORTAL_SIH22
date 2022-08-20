@@ -20,6 +20,7 @@ export default function UniversityRoutes() {
 
   const getSelectedInstitute = (index) => {
     setIndex(index);
+    window.sessionStorage.setItem("UniversityCode", data[index].code);
   };
 
   function getAllUniversities() {

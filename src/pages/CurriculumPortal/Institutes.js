@@ -13,6 +13,7 @@ function Institutes(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [instituteCode, setInstituteCode] = React.useState();
   const [institutesData, setInstitutesData] = React.useState([]);
+  const [universityCode, setUniversityCode] = React.useState(null);
 
   const getInstituteCode = (e) => {
     setInstituteCode(e);
@@ -32,19 +33,27 @@ function Institutes(props) {
   }
 
   React.useEffect(() => {
+    setUniversityCode(window.sessionStorage.getItem("UniversityCode"));
     if (props.data !== null) {
       setInstitutesData(props.data);
-      window.localStorage.setItem("institutesData", JSON.stringify(props.data));
+      window.sessionStorage.setItem(
+        window.sessionStorage.getItem("UniversityCode"),
+        JSON.stringify(props.data)
+      );
       if (!props.data.institutes) return;
-      window.localStorage.setItem(
-        "institutes",
+      window.sessionStorage.setItem(
+        window.sessionStorage.getItem("UniversityCode") + "Institutes",
         JSON.stringify(props.data.institutes)
       );
     } else {
-      if (window.localStorage.getItem("institutes") !== null) {
-        let data = JSON.parse(window.localStorage.getItem("institutesData"));
-        setInstitutesData(data);
-      }
+      // if (window.sessionStorage.getItem() !== null) {
+      let data = JSON.parse(
+        window.sessionStorage.getItem(
+          window.sessionStorage.getItem("UniversityCode")
+        )
+      );
+      setInstitutesData(data);
+      // }
     }
     return () => {};
   }, []);
@@ -76,6 +85,9 @@ function Institutes(props) {
                   <p>Institutes</p>
                 </div>
                 <InstituteList
+                  universityCode={window.sessionStorage.getItem(
+                    "UniversityCode"
+                  )}
                   institutes={institutesData ? institutesData.institutes : null}
                   getInstituteCode={getInstituteCode}
                 />
