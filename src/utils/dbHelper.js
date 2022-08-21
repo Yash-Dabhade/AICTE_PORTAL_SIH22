@@ -327,19 +327,16 @@ function assignToExperts(reportID, name, date, emails) {
     ...emails,
   })
     .then((snapshot) => {
-      // btnFunc();
       emails.forEach((email) => {
         let emailID = String(email).split("@")[0];
         update(dbref(db, `/expertDetails/${emailID}/pending/${reportID}/`), {
           ID: reportID,
           name: name,
           date: date,
-        })
-          .then((snapshot) => {})
-          .catch((err) => {
-            alert("Something went wrong !");
-            console.log(err);
-          });
+        }).catch((err) => {
+          alert("Something went wrong !");
+          console.log(err);
+        });
       });
     })
     .catch((error) => {
