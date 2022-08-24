@@ -110,7 +110,7 @@ export default function UniversityRoutes() {
           />
           <Route
             path="institutes/*"
-            element={<Institutes data={index ? data[index] : null} />}
+            element={<Institutes data={data[index] ? data[index] : null} />}
           ></Route>
         </Routes>
       )}

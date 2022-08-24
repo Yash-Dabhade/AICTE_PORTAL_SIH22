@@ -6,7 +6,7 @@ import { database } from "../firebase/init-firebase";
 import { assignToExperts } from "../utils/dbHelper";
 
 const App = ({ reportId, name, date }) => {
-  const [emailsToAssign, setEmailsToAssign] = useState("");
+  const [emailsToAssign, setEmailsToAssign] = useState();
   const [options, setOptions] = useState([]);
   const [selectedEmails, setSelectedEmails] = useState([]);
 
@@ -58,9 +58,11 @@ const App = ({ reportId, name, date }) => {
   }
 
   function handleAssignToExperts() {
-    let finalSelected = selectedEmails;
-    finalSelected.push(...emailsToAssign.split(","));
-    assignToExperts(reportId, name, date, finalSelected);
+    if (emailsToAssign) {
+      let finalSelected = selectedEmails;
+      finalSelected.push(...emailsToAssign.split(","));
+      assignToExperts(reportId, name, date, finalSelected);
+    }
   }
 
   useEffect(() => {

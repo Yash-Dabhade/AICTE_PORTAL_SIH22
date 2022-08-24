@@ -158,6 +158,7 @@ export default function NewTrendingResponse({ reportID }) {
             value={tagValue}
             onChange={handleTagChange}
           >
+            <option value="">Select a tag</option>
             {tags.map((tag, index) => {
               return (
                 <option key={index} value={tag}>

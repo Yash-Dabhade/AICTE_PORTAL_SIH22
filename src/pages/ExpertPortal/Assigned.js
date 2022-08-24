@@ -4,9 +4,13 @@ import { ref as dbref, set, update, child, get, push } from "firebase/database";
 import { database } from "../../firebase/init-firebase";
 import { Routes, Route, Link } from "react-router-dom";
 import NewTrendingResponse from "../forms/NewTrendingResponse";
+import { useAuth } from "../../contexts/AuthContext";
+
 export default function Assigned() {
   const [assignedReports, setAssignedReports] = useState([]);
   const [selectedReportId, setSelectedReportId] = useState();
+  const { currentUser } = useAuth();
+
   function getAllExpertAssignedReports(email) {
     const db = dbref(database);
     let emailID = String(email).split("@")[0];
@@ -39,7 +43,7 @@ export default function Assigned() {
   }
 
   useEffect(() => {
-    getAllExpertAssignedReports("yash@gmail.com");
+    getAllExpertAssignedReports(currentUser.email);
     return () => {};
   }, []);
 
