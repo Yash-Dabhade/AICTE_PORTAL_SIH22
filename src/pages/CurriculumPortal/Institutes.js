@@ -61,7 +61,7 @@ function Institutes(props) {
   return (
     <>
       <Routes>
-        {institutesData ? (
+        {institutesData && (
           <Route
             path="/"
             element={
@@ -100,8 +100,6 @@ function Institutes(props) {
               </>
             }
           />
-        ) : (
-          (window.location.href = "/University")
         )}
         <Route
           path="courses/*"
