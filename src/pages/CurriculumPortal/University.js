@@ -12,7 +12,7 @@ import HashLoader from "react-spinners/HashLoader";
 export default function University(props) {
   const [data, setData] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function getAllUniversities() {
     const db = dbref(database);
@@ -35,7 +35,9 @@ export default function University(props) {
   }
   useEffect(() => {
     return () => {
+      console.log(data);
       getAllUniversities();
+      console.log(data);
       setLoading(false);
     };
   }, []);
