@@ -24,6 +24,7 @@ export default function University(props) {
           Object.keys(data).forEach((key) => {
             allData.push(data[key]);
           });
+          console.log(allData);
           setData(allData);
           setLoading(false);
         }
@@ -35,6 +36,7 @@ export default function University(props) {
   useEffect(() => {
     return () => {
       getAllUniversities();
+      setLoading(false);
     };
   }, []);
 
