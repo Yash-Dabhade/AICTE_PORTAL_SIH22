@@ -41,9 +41,7 @@ function Trending() {
   };
 
   useEffect(() => {
-    return () => {
-      getAllReports();
-    };
+    getAllReports();
   }, []);
 
   return (
