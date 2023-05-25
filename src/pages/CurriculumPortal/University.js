@@ -35,10 +35,7 @@ export default function University(props) {
   }
   useEffect(() => {
     return () => {
-      console.log(data);
       getAllUniversities();
-      console.log(data);
-      setLoading(false);
     };
   }, []);
 

@@ -42,9 +42,11 @@ export default function UniversityRoutes() {
       });
   }
   useEffect(() => {
-    return () => {
-      getAllUniversities();
-    };
+    setLoading(false);
+    // setLoading(false);
+    console.log(data);
+    getAllUniversities();
+    console.log(data);
   }, []);
 
   function createUniversity() {
@@ -110,7 +112,9 @@ export default function UniversityRoutes() {
           />
           <Route
             path="institutes/*"
-            element={<Institutes data={data[index] ? data[index] : null} />}
+            element={
+              <Institutes data={data && data[index] ? data[index] : null} />
+            }
           ></Route>
         </Routes>
       )}
