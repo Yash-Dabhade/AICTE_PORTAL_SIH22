@@ -54,6 +54,7 @@ function SignIn() {
           className=" mt-2 text-lg px-3 h-10  border border-gray-400 outline-1 outline-blue-500 rounded-md"
           type="text"
           placeholder="Email address"
+          defaultValue={"admin@gmail.com"}
         />
         <h2 className="mt-2">Password</h2>
         <input
@@ -61,6 +62,7 @@ function SignIn() {
           className="text-lg mt-4 px-3 h-10 border border-gray-400 outline-1 outline-blue-500 rounded-md"
           type="password"
           placeholder="Password"
+          defaultValue={"admin123"}
         />
         <div className="flex justify-between items-center mt-3">
           <Link to="/forgetpassword">
